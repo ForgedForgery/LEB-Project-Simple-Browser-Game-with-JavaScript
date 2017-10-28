@@ -90,3 +90,9 @@ class playerObject {
         this.y += d;
     }
 }
+
+class collectibleObject {
+    constructor() {
+        
+    }
+}
