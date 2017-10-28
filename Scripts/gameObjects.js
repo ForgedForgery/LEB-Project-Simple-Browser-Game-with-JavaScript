@@ -17,18 +17,11 @@ class gameArea {
     }
     
     update() {
-        switch (scene) {
-            case 1:
-                this.playerInput();
-                this.drawScene1();
-                break;
-            case 2:
-            default:
-                break;
-        }
+        this.playerInput();
+        this.draw();
     }
     
-    drawScene1() {
+    draw() {
         this.clear();
         this.player.draw();
     }

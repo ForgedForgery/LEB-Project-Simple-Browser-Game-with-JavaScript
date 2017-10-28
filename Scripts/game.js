@@ -10,8 +10,8 @@ function animate() {
 }
 
 function update() {
-    game.playerInput();
-    game.drawScene1();
+    game.update();
+    game.draw();
 }
 
 // start game
