@@ -81,8 +81,8 @@ class PlayerObject {
         this.y += d;
     }
 }
-
     
+
 class KeyManager {
     constructor() {
         this.keysHeldDown = {};
@@ -107,5 +107,11 @@ class KeyManager {
     
     setEvent(event, state) {
         this.keysHeldDown[event.keyCode] = state;
+    }
+}
+
+class CollectibleObject {
+    constructor() {
+        
     }
 }
