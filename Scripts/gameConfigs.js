@@ -1,28 +1,24 @@
+const baseCircleSpeed = 2;
+const baseCircleRad = 20;
+const width = 800;
+const height = 600;
+
 ///!!!||!!!!!!!!!!!!!!!!!!!||!!!
 ///!!!||   DO NOT CHANGE   ||!!!
 ///!!!VV!!!!!!!!!!!!!!!!!!!VV!!!
 
 var canvas = document.querySelector('canvas');
 var c = canvas.getContext('2d');
-var game;
+var game = new GameArea(width, height);
 
-var keyMap = {};
-var possiblePlayerInput = {
-    37: "LEFT",
-    38: "UP",
-    39: "RIGHT",
-    40: "DOWN"
-}
+
 
 //key events
 window.addEventListener('keydown',
-function (event) {
-    keyMap[event.keyCode] = true;
-})
+    function (event) {
+        game.player.controls.setEvent(event, true);
+    });
 window.addEventListener('keyup',
-function (event) {
-    keyMap[event.keyCode] = false;
-})
-
-const baseCircleSpeed = 2;
-const baseCircleRad = 20;
+    function (event) {
+        game.player.controls.setEvent(event, false);
+    });
