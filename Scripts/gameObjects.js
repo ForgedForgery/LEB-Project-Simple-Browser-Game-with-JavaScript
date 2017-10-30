@@ -12,7 +12,8 @@ class GameArea {
             };      
         this.player = new PlayerObject(options);
         
-        this.interval;
+        //execute global update every 20ms
+        this.interval = setInterval(() => update(), 20);
     }
     
     update() {

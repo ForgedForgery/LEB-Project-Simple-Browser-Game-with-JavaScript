@@ -1,7 +1,5 @@
 // game starts with this
 function init() {
-    //execute global update every 20ms
-    game.interval = setInterval(update, 20);
     
 }
 
