@@ -11,7 +11,6 @@ function animate() {
 
 function update() {
     game.update();
-    game.draw();
 }
 
 // start game

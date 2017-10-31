@@ -2,6 +2,7 @@ const baseCircleSpeed = 2;
 const baseCircleRad = 20;
 const width = 800;
 const height = 600;
+const framesPerSecond = 50;
 
 ///!!!||!!!!!!!!!!!!!!!!!!!||!!!
 ///!!!||   DO NOT CHANGE   ||!!!

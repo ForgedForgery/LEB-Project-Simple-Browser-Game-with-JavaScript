@@ -12,19 +12,21 @@ class GameArea {
             };      
         this.player = new PlayerObject(options);
         
+        this.collectibles = new CollectiblesObject();
+        
         //execute global update every 20ms
-        this.interval = setInterval(() => update(), 20);
+        this.interval = setInterval(() => update(), 1000/framesPerSecond);
     }
     
     update() {
         this.player.input();
         this.draw();
-
     }
     
     draw() {
         this.clear();
         this.player.draw();
+        this.collectibles.drawAll();
     }
 
     clear() {
@@ -47,7 +49,7 @@ class PlayerObject {
         c.arc(this.x, this.y, this.radius, 0, Math.PI*2);
         c.fillStyle = 'black';
         c.fill();
-        
+        c.closePath();
     }
         
     input() {
@@ -111,8 +113,48 @@ class KeyManager {
     }
 }
 
-class CollectibleObject {
+class CollectiblesObject {
     constructor() {
+        this.list = this.spawn5C();
+    }
+    
+    drawAll() {
+        for(let i in this.list) {
+            this.drawCollectible(this.list[i]);
+        }
+    }
+    
+    drawCollectible(obj){
+        c.beginPath();
+        c.moveTo(obj.x - obj.r/2, obj.y + obj.r/2);
+        c.lineTo(obj.x + obj.r/2, obj.y + obj.r/2);
+        c.lineTo(obj.x, obj.y - obj.r/2);
+
+        c.fillStyle = 'red';
+        c.fill();
+        c.closePath();
         
+        //draw middle point
+//        c.beginPath();
+//        c.rect(obj.x, obj.y, 3, 3)
+//        c.fillStyle = 'black';
+//        c.fill();
+//        c.closePath();
+    }
+    
+    spawn5C(){
+        let list = {};
+        let rx, ry, rr;
+        for (let i = 0; i < 5; i++){
+            rx = Math.random() * width;
+            ry = Math.random() * height;
+            rr = 15 + Math.random() * 50;
+            list[i] = {
+                x: rx,
+                y: ry,
+                r: rr
+            }
+        }
+        return list;
     }
 }
