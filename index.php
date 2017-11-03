@@ -18,6 +18,8 @@
     <h1>Ressource Collector</h1>
     <center>
         <canvas id="tutorial" width="800" height="600"></canvas><br>
+	<script src="Scripts/gameObjects.js"></script>
+	<script src="Scripts/gameConfigs.js"></script>
         <?php 
             if (isset($_POST["user"]) && !empty($_POST["user"])) {
                 $loginName = $_POST["user"];
@@ -72,9 +74,6 @@
             }
         ?>
     </center>
-    
-    <script src="Scripts/gameObjects.js"></script>
-    <script src="Scripts/gameConfigs.js"></script>
     <script src="Scripts/game.js"></script>
 </body>
 </html>
