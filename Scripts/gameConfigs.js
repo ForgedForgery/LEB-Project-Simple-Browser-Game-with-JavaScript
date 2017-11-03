@@ -3,6 +3,7 @@ const baseCircleRad = 20;
 const width = 800;
 const height = 600;
 const framesPerSecond = 60;
+const loadedData;
 
 ///!!!||!!!!!!!!!!!!!!!!!!!||!!!
 ///!!!||   DO NOT CHANGE   ||!!!
