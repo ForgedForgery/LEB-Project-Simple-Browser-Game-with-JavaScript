@@ -1,0 +1,9 @@
+# reference/test files #
+canvas.js
+index_test.html
+
+# editor file #
+_eslintrc.json
+.eslintrc.json
+
+.gitignore

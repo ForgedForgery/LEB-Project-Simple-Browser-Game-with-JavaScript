@@ -7,6 +7,8 @@ class GameArea {
         
         let options =
             {
+            name: loadedData.name || 'Guest',
+            score: loadedData.score || 0
             //radius: 5,
             //speed: 1
             };      
@@ -14,19 +16,24 @@ class GameArea {
         
         this.collectibles = new CollectiblesObject();
         
+        
         //execute global update every 20ms
         this.interval = setInterval(() => update(), 1000/framesPerSecond);
     }
     
     update() {
         this.player.input();
+        this.player.collision(this.collectibles);
         this.draw();
     }
     
     draw() {
         this.clear();
-        this.player.draw();
         this.collectibles.drawAll();
+        this.player.draw();
+        
+        c.font = '30px Arial';
+        c.fillText(this.player.name, 10, 10);
     }
 
     clear() {
@@ -40,6 +47,8 @@ class PlayerObject {
         this.x = options.x || canvas.width/2;
         this.y = options.y || canvas.height/2;
         this.speed = options.speed || baseCircleSpeed;
+        this.name = options.name;
+        this.score = options.score || 0;
         
         this.controls = new KeyManager();
     }
@@ -50,6 +59,10 @@ class PlayerObject {
         c.fillStyle = 'black';
         c.fill();
         c.closePath();
+    }
+    
+    collision(obj) {
+        obj.isCollided(this);
     }
         
     input() {
@@ -143,18 +156,32 @@ class CollectiblesObject {
     }
     
     spawn5C(){
-        let list = {};
+        let list = [];
         let rx, ry, rr;
         for (let i = 0; i < 5; i++){
             rx = Math.random() * width;
             ry = Math.random() * height;
             rr = 15 + Math.random() * 50;
-            list[i] = {
+            list.push({
                 x: rx,
                 y: ry,
                 r: rr
-            }
+            })
         }
         return list;
+    }
+    
+    isCollided(obj) {
+        let dVec = {x: 1, y: 1, length: 1};
+        for (let i in this.list) {
+            dVec.x = obj.x - this.list[i].x;
+            dVec.y = obj.y - this.list[i].y;
+            dVec.length = Math.sqrt(dVec.x**2 + dVec.y**2);
+
+            if (dVec.length <= obj.radius) {
+                this.list.splice(i, i+1);
+                console.log('removed');
+            }
+        }
     }
 }
