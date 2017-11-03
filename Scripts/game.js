@@ -1,6 +1,6 @@
 // game starts with this
 function init() {
-    var game = new GameArea(width, height);
+
 }
 
 // animations go in here, I think
@@ -12,6 +12,8 @@ function animate() {
 function update() {
     game.update();
 }
+
+var game = new GameArea(width, height);
 
 // start game
 init();
