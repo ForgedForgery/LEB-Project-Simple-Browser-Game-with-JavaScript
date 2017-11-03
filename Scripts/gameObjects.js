@@ -8,7 +8,7 @@ class GameArea {
         let options =
             {
             name: (typeof loadedData === "undefined" ? false : loadedData.name) || 'Guest',
-            score: loadedData.score || 0
+            score: (typeof loadedData === "undefined" ? false : loadedData.score) || 0
             //radius: 5,
             //speed: 1
             };      
