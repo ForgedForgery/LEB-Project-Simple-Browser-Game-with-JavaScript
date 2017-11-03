@@ -32,7 +32,7 @@
                 
                 function setJSVariables($inName, $inScore) {
                     echo '<script>
-                        const loadedData = { name: "'.$inName.'",
+                        loadedData = { name: "'.$inName.'",
              		';
                     echo '
                         score: '.(!empty($inScore) ? $inScore : 0).'}
