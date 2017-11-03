@@ -33,7 +33,7 @@ class GameArea {
         this.player.draw();
         
         c.font = '30px Arial';
-        c.fillText(this.player.name, 10, 10);
+        c.fillText(this.player.name, 10, 30);
     }
 
     clear() {
