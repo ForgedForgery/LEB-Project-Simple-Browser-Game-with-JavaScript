@@ -10,9 +10,6 @@ const framesPerSecond = 60;
 
 var canvas = document.querySelector('canvas');
 var c = canvas.getContext('2d');
-var game = new GameArea(width, height);
-
-
 
 //key events
 window.addEventListener('keydown',
