@@ -3,24 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Canvas Resize</title>
+  <title>Ressource Collector</title>
     <style type="text/css">
-        canvas {
-            border: 1px solid black;
-        }
-        
-        body {
-          
-            margin: 0;
-        }
+         canvas { border: 4px solid #2E9AFE; 
+            background-color: white;}
+        body { background-color: #A9F5D0; }
+        h1 { color: #2E9AFE;
+            font-family: algerian;
+            text-align: center; }
     </style>
 </head>
 
 <body>
-    <canvas></canvas>
-    
-    <script src="Scripts/gameObjects.js"></script>
-    <script src="Scripts/gameConfigs.js"></script>
+    <h1>Ressource Collector</h1>
+    <center>
+        <canvas id="game" width="800" height="600"></canvas><br>
+        <script src="Scripts/gameObjects.js"></script>
+        <script src="Scripts/gameConfigs.js"></script>
+        <!--<script scr="Scripts/form.php"></script>-->
+    </center>
     <script src="Scripts/game.js"></script>
 </body>
 </html

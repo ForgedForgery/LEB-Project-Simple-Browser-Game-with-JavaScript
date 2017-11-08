@@ -71,24 +71,25 @@ class Player {
         
         let keys = this.controls.getKeysDown();
         for (let k in keys) {
-            switch(keys[k]) {
-                case "LEFT":
-                    this.moveX(-speed);
-                    break;
-                case "RIGHT":
-                    this.moveX(speed);
-                    break;
-                case "UP":
-                    this.moveY(-speed);
-                    break;
-                case "DOWN":
-                    this.moveY(speed);
-                    break;
-                default:
-                    break;
+            if (keys[k]) {
+                switch(k) {
+                    case "LEFT":
+                        this.moveX(-speed);
+                        break;
+                    case "RIGHT":
+                        this.moveX(speed);
+                        break;
+                    case "UP":
+                        this.moveY(-speed);
+                        break;
+                    case "DOWN":
+                        this.moveY(speed);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-
     }
     
     moveX(d) {
@@ -117,7 +118,9 @@ class KeyManager {
     }
     
     setEvent(event, state) {
-        let key = event.keyCode in this.possiblePlayerInput ? event.keyCode : 0;
+        let key = event.keyCode in this.possiblePlayerInput ?
+                    this.possiblePlayerInput[event.keyCode] :
+                    0;
         if (key != 0) {
             this.keysHeldDown[key] = state;
         }
