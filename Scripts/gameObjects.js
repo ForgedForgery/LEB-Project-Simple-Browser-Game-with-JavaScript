@@ -5,16 +5,16 @@ class GameArea {
         this.FrameNo = 0;
         this.sceneNo = 1;
         
-        let options =
+        let playerOptions =
             {
             name: (typeof loadedData === "undefined" ? false : loadedData.name) || 'Guest',
             score: (typeof loadedData === "undefined" ? false : loadedData.score) || 0
             //radius: 5,
             //speed: 1
             };      
-        this.player = new PlayerObject(options);
+        this.player = new Player(playerOptions);
         
-        this.collectibles = new CollectiblesObject();
+        this.collectibles = new Collectibles();
         
         
         //execute global update every 20ms
@@ -23,7 +23,8 @@ class GameArea {
     
     update() {
         this.player.input();
-        this.player.collision(this.collectibles);
+        this.player.checkCollisionWith(this.collectibles);
+        
         this.draw();
     }
     
@@ -41,7 +42,7 @@ class GameArea {
     }
 }
 
-class PlayerObject {
+class Player {
     constructor(options) {
         this.radius = options.radius || baseCircleRad;
         this.x = options.x || canvas.width/2;
@@ -61,15 +62,16 @@ class PlayerObject {
         c.closePath();
     }
     
-    collision(obj) {
-        obj.isCollided(this);
+    checkCollisionWith(obj) {
+        obj.checkCollisionWith(this);
     }
         
     input() {
         let speed = this.speed;
-        let allKeysPressed = this.controls.getKeysDown();
-        for (let k in allKeysPressed) {
-            switch(allKeysPressed[k]) {
+        
+        let keys = this.controls.getKeysDown();
+        for (let k in keys) {
+            switch(keys[k]) {
                 case "LEFT":
                     this.moveX(-speed);
                     break;
@@ -111,24 +113,21 @@ class KeyManager {
     }
     
     getKeysDown() {
-        let k = {};
-        let index = 0;
-        for (let n in this.keysHeldDown){
-            if (this.keysHeldDown[n] == true && typeof this.possiblePlayerInput[n] != undefined){
-                k[index++] = this.possiblePlayerInput[n];
-            }
-        }
-        return k;
+        return this.keysHeldDown;
     }
     
     setEvent(event, state) {
-        this.keysHeldDown[event.keyCode] = state;
+        let key = event.keyCode in this.possiblePlayerInput ? event.keyCode : 0;
+        if (key != 0) {
+            this.keysHeldDown[key] = state;
+        }
     }
 }
 
-class CollectiblesObject {
+class Collectibles {
     constructor() {
-        this.list = this.spawn5C();
+        this.list = this.spawn5ForTest();
+        this.hitbox = 0;
     }
     
     drawAll() {
@@ -155,7 +154,7 @@ class CollectiblesObject {
 //        c.closePath();
     }
     
-    spawn5C(){
+    spawn5ForTest(){
         let list = [];
         let rx, ry, rr;
         for (let i = 0; i < 5; i++){
@@ -171,14 +170,14 @@ class CollectiblesObject {
         return list;
     }
     
-    isCollided(obj) {
-        let dVec = {x: 1, y: 1, length: 1};
+    checkCollisionWith(obj) {
+        let dVector = {x: 1, y: 1, length: 1};
         for (let i in this.list) {
-            dVec.x = obj.x - this.list[i].x;
-            dVec.y = obj.y - this.list[i].y;
-            dVec.length = Math.sqrt(dVec.x**2 + dVec.y**2);
+            dVector.x = obj.x - this.list[i].x;
+            dVector.y = obj.y - this.list[i].y;
+            dVector.length = Math.sqrt(dVector.x**2 + dVector.y**2);
 
-            if (dVec.length <= obj.radius) {
+            if (dVector.length <= obj.radius + this.hitbox) {
                 this.list.splice(i, i+1);
                 console.log('removed');
             }
