@@ -191,11 +191,11 @@ class Triangle {
         this.hitbox = 0;
     }
     
-    draw(obj){
+    draw(){
         c.beginPath();
-        c.moveTo(obj.x - obj.r/2, obj.y + obj.r/2);
-        c.lineTo(obj.x + obj.r/2, obj.y + obj.r/2);
-        c.lineTo(obj.x, obj.y - obj.r/2);
+        c.moveTo(this.x - this.r/2, this.y + this.r/2);
+        c.lineTo(this.x + this.r/2, this.y + this.r/2);
+        c.lineTo(this.x, this.y - this.r/2);
 
         c.fillStyle = 'red';
         c.fill();
