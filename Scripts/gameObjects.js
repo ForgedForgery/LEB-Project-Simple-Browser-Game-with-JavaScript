@@ -170,13 +170,12 @@ class TriangleSwarm {
     
     checkCollisionWith(obj) {
         let dVector = {x: 1, y: 1, length: 1};
-        console.log('test1');
+
         for (let i in this.list) {
             dVector.x = obj.x - this.list[i].x;
             dVector.y = obj.y - this.list[i].y;
             dVector.length = Math.sqrt(dVector.x**2 + dVector.y**2);
-
-            console.log(dVector);
+            
             if (dVector.length <= obj.radius + this.hitbox) {
                 this.list.splice(i, i+1);
                 console.log('removed');
