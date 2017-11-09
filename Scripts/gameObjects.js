@@ -143,7 +143,7 @@ class Collectibles {
 
 class TriangleSwarm {
     constructor() {
-        this.list = spawn5ForTest();
+        this.list = this.spawn5ForTest();
     }
     
     draw() {
