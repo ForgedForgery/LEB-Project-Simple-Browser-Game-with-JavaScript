@@ -130,7 +130,7 @@ class KeyManager {
 class Collectibles {
     constructor() {
         this.list = this.spawn5ForTest();
-        this.hitbox = 0;
+        this.triangleSwarm = new TriangleSwarm();
     }
     
     drawAll() {
@@ -164,11 +164,11 @@ class Collectibles {
             rx = Math.random() * width;
             ry = Math.random() * height;
             rr = 15 + Math.random() * 50;
-            list.push({
+            list.push(new Triangle({
                 x: rx,
                 y: ry,
                 r: rr
-            })
+            }));
         }
         return list;
     }
@@ -186,4 +186,23 @@ class Collectibles {
             }
         }
     }
+}
+
+class TriangleSwarm {
+    constructor() {
+        this.list;
+    }
+    
+    
+}
+
+class Triangle {
+    constructor(options) {
+        this.x = options.x;
+        this.y = options.y;
+        this.r = options.r;
+        this.hitbox = 0;
+    }
+    
+    
 }
