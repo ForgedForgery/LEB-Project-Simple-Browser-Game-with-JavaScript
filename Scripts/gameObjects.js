@@ -30,7 +30,7 @@ class GameArea {
     
     draw() {
         this.clear();
-        this.collectibles.drawAll();
+        this.collectibles.draw();
         this.player.draw();
         
         c.font = '30px Arial';
@@ -129,34 +129,29 @@ class KeyManager {
 
 class Collectibles {
     constructor() {
-        this.list = this.spawn5ForTest();
         this.triangleSwarm = new TriangleSwarm();
     }
     
-    drawAll() {
+    draw() {
+        this.triangleSwarm.draw();
+    }
+    
+    checkCollisionWith(obj) {
+        this.triangleSwarm.checkCollisionWith(obj);
+    }
+}
+
+class TriangleSwarm {
+    constructor() {
+        this.list = spawn5ForTest();
+    }
+    
+    draw() {
         for(let i in this.list) {
-            this.drawCollectible(this.list[i]);
+            this.list[i].draw();
         }
     }
-    
-    drawCollectible(obj){
-        c.beginPath();
-        c.moveTo(obj.x - obj.r/2, obj.y + obj.r/2);
-        c.lineTo(obj.x + obj.r/2, obj.y + obj.r/2);
-        c.lineTo(obj.x, obj.y - obj.r/2);
-
-        c.fillStyle = 'red';
-        c.fill();
-        c.closePath();
         
-        //draw middle point
-//        c.beginPath();
-//        c.rect(obj.x, obj.y, 3, 3)
-//        c.fillStyle = 'black';
-//        c.fill();
-//        c.closePath();
-    }
-    
     spawn5ForTest(){
         let list = [];
         let rx, ry, rr;
@@ -188,14 +183,6 @@ class Collectibles {
     }
 }
 
-class TriangleSwarm {
-    constructor() {
-        this.list;
-    }
-    
-    
-}
-
 class Triangle {
     constructor(options) {
         this.x = options.x;
@@ -204,5 +191,21 @@ class Triangle {
         this.hitbox = 0;
     }
     
-    
+    draw(obj){
+        c.beginPath();
+        c.moveTo(obj.x - obj.r/2, obj.y + obj.r/2);
+        c.lineTo(obj.x + obj.r/2, obj.y + obj.r/2);
+        c.lineTo(obj.x, obj.y - obj.r/2);
+
+        c.fillStyle = 'red';
+        c.fill();
+        c.closePath();
+        
+        //draw middle point
+//        c.beginPath();
+//        c.rect(obj.x, obj.y, 3, 3)
+//        c.fillStyle = 'black';
+//        c.fill();
+//        c.closePath();
+    }
 }
