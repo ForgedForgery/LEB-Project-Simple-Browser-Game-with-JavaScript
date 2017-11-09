@@ -176,9 +176,12 @@ class TriangleSwarm {
             dVector.y = obj.y - this.list[i].y;
             dVector.length = Math.sqrt(dVector.x**2 + dVector.y**2);
             
-            if (dVector.length <= obj.radius + this.hitbox) {
-                this.list.splice(i, i+1);
-                console.log('removed');
+            if (dVector.length <= obj.radius + this.list[i].hitbox) {
+                console.log(this.list);
+                console.log(i);
+                let wowwtf = this.list.splice(i, 1);
+                console.log(wowwtf);
+                console.log("---------------------------------");
             }
         }
     }
