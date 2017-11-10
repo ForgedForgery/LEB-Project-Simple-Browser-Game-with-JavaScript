@@ -1,10 +1,5 @@
-class GameArea {
-    constructor(inWidth, inHeight) {
-        canvas.width = inWidth;
-        canvas.height = inHeight;
-        this.FrameNo = 0;
-        this.sceneNo = 1;
-        
+class ResourceCollector {
+    constructor(inWidth, inHeight) {                
         let playerOptions =
             {
             name: (typeof loadedData === "undefined" ? false : loadedData.name) || 'Guest',
@@ -12,31 +7,38 @@ class GameArea {
             //radius: 5,
             //speed: 1
             };      
+        
+        // game elements
         this.player = new Player(playerOptions);
-        
         this.collectibles = new Collectibles();
-        
+        // game systems
+        this.screen = new Screen(inWidth, inHeight);
+        this.scenes = new SceneManager(this.player, this.collectibles);
         
         //execute global update every 20ms
         this.interval = setInterval(() => update(), 1000/framesPerSecond);
     }
     
     update() {
-        this.player.input();
-        this.player.checkCollisionWith(this.collectibles);
-        
-        this.draw();
+        this.scenes.update();
     }
     
     draw() {
-        this.clear();
-        this.collectibles.draw();
-        this.player.draw();
-        
-        c.font = '30px Arial';
-        c.fillText(this.player.name, 10, 30);
+        this.screen.draw(this.scenes);
     }
+}
 
+class Screen {
+    constructor(inWidth, inHeight) {
+        canvas.width  = inWidth;
+        canvas.height  = inHeight;
+    }
+    
+    draw(obj) {
+        this.clear();
+        obj.draw();
+    }
+        
     clear() {
         c.clearRect(0, 0, canvas.width, canvas.height);
     }
@@ -51,7 +53,7 @@ class Player {
         this.name = options.name;
         this.score = options.score || 0;
         
-        this.controls = new KeyManager();
+        this.controls = new Input();
     }
     
     draw() {
@@ -100,9 +102,8 @@ class Player {
         this.y += d;
     }
 }
-    
 
-class KeyManager {
+class Input {
     constructor() {
         this.keysHeldDown = {};
         this.possiblePlayerInput = {
@@ -125,6 +126,58 @@ class KeyManager {
             this.keysHeldDown[key] = state;
         }
     }
+}
+
+class SceneManager {
+    constructor(inPlayerReference, inCollectiblesReference) {
+        this.currentScene = "None";
+        this.allScenes = {
+            //title: new TitleScene(),
+            Game: new MainGame(inPlayerReference, inCollectiblesReference),
+            //store: )
+        };
+    }
+    
+    update() {
+        if (this.currentScene != "None") {
+            this.allScenes[this.currentScene].update();
+        }
+    } 
+    
+    draw() {
+        if (this.currentScene != "None") {
+            this.allScenes[this.currentScene].draw();
+        }
+    }
+    
+    changeTo(inScene) {
+        this.currentScene = inScene;
+    }
+}
+
+class MainGame {
+    constructor(inPlayerReference, inCollectiblesReference) {
+        this.player = inPlayerReference;
+        this.collectibles = inCollectiblesReference;
+    }
+    
+    update() {
+        this.player.input();
+        this.player.checkCollisionWith(this.collectibles);
+    }
+    
+    draw() {
+        this.collectibles.draw();
+        this.player.draw();
+
+        c.font = '30px Arial';
+        c.fillText(this.player.name, 10, 30);
+    }
+    
+}
+
+class Title {
+    
 }
 
 class Collectibles {
@@ -169,19 +222,9 @@ class TriangleSwarm {
     }
     
     checkCollisionWith(obj) {
-        let dVector = {x: 1, y: 1, length: 1};
-
         for (let i in this.list) {
-            dVector.x = obj.x - this.list[i].x;
-            dVector.y = obj.y - this.list[i].y;
-            dVector.length = Math.sqrt(dVector.x**2 + dVector.y**2);
-            
-            if (dVector.length <= obj.radius + this.list[i].hitbox) {
-                console.log(this.list);
-                console.log(i);
-                let wowwtf = this.list.splice(i, 1);
-                console.log(wowwtf);
-                console.log("---------------------------------");
+            if (this.list[i].isCollidedWith(obj)) {
+                this.list.splice(i, 1);
             }
         }
     }
@@ -212,4 +255,18 @@ class Triangle {
 //        c.fill();
 //        c.closePath();
     }
+    
+    isCollidedWith(obj) {
+        let dVector = {
+            x: obj.x - this.x,
+            y: obj.y - this.y,
+        };
+        let vLength = Math.sqrt(dVector.x**2 + dVector.y**2);
+        if (vLength <= obj.radius + this.hitbox) {
+            return true;
+        }
+        return false;
+    }
+    
+    
 }
