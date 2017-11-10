@@ -11,10 +11,11 @@ function animate() {
 
 function update() {
     game.update();
+    game.draw();
 }
 
-var game = new GameArea(width, height);
-
+var game = new ResourceCollector(width, height);
+game.scenes.changeTo("Game");
 // start game
 init();
 animate();
