@@ -51,14 +51,14 @@
         if ($array != NULL) {
             echo '<script>
                 let status = document.getElementById("status");
-                status.innerText = "Logging in as '.$loginName.'...";
+                status.innerText = "Logged in as '.$loginName.'...";
                 setTimeout(function(){status.innerText = "";}, 3000);
             </script>';
             setJSVariables($loginName, $array['Score']);
         } else {
             echo '<script>
                     let status2 = document.getElementById("status2");
-                    status2.innerText = "User does not exist. Creating '.$loginName.'  profile...";
+                    status2.innerText = "User did not exist. Created '.$loginName.'.";
                     setTimeout(function(){status2.innerText = "";}, 3000);
                 </script>';
             // create new account and put it in database
