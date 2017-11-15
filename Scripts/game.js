@@ -1,6 +1,9 @@
+var game;
+
 // game starts with this
 function init() {
-
+    game = new ResourceCollector(width, height);
+    game.scenes.changeTo("Game");
 }
 
 // animations go in here, I think
@@ -14,8 +17,6 @@ function update() {
     game.draw();
 }
 
-var game = new ResourceCollector(width, height);
-game.scenes.changeTo("Game");
 // start game
 init();
 animate();
