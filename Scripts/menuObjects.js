@@ -9,45 +9,61 @@ class Button {
         this.fontSize = config.fontSize || "20px";
         this.fontType = config.fontType || "Comic Sans MS";
         this.bgColor = config.bgColor || "#ff0000";
-        this.tColor = config.tColor || "#00ff00";
-        this.isClicked = false;
+        this.textColor = config.textColor || "#00ff00";
+        this.mouseUp = false;
+        this.mouseDown = false;
+        this.clicked = false;
+        this.hovered = false;
         //this.mouseInput = new MouseInpute();
     }
-
-    draw() {
-        c.beginPath();
-        c.lineWidth = "6";
-        c.strokeStyle = this.bgColor;
-        c.fillStyle = this.isClicked == false ? this.bgColor : "#aaaaaa";
-        c.rect(this.x, this.y , this.width, this.height);
-        c.stroke();
-        c.fill();
-        c.fillStyle = this.tColor;
-        c.font = this.fontSize + " " + this.fontType;
-        c.textAlign = "center";
-        c.fillText(this.label, this.x+this.width/2, this.y+this.height/2);
-        c.closePath();
+    
+    update() {
+        this.setMouseUpDown();
+        this.hovered = this.isHovered();
+        this.clicked = this.isClicked();
+        
+        if(this.hovered && this.clicked) {
+            this.task();
+        }
+        
     }
-
-    isMouseInside() {
-        let mouseX = 0;
-        let mouseY = 0;
+    
+    setMouseUpDown() {
+        this.mouseDown = playerInput.leftClick == true ? true : false;
+        if(this.mouseDown == true && playerInput.leftClick == false) {
+            this.mouseUp = true;
+            this.mouseDown = false;
+        } else {
+            this.mouseUp = false;
+        }
+    }
+    
+    isHovered() {
+        let mouseX = playerInput.mouseX;
+        let mouseY = playerInput.mouseY;
         return mouseX > this.x &&
             mouseX < (this.x + this.width) &&
             mouseY > this.y &&
             mouseY < (this.y + this.height);
-    }   
-
-    handelMouseClick() {
-        if(this.isMouseInside() && this.isMouseClicked()) {
-            this.isClicked = true;
-            this.task();
-        } else {
-            this.isClicked = false;
-        }
+    }  
+    
+    isClicked() {
+        this.clicked = this.mouseDown == true && this.mouseUp == true ? true : false;
     }
     
-    isMouseClicked() {
-        //return this.mouseInput.isLeftClick()
-    }
+    draw() {
+        c.beginPath();
+        c.lineWidth = "6";
+        c.strokeStyle = this.bgColor;
+        c.fillStyle = this.clicked == false ? this.bgColor : "#aaaaaa";
+        c.fillStyle = this.hovered == false ? this.bgColor : "#f9ff79";
+        c.rect(this.x, this.y , this.width, this.height);
+        c.stroke();
+        c.fill();
+        c.fillStyle = this.textColor;
+        c.font = this.fontSize + " " + this.fontType;
+        c.textAlign = "center";
+        c.fillText(this.label, this.x+this.width/2, this.y+this.height/2);
+        c.closePath();
+    } 
 }

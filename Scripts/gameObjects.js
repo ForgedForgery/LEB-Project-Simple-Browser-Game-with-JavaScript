@@ -165,7 +165,7 @@ class TitleMenu {
     }
     
     update() {
-        this.btn1.handelMouseClick();
+        this.btn1.update();
     }
     
     draw() {
