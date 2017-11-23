@@ -52,11 +52,11 @@ function animate() {
 }
 var titlex = 100;
 function update() {
-    game.clear();
+    game.screen.clear();
     titleUpdate();
 }
 
-var game = new GameArea(width, height);
+var game = new ResourceCollector(width, height);
 
 // start game
 init();
