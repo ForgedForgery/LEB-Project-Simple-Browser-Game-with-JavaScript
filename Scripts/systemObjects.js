@@ -7,18 +7,31 @@ class Input {
             39: "RIGHT",
             40: "DOWN"
         }
+        this.mouseX = 0;
+        this.mouseY = 0;
+        this.leftClick = false;
     }
     
     getKeysDown() {
         return this.keysHeldDown;
     }
     
-    setEvent(event, state) {
+    updateKeys(event, state) {
         let key = event.keyCode in this.possiblePlayerInput ?
                     this.possiblePlayerInput[event.keyCode] :
                     0;
         if (key != 0) {
             this.keysHeldDown[key] = state;
         }
+    }
+    
+    updateMouse(e, state) {
+        this.leftClick = state;
+    }
+    
+    updateMouseOver(e) {
+        let rect = canvas.getBoundingClientRect();
+        this.mouseX = e.clientX - rect.left;
+        this.mouseY = e.clientY - rect.top;
     }
 }
