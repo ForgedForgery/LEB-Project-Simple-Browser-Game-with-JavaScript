@@ -14,7 +14,7 @@ class Button {
         c.fillStyle = "black";
         c.rect(this.x, this.y, this.width, this.height, 5);
         c.fillStyle = "blue";
-        c.font = this.textSize + this.fontType;
+        c.font = this.textSize + " " + this.fontType;
         c.textAlign ='middle';
         c.fillText(this.label, this.x+10, this.y+this.height/4);
     }
