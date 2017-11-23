@@ -29,7 +29,7 @@ class Input {
         this.leftClick = state;
     }
     
-    updateMouseOver(e) {
+    updateMouseMove(e) {
         let rect = canvas.getBoundingClientRect();
         this.mouseX = e.clientX - rect.left;
         this.mouseY = e.clientY - rect.top;

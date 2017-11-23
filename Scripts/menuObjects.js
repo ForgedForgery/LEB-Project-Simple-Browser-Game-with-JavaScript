@@ -21,21 +21,27 @@ class Button {
         this.setMouseUpDown();
         this.hovered = this.isHovered();
         this.clicked = this.isClicked();
+        console.log(this.hovered + ":" + this.clicked);
         
         if(this.hovered && this.clicked) {
             this.task();
         }
         
+        if(this.clicked)
+            this.mouseDown = false;
     }
     
     setMouseUpDown() {
-        this.mouseDown = playerInput.leftClick == true ? true : false;
-        if(this.mouseDown == true && playerInput.leftClick == false) {
-            this.mouseUp = true;
-            this.mouseDown = false;
+        if(this.mouseDown == false && playerInput.leftClick == true) {
+            this.mouseDown = true;
         } else {
-            this.mouseUp = false;
+            if(this.mouseDown == true && playerInput.leftClick == false) {
+                this.mouseUp = true;
+            } else {
+                this.mouseUp = false;
+            }
         }
+
     }
     
     isHovered() {
@@ -48,15 +54,14 @@ class Button {
     }  
     
     isClicked() {
-        this.clicked = this.mouseDown == true && this.mouseUp == true ? true : false;
+        return this.mouseDown == true && this.mouseUp == true ? true : false;
     }
     
     draw() {
         c.beginPath();
         c.lineWidth = "6";
         c.strokeStyle = this.bgColor;
-        c.fillStyle = this.clicked == false ? this.bgColor : "#aaaaaa";
-        c.fillStyle = this.hovered == false ? this.bgColor : "#f9ff79";
+        c.fillStyle = this.hovered ? (this.mouseDown ? "#aaaaaa" : "#f9ff79") : this.bgColor;
         c.rect(this.x, this.y , this.width, this.height);
         c.stroke();
         c.fill();

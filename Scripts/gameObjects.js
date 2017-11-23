@@ -159,7 +159,7 @@ class TitleMenu {
                         fontSize: "40px",
                         fontType: "Arial",
                         onClick: function() {
-                            text("You made the right choice!", this.x, this.y+this.height);
+                            game.scenes.changeTo("game");
                         }
                     });
     }
@@ -173,8 +173,6 @@ class TitleMenu {
         c.fillStyle = "black";
         c.strokeStyle = "blue";
         c.font = "40px Comic Sans MS";
-        c.textAlign = "right";
-        c.fillText(game.player.name,790,570);
         c.textAlign = 'center';
         c.textBaseline = 'middle';
         c.fillText('Resource Collector',400,100);

@@ -20,7 +20,7 @@ window.addEventListener('keyup',
     function (event) {
         playerInput.updateKeys(event, false);
     });
-window.addEventListener('mouseover',
+window.addEventListener('mousemove',
     function (event) {
         playerInput.updateMouseMove(event);
     });
