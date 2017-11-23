@@ -6,13 +6,15 @@ class Button {
         this.height = config.height || 50;
         this.label = config.label || "Click";
         this.onClick = config.onClick || function() {};
+        this.textSize = config.textSize || "20px";
+        this.fontType = config.fontType || "Comic Sans MS";
     }
 
     draw() {
         c.fillStyle = "black";
         c.rect(this.x, this.y, this.width, this.height, 5);
         c.fillStyle = "blue";
-        c.textSize = "19";
+        c.font = this.textSize + this.fontType;
         c.textAlign ='middle';
         c.fillText(this.label, this.x+10, this.y+this.height/4);
     }
