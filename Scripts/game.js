@@ -11,31 +11,16 @@ function titleUpdate(){
     var btn1 = new Button({
         x: 300,
         y: 200,
+        width: 250,
         label: "Please click!",
+        fontSize: "40px",
+        fontType: "Arial",
         onClick: function() {
             text("You made the right choice!", this.x, this.y+this.height);
         }
     });
     btn1.draw();
-
-
-    var btn2 = new Button({
-        x: 100,
-        y: 213,
-        width:50,
-        height:50,
-        label: "No! Click ME!",
-        onClick: function() {
-            text("Yay, you picked me!", this.x, this.y+this.height);
-        }
-    });
-    btn2.draw();
-
-
-    mouseClicked = function() {
-        btn1.handleMouseClick();
-        btn2.handleMouseClick();
-    };    
+    btn1.handelMouseClick();
 }
 
 
