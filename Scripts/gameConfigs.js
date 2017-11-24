@@ -4,14 +4,13 @@ const width = 800;
 const height = 600;
 const framesPerSecond = 60;
 
-///!!!||!!!!!!!!!!!!!!!!!!!||!!!
-///!!!||   DO NOT CHANGE   ||!!!
-///!!!VV!!!!!!!!!!!!!!!!!!!VV!!!
+var game;
+var playerInput;
 
 var canvas = document.querySelector('canvas');
-var c = canvas.getContext('2d');
+var canvasContext = canvas.getContext('2d');
 
-//key events
+//key and mouse events
 window.addEventListener('keydown',
     function (event) {
         playerInput.updateKeys(event, true);

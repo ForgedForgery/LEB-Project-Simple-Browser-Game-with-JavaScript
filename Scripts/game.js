@@ -1,6 +1,3 @@
-var game;
-var playerInput;
-
 // game starts with this
 function init() {
     playerInput = new Input();
