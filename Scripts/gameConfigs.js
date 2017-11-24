@@ -14,9 +14,21 @@ var c = canvas.getContext('2d');
 //key events
 window.addEventListener('keydown',
     function (event) {
-        game.player.controls.setEvent(event, true);
+        playerInput.updateKeys(event, true);
     });
 window.addEventListener('keyup',
     function (event) {
-        game.player.controls.setEvent(event, false);
+        playerInput.updateKeys(event, false);
+    });
+window.addEventListener('mousemove',
+    function (event) {
+        playerInput.updateMouseMove(event);
+    });
+window.addEventListener('mouseup',
+    function (event) {
+        playerInput.updateMouse(event, false);
+    });
+window.addEventListener('mousedown',
+    function (event) {
+        playerInput.updateMouse(event, true);
     });

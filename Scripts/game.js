@@ -1,9 +1,11 @@
 var game;
+var playerInput;
 
 // game starts with this
 function init() {
+    playerInput = new Input();
     game = new ResourceCollector(width, height);
-    game.scenes.changeTo("Game");
+    game.scenes.changeTo("title");
 }
 
 // animations go in here, I think

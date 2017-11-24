@@ -1,9 +1,9 @@
 class ResourceCollector {
-    constructor(inWidth, inHeight) {                
+    constructor(inWidth, inHeight) {     
         let playerOptions =
             {
             name: (typeof loadedData === "undefined" ? false : loadedData.name) || 'Guest',
-            score: (typeof loadedData === "undefined" ? false : loadedData.score) || 0
+            score: (typeof loadedData === "undefined" ? false : loadedData.score) || 0,
             //radius: 5,
             //speed: 1
             };      
@@ -12,8 +12,8 @@ class ResourceCollector {
         this.player = new Player(playerOptions);
         this.collectibles = new Collectibles();
         // game systems
-        this.screen = new Screen(inWidth, inHeight);
         this.scenes = new SceneManager(this.player, this.collectibles);
+        this.screen = new Screen(inWidth, inHeight, this.scenes);
         
         //execute global update every 20ms
         this.interval = setInterval(() => update(), 1000/framesPerSecond);
@@ -24,19 +24,20 @@ class ResourceCollector {
     }
     
     draw() {
-        this.screen.draw(this.scenes);
+        this.screen.draw();
     }
 }
 
 class Screen {
-    constructor(inWidth, inHeight) {
+    constructor(inWidth, inHeight, inSceneObj) {
         canvas.width  = inWidth;
         canvas.height  = inHeight;
+        this.scenes = inSceneObj;
     }
     
-    draw(obj) {
+    draw() {
         this.clear();
-        obj.draw();
+        this.scenes.draw();
     }
         
     clear() {
@@ -52,8 +53,6 @@ class Player {
         this.speed = options.speed || baseCircleSpeed;
         this.name = options.name;
         this.score = options.score || 0;
-        
-        this.controls = new Input();
     }
     
     draw() {
@@ -71,7 +70,7 @@ class Player {
     input() {
         let speed = this.speed;
         
-        let keys = this.controls.getKeysDown();
+        let keys = playerInput.getKeysDown();
         for (let k in keys) {
             if (keys[k]) {
                 switch(k) {
@@ -103,38 +102,13 @@ class Player {
     }
 }
 
-class Input {
-    constructor() {
-        this.keysHeldDown = {};
-        this.possiblePlayerInput = {
-            37: "LEFT",
-            38: "UP",
-            39: "RIGHT",
-            40: "DOWN"
-        }
-    }
-    
-    getKeysDown() {
-        return this.keysHeldDown;
-    }
-    
-    setEvent(event, state) {
-        let key = event.keyCode in this.possiblePlayerInput ?
-                    this.possiblePlayerInput[event.keyCode] :
-                    0;
-        if (key != 0) {
-            this.keysHeldDown[key] = state;
-        }
-    }
-}
-
 class SceneManager {
     constructor(inPlayerReference, inCollectiblesReference) {
         this.currentScene = "None";
         this.allScenes = {
-            //title: new TitleScene(),
-            Game: new MainGame(inPlayerReference, inCollectiblesReference),
-            //store: )
+            title: new TitleMenu(),
+            game: new MainGame(inPlayerReference, inCollectiblesReference),
+            //store: 
         };
     }
     
@@ -173,11 +147,39 @@ class MainGame {
         c.font = '30px Arial';
         c.fillText(this.player.name, 10, 30);
     }
-    
 }
 
-class Title {
+class TitleMenu {
+    constructor() {
+        this.btn1 = new Button({
+                        x: 300,
+                        y: 200,
+                        width: 250,
+                        label: "Please click!",
+                        fontSize: "40px",
+                        fontType: "Arial",
+                        onClick: function() {
+                            game.scenes.changeTo("game");
+                        }
+                    });
+    }
     
+    update() {
+        this.btn1.update();
+    }
+    
+    draw() {
+        c.beginPath();
+        c.fillStyle = "black";
+        c.strokeStyle = "blue";
+        c.font = "40px Comic Sans MS";
+        c.textAlign = 'center';
+        c.textBaseline = 'middle';
+        c.fillText('Resource Collector',400,100);
+        c.closePath();
+        
+        this.btn1.draw();
+    }
 }
 
 class Collectibles {
