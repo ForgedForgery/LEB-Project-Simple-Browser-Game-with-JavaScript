@@ -58,17 +58,17 @@ class Button {
     }
     
     draw() {
-        c.beginPath();
-        c.lineWidth = "6";
-        c.strokeStyle = this.bgColor;
-        c.fillStyle = this.hovered ? (this.mouseDown ? "#aaaaaa" : "#f9ff79") : this.bgColor;
-        c.rect(this.x, this.y , this.width, this.height);
-        c.stroke();
-        c.fill();
-        c.fillStyle = this.textColor;
-        c.font = this.fontSize + " " + this.fontType;
-        c.textAlign = "center";
-        c.fillText(this.label, this.x+this.width/2, this.y+this.height/2);
-        c.closePath();
+        canvasContext.beginPath();
+        canvasContext.lineWidth = "6";
+        canvasContext.strokeStyle = this.bgColor;
+        canvasContext.fillStyle = this.hovered ? (this.mouseDown ? "#aaaaaa" : "#f9ff79") : this.bgColor;
+        canvasContext.rect(this.x, this.y , this.width, this.height);
+        canvasContext.stroke();
+        canvasContext.fill();
+        canvasContext.fillStyle = this.textColor;
+        canvasContext.font = this.fontSize + " " + this.fontType;
+        canvasContext.textAlign = "center";
+        canvasContext.fillText(this.label, this.x+this.width/2, this.y+this.height/2);
+        canvasContext.closePath();
     } 
 }

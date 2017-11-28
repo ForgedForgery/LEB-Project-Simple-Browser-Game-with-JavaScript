@@ -41,7 +41,7 @@ class Screen {
     }
         
     clear() {
-        c.clearRect(0, 0, canvas.width, canvas.height);
+        canvasContext.clearRect(0, 0, canvas.width, canvas.height);
     }
 }
 
@@ -56,11 +56,11 @@ class Player {
     }
     
     draw() {
-        c.beginPath();
-        c.arc(this.x, this.y, this.radius, 0, Math.PI*2);
-        c.fillStyle = 'black';
-        c.fill();
-        c.closePath();
+        canvasContext.beginPath();
+        canvasContext.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+        canvasContext.fillStyle = 'black';
+        canvasContext.fill();
+        canvasContext.closePath();
     }
     
     checkCollisionWith(obj) {
@@ -144,8 +144,8 @@ class MainGame {
         this.collectibles.draw();
         this.player.draw();
 
-        c.font = '30px Arial';
-        c.fillText(this.player.name, 10, 30);
+        canvasContext.font = '30px Arial';
+        canvasContext.fillText(this.player.name, 10, 30);
     }
 }
 
@@ -169,14 +169,14 @@ class TitleMenu {
     }
     
     draw() {
-        c.beginPath();
-        c.fillStyle = "black";
-        c.strokeStyle = "blue";
-        c.font = "40px Comic Sans MS";
-        c.textAlign = 'center';
-        c.textBaseline = 'middle';
-        c.fillText('Resource Collector',400,100);
-        c.closePath();
+        canvasContext.beginPath();
+        canvasContext.fillStyle = "black";
+        canvasContext.strokeStyle = "blue";
+        canvasContext.font = "40px Comic Sans MS";
+        canvasContext.textAlign = 'center';
+        canvasContext.textBaseline = 'middle';
+        canvasContext.fillText('Resource Collector',400,100);
+        canvasContext.closePath();
         
         this.btn1.draw();
     }
@@ -241,21 +241,21 @@ class Triangle {
     }
     
     draw(){
-        c.beginPath();
-        c.moveTo(this.x - this.r/2, this.y + this.r/2);
-        c.lineTo(this.x + this.r/2, this.y + this.r/2);
-        c.lineTo(this.x, this.y - this.r/2);
+        canvasContext.beginPath();
+        canvasContext.moveTo(this.x - this.r/2, this.y + this.r/2);
+        canvasContext.lineTo(this.x + this.r/2, this.y + this.r/2);
+        canvasContext.lineTo(this.x, this.y - this.r/2);
 
-        c.fillStyle = 'red';
-        c.fill();
-        c.closePath();
+        canvasContext.fillStyle = 'red';
+        canvasContext.fill();
+        canvasContext.closePath();
         
         //draw middle point
-//        c.beginPath();
-//        c.rect(obj.x, obj.y, 3, 3)
-//        c.fillStyle = 'black';
-//        c.fill();
-//        c.closePath();
+//        canvasContext.beginPath();
+//        canvasContext.rect(obj.x, obj.y, 3, 3)
+//        canvasContext.fillStyle = 'black';
+//        canvasContext.fill();
+//        canvasContext.closePath();
     }
     
     isCollidedWith(obj) {
