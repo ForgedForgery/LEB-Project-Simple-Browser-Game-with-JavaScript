@@ -10,12 +10,12 @@ class Button {
         this.backgroundColor = config.backgroundColor || "#ff0000";
         
         this.label = new TextField({
-                x: this.x + this.width/2,
-                y: this.y + this.height/2,
+                x: this.x,
+                y: this.y,
                 name: config.label || false,
                 size: config.fontSize || false,
                 type: config.fontType || false,
-                color: config.textColor || false
+                color: config.fontColor || false
             });
         
         this.hovered = false;
@@ -34,11 +34,15 @@ class Button {
     isHovered() {
         let mouseX = playerInput.mouseX;
         let mouseY = playerInput.mouseY;
+        let topleftCorner = {
+            x: this.x - this.width/2,
+            y: this.y - this.height/2
+        }
         
-        return mouseX > this.x &&
-            mouseX < (this.x + this.width) &&
-            mouseY > this.y &&
-            mouseY < (this.y + this.height);
+        return mouseX > topleftCorner.x &&
+            mouseX < (topleftCorner.x + this.width) &&
+            mouseY > topleftCorner.y &&
+            mouseY < (topleftCorner.y + this.height);
     } 
     
     draw() {
@@ -46,7 +50,7 @@ class Button {
         canvasContext.lineWidth = "5";
         canvasContext.strokeStyle = this.backgroundColor;
         canvasContext.fillStyle = this.hovered ? (playerInput.mouseHold ? "#aaaaaa" : "#f9ff79") : this.backgroundColor;
-        canvasContext.rect(this.x, this.y , this.width, this.height);
+        canvasContext.rect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
         canvasContext.stroke();
         canvasContext.fill();
         
@@ -62,9 +66,9 @@ class TextField {
 
         this.name = config.name || "Button";
         
-        this.size = config.size || "20px";
+        this.size = config.size || "12px";
         this.type = config.type || "Comic Sans MS";
-        this.color = config.color || "#00ff00";
+        this.color = config.color || "black";
     }
     
     draw() {
@@ -72,5 +76,8 @@ class TextField {
         canvasContext.font = this.size + " " + this.type;
         canvasContext.textAlign = "center";     
         canvasContext.fillText(this.name, this.x, this.y);
+        canvasContext.textAlign = "left";
+        canvasContext.fillStyle = 'black';
+        
     }
 }

@@ -23,7 +23,7 @@ class SceneManager {
         }
     }
     
-    setTo(inScenes) {
+    start(inScenes) {
         if(inScenes.isArray)
             this.currentScenes = inScenes;
         else
@@ -35,39 +35,90 @@ class MainGame {
     constructor(inPlayerReference, inCollectiblesReference) {
         this.player = inPlayerReference;
         this.collectibles = inCollectiblesReference;
+        this.gameUI = new GameUI(); 
     }
     
     update() {
         this.player.update();
         this.player.checkCollisionWith(this.collectibles);
+        this.gameUI.update();
     }
     
     draw() {
         this.collectibles.draw();
         this.player.draw();
+        this.gameUI.draw();
+    }
+}
 
-        canvasContext.font = '30px Arial';
-        canvasContext.fillText(this.player.name, 10, 30);
+class GameUI {
+    constructor() {
+        this.x = 0;
+        this.y = height;
+        this.width = width;
+        this.height = heightUI;
+        
+        this.menuButton = new Button({
+            
+        });
+        
+        this.saveButton  = new Button({
+            x: this.x + 60,
+            y: this.y + 25,
+            width: 100,
+            label: "Save",
+            fontSize: "20px",
+            fontColor: "pink",
+            onClick: () => doSave(),
+            
+        });
+        
+        this.name = new TextField({
+            x: this.x + 200,
+            y: this.y + 25,
+            name: playerData.name,
+            color: 'red',
+            type: 'Arial'
+        });
+    }
+    
+    update() {
+        this.saveButton.update();
+    }
+    
+    draw() {
+        this.drawBackground();
+        this.name.draw();
+        this.saveButton.draw();
+    }
+    
+    drawBackground() {
+        canvasContext.beginPath();
+        canvasContext.rect(this.x, this.y, this.width, this.height);
+        canvasContext.fillStyle = 'lightgrey';
+        canvasContext.fill();
+        canvasContext.closePath();
     }
 }
 
 class TitleMenu {
     constructor() {
-        this.btn1 = new Button({
-                        x: 300,
-                        y: 200,
+        this.startButton = new Button({
+                        x: 425,
+                        y: 210,
                         width: 250,
-                        label: "Please click!",
+                        label: "Start Game",
                         fontSize: "40px",
                         fontType: "Arial",
                         onClick: function() {
-                            game.scenes.setTo("game");
+                            game.player.setTo(playerData);
+                            game.scenes.start("game");
                         }
                     });
     }
     
     update() {
-        this.btn1.update();
+        this.startButton.update();
     }
     
     draw() {
@@ -80,7 +131,7 @@ class TitleMenu {
         canvasContext.fillText('Resource Collector',400,100);
         canvasContext.closePath();
         
-        this.btn1.draw();
+        this.startButton.draw();
     }
 }
 

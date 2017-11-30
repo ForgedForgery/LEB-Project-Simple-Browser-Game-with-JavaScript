@@ -1,9 +1,9 @@
 class ResourceCollector {
-    constructor(inWidth, inHeight) {     
+    constructor() {     
         let playerOptions =
             {
-            name: (typeof loadedData === "undefined" ? false : loadedData.name) || 'Guest',
-            score: (typeof loadedData === "undefined" ? false : loadedData.score) || 0,
+            name: playerData.name,
+            score: playerData.score
             //radius: 5,
             //speed: 1
             };      
@@ -13,7 +13,7 @@ class ResourceCollector {
         this.collectibles = new Collectibles();
         // game systems
         this.scenes = new SceneManager(this.player, this.collectibles);
-        this.screen = new Screen(inWidth, inHeight, this.scenes);
+        this.screen = new Screen(this.scenes);
         
         //execute global update every 20ms
         this.interval = setInterval(() => update(), 1000/framesPerSecond);
@@ -30,9 +30,9 @@ class ResourceCollector {
 }
 
 class Screen {
-    constructor(inWidth, inHeight, inSceneObj) {
-        canvas.width  = inWidth;
-        canvas.height  = inHeight;
+    constructor(inSceneObj) {
+        canvas.width = width;
+        canvas.height = height + heightUI;
         this.scenes = inSceneObj;
     }
     
@@ -49,8 +49,8 @@ class Screen {
 class Player {
     constructor(options) {
         this.radius = options.radius || baseCircleRad;
-        this.x = options.x || canvas.width/2;
-        this.y = options.y || canvas.height/2;
+        this.x = options.x || width/2;
+        this.y = options.y || height/2;
         this.speed = options.speed || baseCircleSpeed;
         this.name = options.name;
         this.score = options.score || 0;
@@ -70,6 +70,11 @@ class Player {
         
     update() {
         this.checkInput();
+    }
+    
+    setTo(options) {
+        this.name = options.name;
+        this.score = options.score;
     }
     
     checkInput() {
