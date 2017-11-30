@@ -20,6 +20,7 @@ class ResourceCollector {
     }
     
     update() {
+        playerInput.update();
         this.scenes.update();
     }
     
@@ -67,7 +68,11 @@ class Player {
         obj.checkCollisionWith(this);
     }
         
-    input() {
+    update() {
+        this.checkInput();
+    }
+    
+    checkInput() {
         let speed = this.speed;
         
         let keys = playerInput.getKeysDown();
@@ -99,86 +104,6 @@ class Player {
     
     moveY(d) {
         this.y += d;
-    }
-}
-
-class SceneManager {
-    constructor(inPlayerReference, inCollectiblesReference) {
-        this.currentScene = "None";
-        this.allScenes = {
-            title: new TitleMenu(),
-            game: new MainGame(inPlayerReference, inCollectiblesReference),
-            //store: 
-        };
-    }
-    
-    update() {
-        if (this.currentScene != "None") {
-            this.allScenes[this.currentScene].update();
-        }
-    } 
-    
-    draw() {
-        if (this.currentScene != "None") {
-            this.allScenes[this.currentScene].draw();
-        }
-    }
-    
-    changeTo(inScene) {
-        this.currentScene = inScene;
-    }
-}
-
-class MainGame {
-    constructor(inPlayerReference, inCollectiblesReference) {
-        this.player = inPlayerReference;
-        this.collectibles = inCollectiblesReference;
-    }
-    
-    update() {
-        this.player.input();
-        this.player.checkCollisionWith(this.collectibles);
-    }
-    
-    draw() {
-        this.collectibles.draw();
-        this.player.draw();
-
-        canvasContext.font = '30px Arial';
-        canvasContext.fillText(this.player.name, 10, 30);
-    }
-}
-
-class TitleMenu {
-    constructor() {
-        this.btn1 = new Button({
-                        x: 300,
-                        y: 200,
-                        width: 250,
-                        label: "Please click!",
-                        fontSize: "40px",
-                        fontType: "Arial",
-                        onClick: function() {
-                            game.scenes.changeTo("game");
-                        }
-                    });
-    }
-    
-    update() {
-        this.btn1.update();
-    }
-    
-    draw() {
-        canvasContext.beginPath();
-        canvasContext.fillStyle = "black";
-        canvasContext.strokeStyle = "blue";
-        canvasContext.font = "40px Comic Sans MS";
-        canvasContext.textAlign = 'center';
-        canvasContext.textBaseline = 'middle';
-        canvasContext.fillText('Resource Collector',400,100);
-        canvasContext.closePath();
-        
-        this.btn1.draw();
     }
 }
 

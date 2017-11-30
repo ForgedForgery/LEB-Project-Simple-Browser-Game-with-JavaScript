@@ -7,9 +7,29 @@ class Input {
             39: "RIGHT",
             40: "DOWN"
         }
+        
         this.mouseX = 0;
         this.mouseY = 0;
-        this.leftClick = false;
+
+        this.upClick = false;
+        this.downClick = false;
+        this.mouseHold = false;
+        this.prevMouseHold = false;
+    }
+    
+    update() {        
+        if(this.mouseHold && !this.prevMouseHold) {
+            this.downClick = true;
+            this.prevMouseHold = true;
+        } else {
+            this.downClick = false;
+        }
+        if(!this.mouseHold && this.prevMouseHold) {
+            this.upClick = true;
+            this.prevMouseHold = false;
+        } else {
+            this.upClick = false;
+        }
     }
     
     getKeysDown() {
@@ -26,7 +46,7 @@ class Input {
     }
     
     updateMouse(e, state) {
-        this.leftClick = state;
+        this.mouseHold = state;
     }
     
     updateMouseMove(e) {

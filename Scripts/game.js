@@ -2,7 +2,7 @@
 function init() {
     playerInput = new Input();
     game = new ResourceCollector(width, height);
-    game.scenes.changeTo("title");
+    game.scenes.setTo(["title"]);
 }
 
 // animations go in here, I think
