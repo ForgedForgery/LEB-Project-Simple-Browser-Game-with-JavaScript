@@ -34,12 +34,18 @@ function loadPHP(url, cFunction) {
 
 function loadData(xhttp) {
     let loadedData = JSON.parse(xhttp.responseText);
-    playerData = loadedData;
+    playerData = {
+        name: loadedData.name,
+        score: loadedData.score
+    };
     game.player.name = loadData.name;
     
     loginForm.delete();
+    
     let status = document.getElementById("status");
-    status.innerText = "Logged in as " + playerData.name + "...";
+    if(loadedData.status == "New account created.")
+        status.innerText += "New account created! ";
+    status.innerText += "Logged in as " + playerData.name + "...";
     setTimeout(function(){status.innerText = "";}, 3000);
 }
 
