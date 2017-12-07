@@ -35,6 +35,7 @@ function loadPHP(url, cFunction) {
 function loadData(xhttp) {
     let loadedData = JSON.parse(xhttp.responseText);
     playerData = loadedData;
+    game.player.name = loadData.name;
     
     loginForm.delete();
     let status = document.getElementById("status");

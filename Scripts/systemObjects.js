@@ -1,3 +1,5 @@
+// split input into mouse and keyboard
+
 class Input {
     constructor() {
         this.keysHeldDown = {};

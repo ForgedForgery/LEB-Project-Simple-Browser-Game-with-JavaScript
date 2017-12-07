@@ -35,7 +35,7 @@ class MainGame {
     constructor(inPlayerReference, inCollectiblesReference) {
         this.player = inPlayerReference;
         this.collectibles = inCollectiblesReference;
-        this.gameUI = new GameUI(); 
+        this.gameUI = new GameUI();
     }
     
     update() {
@@ -64,6 +64,7 @@ class TitleMenu {
                             game.player.setTo(playerData);
                             game.scenes.start("game");
                             loginForm.delete();
+                            game.scenes.allScenes["game"].gameUI = new GameUI(); //a new player name could be loaded after gameUI was already created
                         }
                     });
     }
@@ -73,6 +74,11 @@ class TitleMenu {
     }
     
     draw() {
+        this.drawTitleText();
+        this.startButton.draw();
+    }
+    
+    drawTitleText() {
         canvasContext.beginPath();
         canvasContext.fillStyle = "black";
         canvasContext.strokeStyle = "blue";
@@ -81,8 +87,6 @@ class TitleMenu {
         canvasContext.textBaseline = 'middle';
         canvasContext.fillText('Resource Collector',400,100);
         canvasContext.closePath();
-        
-        this.startButton.draw();
     }
 }
 

@@ -17,10 +17,9 @@ class GameUI {
             fontSize: "20px",
             fontColor: "pink",
             onClick: () => doSave(),
-            
         });
         
-        this.name = new TextField({
+        this.playerNameField = new TextField({
             x: this.x + 200,
             y: this.y + 25,
             name: playerData.name,
@@ -35,7 +34,7 @@ class GameUI {
     
     draw() {
         this.drawBackground();
-        this.name.draw();
+        this.playerNameField.draw();
         this.saveButton.draw();
     }
     
@@ -45,6 +44,10 @@ class GameUI {
         canvasContext.fillStyle = 'lightgrey';
         canvasContext.fill();
         canvasContext.closePath();
+    }
+    
+    setNameAtStart() {
+            this.playerNameField.name = playerData.name;
     }
 }
 
