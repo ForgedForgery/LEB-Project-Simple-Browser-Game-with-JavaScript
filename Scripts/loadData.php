@@ -18,7 +18,8 @@ $array = mysqli_fetch_assoc($result);
 if ($array != NULL) {
     echo '{
         "name": "'.$array['Benutzername'].'",
-        "score": '.$array['Score'].'
+        "score": '.$array['Score'].',
+        "status": "Account loaded."
     }';
 } else {
     // create new account and put it in database
@@ -26,7 +27,8 @@ if ($array != NULL) {
     $sqlerstellen = mysqli_query($conn, $erstellen);
     echo '{
         "name": "'.$loginName.'",
-        "score": 0
+        "score": 0,
+        "status": "New account created."
     }';
 
 }
