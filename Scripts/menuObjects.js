@@ -26,6 +26,13 @@ class GameUI {
             color: 'red',
             type: 'Arial'
         });
+        this.playerScoreField = new TextField({
+            x: this.x + 320,
+            y: this.y + 25,
+            name: "Score " + playerData.score,
+            color: 'red',
+            type: 'Arial'
+        });
     }
     
     update() {
@@ -36,6 +43,7 @@ class GameUI {
         this.drawBackground();
         this.playerNameField.draw();
         this.saveButton.draw();
+        this.playerScoreField();
     }
     
     drawBackground() {
