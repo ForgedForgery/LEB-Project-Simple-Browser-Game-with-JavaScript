@@ -1,11 +1,17 @@
 const baseCircleSpeed = 2;
 const baseCircleRad = 20;
 const width = 800;
-const height = 600;
+const heightUI = 50;
+const height = 550;
 const framesPerSecond = 60;
 
 var game;
 var playerInput;
+var loginForm;
+var playerData = {
+    name: "Guest",
+    score: 0
+};
 
 var canvas = document.querySelector('canvas');
 var canvasContext = canvas.getContext('2d');

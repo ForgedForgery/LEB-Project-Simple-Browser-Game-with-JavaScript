@@ -1,8 +1,9 @@
 // game starts with this
 function init() {
+    loginForm = new LoginForm();
     playerInput = new Input();
-    game = new ResourceCollector(width, height);
-    game.scenes.changeTo("title");
+    game = new ResourceCollector();
+    game.scenes.start(["title"]);
 }
 
 // animations go in here, I think

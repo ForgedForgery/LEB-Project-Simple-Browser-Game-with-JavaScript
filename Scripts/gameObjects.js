@@ -1,9 +1,9 @@
 class ResourceCollector {
-    constructor(inWidth, inHeight) {     
+    constructor() {     
         let playerOptions =
             {
-            name: (typeof loadedData === "undefined" ? false : loadedData.name) || 'Guest',
-            score: (typeof loadedData === "undefined" ? false : loadedData.score) || 0,
+            name: playerData.name,
+            score: playerData.score
             //radius: 5,
             //speed: 1
             };      
@@ -13,13 +13,14 @@ class ResourceCollector {
         this.collectibles = new Collectibles();
         // game systems
         this.scenes = new SceneManager(this.player, this.collectibles);
-        this.screen = new Screen(inWidth, inHeight, this.scenes);
+        this.screen = new Screen(this.scenes);
         
         //execute global update every 20ms
         this.interval = setInterval(() => update(), 1000/framesPerSecond);
     }
     
     update() {
+        playerInput.update();
         this.scenes.update();
     }
     
@@ -29,9 +30,9 @@ class ResourceCollector {
 }
 
 class Screen {
-    constructor(inWidth, inHeight, inSceneObj) {
-        canvas.width  = inWidth;
-        canvas.height  = inHeight;
+    constructor(inSceneObj) {
+        canvas.width = width;
+        canvas.height = height + heightUI;
         this.scenes = inSceneObj;
     }
     
@@ -48,8 +49,8 @@ class Screen {
 class Player {
     constructor(options) {
         this.radius = options.radius || baseCircleRad;
-        this.x = options.x || canvas.width/2;
-        this.y = options.y || canvas.height/2;
+        this.x = options.x || width/2;
+        this.y = options.y || height/2;
         this.speed = options.speed || baseCircleSpeed;
         this.name = options.name;
         this.score = options.score || 0;
@@ -67,7 +68,16 @@ class Player {
         obj.checkCollisionWith(this);
     }
         
-    input() {
+    update() {
+        this.checkInput();
+    }
+    
+    setTo(options) {
+        this.name = options.name;
+        this.score = options.score;
+    }
+    
+    checkInput() {
         let speed = this.speed;
         
         let keys = playerInput.getKeysDown();
@@ -99,86 +109,6 @@ class Player {
     
     moveY(d) {
         this.y += d;
-    }
-}
-
-class SceneManager {
-    constructor(inPlayerReference, inCollectiblesReference) {
-        this.currentScene = "None";
-        this.allScenes = {
-            title: new TitleMenu(),
-            game: new MainGame(inPlayerReference, inCollectiblesReference),
-            //store: 
-        };
-    }
-    
-    update() {
-        if (this.currentScene != "None") {
-            this.allScenes[this.currentScene].update();
-        }
-    } 
-    
-    draw() {
-        if (this.currentScene != "None") {
-            this.allScenes[this.currentScene].draw();
-        }
-    }
-    
-    changeTo(inScene) {
-        this.currentScene = inScene;
-    }
-}
-
-class MainGame {
-    constructor(inPlayerReference, inCollectiblesReference) {
-        this.player = inPlayerReference;
-        this.collectibles = inCollectiblesReference;
-    }
-    
-    update() {
-        this.player.input();
-        this.player.checkCollisionWith(this.collectibles);
-    }
-    
-    draw() {
-        this.collectibles.draw();
-        this.player.draw();
-
-        canvasContext.font = '30px Arial';
-        canvasContext.fillText(this.player.name, 10, 30);
-    }
-}
-
-class TitleMenu {
-    constructor() {
-        this.btn1 = new Button({
-                        x: 300,
-                        y: 200,
-                        width: 250,
-                        label: "Please click!",
-                        fontSize: "40px",
-                        fontType: "Arial",
-                        onClick: function() {
-                            game.scenes.changeTo("game");
-                        }
-                    });
-    }
-    
-    update() {
-        this.btn1.update();
-    }
-    
-    draw() {
-        canvasContext.beginPath();
-        canvasContext.fillStyle = "black";
-        canvasContext.strokeStyle = "blue";
-        canvasContext.font = "40px Comic Sans MS";
-        canvasContext.textAlign = 'center';
-        canvasContext.textBaseline = 'middle';
-        canvasContext.fillText('Resource Collector',400,100);
-        canvasContext.closePath();
-        
-        this.btn1.draw();
     }
 }
 
