@@ -1,13 +1,13 @@
 class LoginForm {
     constructor() {
-        createLoginForm();
+        this.create();
     }
     
-    createLoginForm() {
+    create() {
         document.getElementById('login').innerHTML = '<input id="nameInput" type="text" name="user" placeholder="Benutzername"><input id="passInput" type="password" name="pass" placeholder="Passwort"><input type="submit" value="Log-In" onclick="doLogin()">';
     }
     
-    deleteLoginFom() {
+    delete() {
         document.getElementById("login").innerHTML = "";
     }
 }
@@ -36,7 +36,7 @@ function loadData(xhttp) {
     let loadedData = JSON.parse(xhttp.responseText);
     playerData = loadedData;
     
-    loginForm.deleteLoginForm();
+    loginForm.delete();
     let status = document.getElementById("status");
     status.innerText = "Logged in as " + playerData.name + "...";
     setTimeout(function(){status.innerText = "";}, 3000);

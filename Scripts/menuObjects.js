@@ -1,3 +1,53 @@
+class GameUI {
+    constructor() {
+        this.x = 0;
+        this.y = height;
+        this.width = width;
+        this.height = heightUI;
+        
+        this.menuButton = new Button({
+            
+        });
+        
+        this.saveButton  = new Button({
+            x: this.x + 60,
+            y: this.y + 25,
+            width: 100,
+            label: "Save",
+            fontSize: "20px",
+            fontColor: "pink",
+            onClick: () => doSave(),
+            
+        });
+        
+        this.name = new TextField({
+            x: this.x + 200,
+            y: this.y + 25,
+            name: playerData.name,
+            color: 'red',
+            type: 'Arial'
+        });
+    }
+    
+    update() {
+        this.saveButton.update();
+    }
+    
+    draw() {
+        this.drawBackground();
+        this.name.draw();
+        this.saveButton.draw();
+    }
+    
+    drawBackground() {
+        canvasContext.beginPath();
+        canvasContext.rect(this.x, this.y, this.width, this.height);
+        canvasContext.fillStyle = 'lightgrey';
+        canvasContext.fill();
+        canvasContext.closePath();
+    }
+}
+
 class Button {
     constructor(config) {
         this.x = config.x || 0;
