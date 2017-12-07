@@ -46,5 +46,5 @@ function loadData(xhttp) {
 function saveData(xhttp) {
     let status = document.getElementById("status");
     status.innerText = xhttp.responseText;
-  //  setTimeout(function(){status.innerText = "";}, 3000);
+    setTimeout(function(){status.innerText = "";}, 3000);
 }
