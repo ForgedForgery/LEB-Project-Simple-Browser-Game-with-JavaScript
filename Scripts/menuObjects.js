@@ -45,10 +45,6 @@ class GameUI {
         canvasContext.fill();
         canvasContext.closePath();
     }
-    
-    setNameAtStart() {
-            this.playerNameField.name = playerData.name;
-    }
 }
 
 class Button {
