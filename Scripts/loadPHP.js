@@ -1,4 +1,16 @@
-document.getElementById('login').innerHTML = '<input id="nameInput" type="text" name="user" placeholder="Benutzername"><input id="passInput" type="password" name="pass" placeholder="Passwort"><input type="submit" value="Log-In" onclick="doLogin()">';
+class LoginForm {
+    constructor() {
+        createLoginForm();
+    }
+    
+    createLoginForm() {
+        document.getElementById('login').innerHTML = '<input id="nameInput" type="text" name="user" placeholder="Benutzername"><input id="passInput" type="password" name="pass" placeholder="Passwort"><input type="submit" value="Log-In" onclick="doLogin()">';
+    }
+    
+    deleteLoginFom() {
+        document.getElementById("login").innerHTML = "";
+    }
+}
 
 function doLogin() {
     loadPHP("Scripts/loadData.php?user=" + document.getElementById("nameInput").value + "&pass=" + document.getElementById("passInput").value, loadData);
@@ -23,6 +35,8 @@ function loadPHP(url, cFunction) {
 function loadData(xhttp) {
     let loadedData = JSON.parse(xhttp.responseText);
     playerData = loadedData;
+    
+    loginForm.deleteLoginForm();
     let status = document.getElementById("status");
     status.innerText = "Logged in as " + playerData.name + "...";
     setTimeout(function(){status.innerText = "";}, 3000);
@@ -31,5 +45,5 @@ function loadData(xhttp) {
 function saveData(xhttp) {
     let status = document.getElementById("status");
     status.innerText = xhttp.responseText;
-    setTimeout(function(){status.innerText = "";}, 3000);
+  //  setTimeout(function(){status.innerText = "";}, 3000);
 }

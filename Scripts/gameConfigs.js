@@ -7,6 +7,7 @@ const framesPerSecond = 60;
 
 var game;
 var playerInput;
+var loginForm;
 var playerData = {
     name: "Guest",
     score: 0
