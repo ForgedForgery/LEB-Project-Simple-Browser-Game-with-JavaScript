@@ -43,7 +43,7 @@ class GameUI {
         this.drawBackground();
         this.playerNameField.draw();
         this.saveButton.draw();
-        this.playerScoreField();
+        this.playerScoreField.draw();
     }
     
     drawBackground() {
