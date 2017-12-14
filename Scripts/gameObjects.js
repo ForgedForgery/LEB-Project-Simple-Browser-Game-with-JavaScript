@@ -16,7 +16,7 @@ class ResourceCollector {
         this.screen = new Screen(this.scenes);
         
         //execute global update every 20ms
-        this.interval = setInterval(() => update(), 1000/framesPerSecond);
+        this.interval = setInterval(() => update(), 1000/framesPerSecond); 
     }
     
     update() {
@@ -59,7 +59,7 @@ class Player {
     draw() {
         canvasContext.beginPath();
         canvasContext.arc(this.x, this.y, this.radius, 0, Math.PI*2);
-        canvasContext.fillStyle = 'black';
+        canvasContext.fillStyle = playerColor;
         canvasContext.fill();
         canvasContext.closePath();
     }
@@ -78,7 +78,7 @@ class Player {
     }
     
     checkInput() {
-        let speed = this.speed;
+        let speed = this.speed + 5;
         
         let keys = playerInput.getKeysDown();
         for (let k in keys) {
@@ -96,6 +96,9 @@ class Player {
                     case "DOWN":
                         this.moveY(speed);
                         break;
+                    case "E":
+                        this.increaseScoreByOne();
+                        break;
                     default:
                         break;
                 }
@@ -110,31 +113,75 @@ class Player {
     moveY(d) {
         this.y += d;
     }
+    
+    increaseScoreByOne() {
+        this.score++;
+    }
 }
 
 class Collectibles {
     constructor() {
-        this.triangleSwarm = new TriangleSwarm();
+        this.counter = 0;
+        this.updateCounter = setInterval((() => this.counter++), 1000);
+        this.spawnTime = 0;
+        this.amountAtSpawn = 0;
+        
+        this.spawner = new Spawner();
+        
+        this.counterTextFiel = new TextField({
+            
+        });
     }
     
-    draw() {
-        this.triangleSwarm.draw();
-    }
+    update() {
+        if(this.spawner.list.length != this.amountAtSpawn) {
+            this.amountAtSpawn = this.spawner.list.length;
+            this.spawnTime = Math.pow((this.amountAtSpawn), 2) / 12;
+        }
+        if(this.counter >= this.spawnTime) {
+            this.spawner.spawn();
+            this.counter = 0;
+            this.amountAtSpawn = this.spawner.list.length;
+            this.spawnTime = Math.pow((this.amountAtSpawn), 2) / 12;
+        }
+    }   
     
     checkCollisionWith(obj) {
-        this.triangleSwarm.checkCollisionWith(obj);
+        this.spawner.checkCollisionWith(obj);
+    }
+    
+    
+    draw() {
+        this.spawner.draw();
+        
     }
 }
 
-class TriangleSwarm {
+class Spawner {
     constructor() {
-        this.list = this.spawn5ForTest();
+        this.list = [];
     }
     
     draw() {
         for(let i in this.list) {
             this.list[i].draw();
         }
+    }
+    
+    spawn() {
+        let rx, ry, rr;
+        rx = Math.random() * width;
+        ry = Math.random() * height;
+        rr = this.randomizeRadius();
+        this.list.push(new Triangle({
+            x: rx,
+            y: ry,
+            r: rr
+        }));
+    }
+    
+    randomizeRadius() {
+        return 7 + Math.random() * 25;
     }
         
     spawn5ForTest(){
@@ -157,6 +204,7 @@ class TriangleSwarm {
         for (let i in this.list) {
             if (this.list[i].isCollidedWith(obj)) {
                 this.list.splice(i, 1);
+                game.player.score++;
             }
         }
     }
@@ -167,16 +215,16 @@ class Triangle {
         this.x = options.x;
         this.y = options.y;
         this.r = options.r;
-        this.hitbox = 0;
+        this.hitbox = this.r;
     }
     
     draw(){
         canvasContext.beginPath();
-        canvasContext.moveTo(this.x - this.r/2, this.y + this.r/2);
-        canvasContext.lineTo(this.x + this.r/2, this.y + this.r/2);
-        canvasContext.lineTo(this.x, this.y - this.r/2);
+        canvasContext.moveTo(this.x - this.r, this.y + this.r);
+        canvasContext.lineTo(this.x + this.r, this.y + this.r);
+        canvasContext.lineTo(this.x, this.y - this.r);
 
-        canvasContext.fillStyle = 'red';
+        canvasContext.fillStyle = collectibleColor;
         canvasContext.fill();
         canvasContext.closePath();
         
