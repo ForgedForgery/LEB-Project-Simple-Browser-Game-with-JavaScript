@@ -96,6 +96,9 @@ class Player {
                     case "DOWN":
                         this.moveY(speed);
                         break;
+                    case "E":
+                        this.increaseScoreByOne();
+                        break;
                     default:
                         break;
                 }
@@ -109,6 +112,10 @@ class Player {
     
     moveY(d) {
         this.y += d;
+    }
+    
+    increaseScoreByOne() {
+        this.score++;
     }
 }
 

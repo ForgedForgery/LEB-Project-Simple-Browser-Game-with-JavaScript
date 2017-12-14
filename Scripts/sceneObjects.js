@@ -35,7 +35,7 @@ class MainGame {
     constructor(inPlayerReference, inCollectiblesReference) {
         this.player = inPlayerReference;
         this.collectibles = inCollectiblesReference;
-        this.gameUI = new GameUI();
+        this.gameUI = new GameUI(this.player);
     }
     
     update() {
@@ -64,7 +64,6 @@ class TitleMenu {
                             game.player.setTo(playerData);
                             game.scenes.start("game");
                             loginForm.delete();
-                            game.scenes.allScenes["game"].gameUI = new GameUI(); //a new player name could be loaded after gameUI was already created
                         }
                     });
     }

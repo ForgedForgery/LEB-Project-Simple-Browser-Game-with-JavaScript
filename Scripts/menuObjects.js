@@ -1,9 +1,11 @@
 class GameUI {
-    constructor() {
+    constructor(inPlayerReference) {
         this.x = 0;
         this.y = height;
         this.width = width;
         this.height = heightUI;
+        
+        this.player = inPlayerReference;
         
         this.menuButton = new Button({
             
@@ -22,14 +24,23 @@ class GameUI {
         this.playerNameField = new TextField({
             x: this.x + 200,
             y: this.y + 25,
-            name: playerData.name,
+            text: this.player.name,
             color: 'red',
             type: 'Arial'
         });
-        this.playerScoreField = new TextField({
-            x: this.x + 320,
+                
+        this.playerScorePreField = new TextField({
+            x: this.x + 300,
             y: this.y + 25,
-            name: "Score " + playerData.score,
+            text: "Score: ",
+            color: 'red',
+            type: 'Arial'
+        });
+        
+        this.playerScoreField = new TextField({
+            x: this.x + 400,
+            y: this.y + 25,
+            text: this.player.score,
             color: 'red',
             type: 'Arial'
         });
@@ -37,6 +48,8 @@ class GameUI {
     
     update() {
         this.saveButton.update();
+        this.playerNameField.setTextTo(this.player.name);
+        this.playerScoreField.setTextTo(this.player.score);
     }
     
     draw() {
@@ -44,6 +57,7 @@ class GameUI {
         this.playerNameField.draw();
         this.saveButton.draw();
         this.playerScoreField.draw();
+        this.playerScorePreField.draw();
     }
     
     drawBackground() {
@@ -69,7 +83,7 @@ class Button {
         this.label = new TextField({
                 x: this.x,
                 y: this.y,
-                name: config.label || false,
+                text: config.label || false,
                 size: config.fontSize || false,
                 type: config.fontType || false,
                 color: config.fontColor || false
@@ -121,7 +135,7 @@ class TextField {
         this.x = config.x;
         this.y = config.y;
 
-        this.name = config.name || "Button";
+        this.text = config.text || "No Text";
         
         this.size = config.size || "12px";
         this.type = config.type || "Comic Sans MS";
@@ -132,9 +146,13 @@ class TextField {
         canvasContext.fillStyle = this.color;
         canvasContext.font = this.size + " " + this.type;
         canvasContext.textAlign = "center";     
-        canvasContext.fillText(this.name, this.x, this.y);
+        canvasContext.fillText(this.text, this.x, this.y);
         canvasContext.textAlign = "left";
         canvasContext.fillStyle = 'black';
         
+    }
+    
+    setTextTo(inText) {
+        this.text = inText;
     }
 }
