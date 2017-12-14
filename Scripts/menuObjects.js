@@ -136,6 +136,7 @@ class TextField {
         this.y = config.y;
 
         this.text = config.text || "No Text";
+        this.align = config.align || "center";
         
         this.size = config.size || "12px";
         this.type = config.type || "Comic Sans MS";
@@ -145,11 +146,10 @@ class TextField {
     draw() {
         canvasContext.fillStyle = this.color;
         canvasContext.font = this.size + " " + this.type;
-        canvasContext.textAlign = "center";     
+        canvasContext.textAlign = this.align;     
         canvasContext.fillText(this.text, this.x, this.y);
         canvasContext.textAlign = "left";
         canvasContext.fillStyle = 'black';
-        
     }
     
     setTextTo(inText) {

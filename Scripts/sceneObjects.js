@@ -2,7 +2,7 @@ class SceneManager {
     constructor(inPlayerReference, inCollectiblesReference) {
         this.currentScenes = [];
         this.allScenes = {
-            title: new TitleMenu(),
+            title: new TitleMenu(inPlayerReference),
             game: new MainGame(inPlayerReference, inCollectiblesReference),
             store: new StoreMenu()
         };
@@ -39,6 +39,7 @@ class MainGame {
     }
     
     update() {
+        this.collectibles.update();
         this.player.update();
         this.player.checkCollisionWith(this.collectibles);
         this.gameUI.update();
@@ -52,7 +53,9 @@ class MainGame {
 }
 
 class TitleMenu {
-    constructor() {
+    constructor(inPlayerReference) {
+        this.player = inPlayerReference;
+        
         this.startButton = new Button({
                         x: 425,
                         y: 210,

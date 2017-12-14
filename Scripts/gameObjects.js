@@ -16,7 +16,7 @@ class ResourceCollector {
         this.screen = new Screen(this.scenes);
         
         //execute global update every 20ms
-        this.interval = setInterval(() => update(), 1000/framesPerSecond);
+        this.interval = setInterval(() => update(), 1000/framesPerSecond); 
     }
     
     update() {
@@ -78,7 +78,7 @@ class Player {
     }
     
     checkInput() {
-        let speed = this.speed;
+        let speed = this.speed + 5;
         
         let keys = playerInput.getKeysDown();
         for (let k in keys) {
@@ -121,27 +121,62 @@ class Player {
 
 class Collectibles {
     constructor() {
-        this.triangleSwarm = new TriangleSwarm();
+        this.counter = 0;
+        this.updateCounter = setInterval((() => this.counter++), 1000);
+        this.spawnTime = 0;
+        this.amountAtSpawn = 0;
+        
+        this.spawner = new Spawner();
+        
+        this.counterTextFiel = new TextField({
+            
+        });
     }
     
-    draw() {
-        this.triangleSwarm.draw();
-    }
+    update() {
+        if(this.spawner.list.length != this.amountAtSpawn) {
+           this.amountAtSpawn = this.spawner.list.length
+        }
+        if(this.counter >= this.spawnTime) {
+            this.spawner.spawn();
+            this.counter = 0;
+            this.amountAtSpawn = this.spawner.list.length;
+            this.spawnTime = Math.pow((this.amountAtSpawn), 2) / 12;
+        }
+    }   
     
     checkCollisionWith(obj) {
-        this.triangleSwarm.checkCollisionWith(obj);
+        this.spawner.checkCollisionWith(obj);
+    }
+    
+    
+    draw() {
+        this.spawner.draw();
+        
     }
 }
 
-class TriangleSwarm {
+class Spawner {
     constructor() {
-        this.list = this.spawn5ForTest();
+        this.list = [];
     }
     
     draw() {
         for(let i in this.list) {
             this.list[i].draw();
         }
+    }
+    
+    spawn() {
+        let rx, ry, rr;
+        rx = Math.random() * width;
+        ry = Math.random() * height;
+        rr = 15 + Math.random() * 50;
+        this.list.push(new Triangle({
+            x: rx,
+            y: ry,
+            r: rr
+        }));
     }
         
     spawn5ForTest(){
