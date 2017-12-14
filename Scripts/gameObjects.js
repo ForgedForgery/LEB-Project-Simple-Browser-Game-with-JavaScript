@@ -70,6 +70,19 @@ class Player {
         
     update() {
         this.checkInput();
+        
+        if(this.x > width + this.radius) {
+           this.x = 0 - this.radius;
+        }
+        if(this.x < 0 - this.radius) {
+           this.x = width + this.radius;
+        }
+        if(this.y > height + heightUI + this.radius) {
+           this.y = 0 - this.radius;
+        }
+        if(this.y < 0 - this.radius) {
+            this.y = height + heightUI + this.radius;
+        }
     }
     
     setTo(options) {
