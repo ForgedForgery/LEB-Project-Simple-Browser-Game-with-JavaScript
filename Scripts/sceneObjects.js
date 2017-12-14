@@ -62,6 +62,7 @@ class TitleMenu {
                         width: 250,
                         label: "Start Game",
                         fontSize: "40px",
+                        fontColor: "#775300",
                         fontType: "Arial",
                         onClick: function() {
                             game.player.setTo(playerData);
@@ -82,9 +83,9 @@ class TitleMenu {
     
     drawTitleText() {
         canvasContext.beginPath();
-        canvasContext.fillStyle = "black";
+        canvasContext.fillStyle = "#775300";
         canvasContext.strokeStyle = "blue";
-        canvasContext.font = "40px Comic Sans MS";
+        canvasContext.font = "40px Ravie";
         canvasContext.textAlign = 'center';
         canvasContext.textBaseline = 'middle';
         canvasContext.fillText('Resource Collector',400,100);
