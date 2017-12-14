@@ -33,7 +33,6 @@ class GameUI {
             x: this.x + 160,
             y: this.y + 15,
             text: this.player.name,
-            type: 'Arial',
             align: 'left'
         });
                 
@@ -41,7 +40,6 @@ class GameUI {
             x: this.x + 160,
             y: this.y + 30,
             text: "Score: ",
-            type: 'Arial',
             align: 'left'
         });
         
@@ -49,7 +47,6 @@ class GameUI {
             x: this.x + 196,
             y: this.y + 30,
             text: this.player.score,
-            type: 'Arial',
             align: 'start'
         });
     }
@@ -134,6 +131,8 @@ class Button {
         canvasContext.rect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
         canvasContext.stroke();
         canvasContext.fill();
+        canvasContext.lineWidth = "1";
+        canvasContext.strokeStyle = "black";
         
         this.label.draw();       
         canvasContext.closePath();
@@ -153,9 +152,14 @@ class TextField {
     }
     
     draw() {
-        canvasContext.fillStyle = this.color;
+        canvasContext.fillStyle = buttonHoverColor;
+        canvasContext.lineWidth = "3";
         canvasContext.font = this.size + " " + this.type;
-        canvasContext.textAlign = this.align;     
+        canvasContext.textAlign = this.align;   
+        canvasContext.strokeStyle = "black";
+        canvasContext.strokeText(this.text, this.x-2, this.y+2);
+        canvasContext.strokeStyle = this.color;
+        canvasContext.strokeText(this.text, this.x-1, this.y+1);
         canvasContext.fillText(this.text, this.x, this.y);
         canvasContext.textAlign = "left";
         canvasContext.fillStyle = 'black';
