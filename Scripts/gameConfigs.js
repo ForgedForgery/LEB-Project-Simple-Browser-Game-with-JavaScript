@@ -29,12 +29,12 @@ const contrastingColors = {
     C5: "#89FC00"
 };
 
-const gameUIColor = "#04E762";
-const buttonBGColor = "#F5B700";
-const titleBGColor = "#008BF8";
-const textFieldColor = "#89FC00";
-const buttonHoldColor = "#DC0073";
-const buttonHoverColor = "#DC0073";
+const gameUIColor = greenColors.C1;
+const buttonBGColor = greenColors.C2;
+const titleBGColor = greenColors.C4;
+const textFieldColor = greenColors.C5;
+const buttonHoldColor = greenColors.C4;
+const buttonHoverColor = greenColors.C3;
 
 const gameBGColor = paleColors.C4;
 const collectibleColor = paleColors.C3;
