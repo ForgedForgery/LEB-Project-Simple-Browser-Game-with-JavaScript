@@ -172,12 +172,16 @@ class Spawner {
         let rx, ry, rr;
         rx = Math.random() * width;
         ry = Math.random() * height;
-        rr = 15 + Math.random() * 50;
+        rr = this.randomizeRadius();
         this.list.push(new Triangle({
             x: rx,
             y: ry,
             r: rr
         }));
+    }
+    
+    randomizeRadius() {
+        return 7 + Math.random() * 25;
     }
         
     spawn5ForTest(){
@@ -200,6 +204,7 @@ class Spawner {
         for (let i in this.list) {
             if (this.list[i].isCollidedWith(obj)) {
                 this.list.splice(i, 1);
+                game.player.score++;
             }
         }
     }
@@ -210,14 +215,14 @@ class Triangle {
         this.x = options.x;
         this.y = options.y;
         this.r = options.r;
-        this.hitbox = 0;
+        this.hitbox = this.r;
     }
     
     draw(){
         canvasContext.beginPath();
-        canvasContext.moveTo(this.x - this.r/2, this.y + this.r/2);
-        canvasContext.lineTo(this.x + this.r/2, this.y + this.r/2);
-        canvasContext.lineTo(this.x, this.y - this.r/2);
+        canvasContext.moveTo(this.x - this.r, this.y + this.r);
+        canvasContext.lineTo(this.x + this.r, this.y + this.r);
+        canvasContext.lineTo(this.x, this.y - this.r);
 
         canvasContext.fillStyle = collectibleColor;
         canvasContext.fill();
