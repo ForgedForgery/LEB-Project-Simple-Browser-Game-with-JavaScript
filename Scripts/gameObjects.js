@@ -135,7 +135,8 @@ class Collectibles {
     
     update() {
         if(this.spawner.list.length != this.amountAtSpawn) {
-           this.amountAtSpawn = this.spawner.list.length
+            this.amountAtSpawn = this.spawner.list.length;
+            this.spawnTime = Math.pow((this.amountAtSpawn), 2) / 12;
         }
         if(this.counter >= this.spawnTime) {
             this.spawner.spawn();
