@@ -59,7 +59,7 @@ class Player {
     draw() {
         canvasContext.beginPath();
         canvasContext.arc(this.x, this.y, this.radius, 0, Math.PI*2);
-        canvasContext.fillStyle = 'black';
+        canvasContext.fillStyle = C5;
         canvasContext.fill();
         canvasContext.closePath();
     }
@@ -218,7 +218,7 @@ class Triangle {
         canvasContext.lineTo(this.x + this.r/2, this.y + this.r/2);
         canvasContext.lineTo(this.x, this.y - this.r/2);
 
-        canvasContext.fillStyle = 'red';
+        canvasContext.fillStyle = C3;
         canvasContext.fill();
         canvasContext.closePath();
         

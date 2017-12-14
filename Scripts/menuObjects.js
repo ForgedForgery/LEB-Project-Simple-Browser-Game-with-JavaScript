@@ -17,7 +17,8 @@ class GameUI {
             width: 100,
             label: "Save",
             fontSize: "20px",
-            fontColor: "pink",
+            fontColor: C5,
+            backgroundColor: C2,
             onClick: () => doSave()
         });
         
@@ -27,15 +28,16 @@ class GameUI {
             width: 100,
             label: "Shop",
             fontSize: "20px",
-            fontColor: "pink",
-            onClick: () => doSave()
+            fontColor: C5,
+            backgroundColor: C2
+           //onClick effekt für Szenenwechseln
         });
         
         this.playerNameField = new TextField({
             x: this.x + 160,
             y: this.y + 15,
             text: this.player.name,
-            color: 'black',
+            color: C5,
             type: 'Arial',
             align: 'left'
         });
@@ -44,7 +46,7 @@ class GameUI {
             x: this.x + 160,
             y: this.y + 30,
             text: "Score: ",
-            color: 'black',
+            color: C5,
             type: 'Arial',
             align: 'left'
         });
@@ -53,7 +55,7 @@ class GameUI {
             x: this.x + 196,
             y: this.y + 30,
             text: this.player.score,
-            color: 'black',
+            color: C5,
             type: 'Arial',
             align: 'start'
         });
@@ -61,6 +63,7 @@ class GameUI {
     
     update() {
         this.saveButton.update();
+        this.shopButton.update();
         this.playerNameField.setTextTo(this.player.name);
         this.playerScoreField.setTextTo(this.player.score);
     }
@@ -69,7 +72,7 @@ class GameUI {
         this.drawBackground();
         this.playerNameField.draw();
         this.saveButton.draw();
-        this.shopButton();
+        this.shopButton.draw();
         this.playerScoreField.draw();
         this.playerScorePreField.draw();
     }
@@ -77,7 +80,7 @@ class GameUI {
     drawBackground() {
         canvasContext.beginPath();
         canvasContext.rect(this.x, this.y, this.width, this.height);
-        canvasContext.fillStyle = '#887888';
+        canvasContext.fillStyle = C1;
         canvasContext.fill();
         canvasContext.closePath();
     }
@@ -92,7 +95,7 @@ class Button {
         this.height = config.height || 40;
         
         this.executeBehavior = config.onClick || function() {this.label = "Empty"};
-        this.backgroundColor = config.backgroundColor || "#4daaaa";
+        this.backgroundColor = config.backgroundColor || C2;
         
         this.label = new TextField({
                 x: this.x,
@@ -134,7 +137,7 @@ class Button {
         canvasContext.beginPath();       
         canvasContext.lineWidth = "5";
         canvasContext.strokeStyle = this.backgroundColor;
-        canvasContext.fillStyle = this.hovered ? (playerInput.mouseHold ? "#000000" : "#f9ff79") : this.backgroundColor;
+        canvasContext.fillStyle = this.hovered ? (playerInput.mouseHold ? C5 : C1) : this.backgroundColor;
         canvasContext.rect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
         canvasContext.stroke();
         canvasContext.fill();
@@ -153,7 +156,7 @@ class TextField {
         this.align = config.align || "center";
         this.size = config.size || "12px";
         this.type = config.type || "Comic Sans MS";
-        this.color = config.color || "black";
+        this.color = config.color || C5;
     }
     
     draw() {

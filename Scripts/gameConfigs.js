@@ -5,6 +5,18 @@ const heightUI = 50;
 const height = 550;
 const framesPerSecond = 60;
 
+//const C1 = "#878E88";
+//const C2 = "#C9F2C7";
+//const C3 = "#F06449";
+//const C4 = "#EDE6E3";
+//const C5 = "#36382E";
+
+const C1 = "#FFE066";
+const C2 = "#247BA0";
+const C3 = "#F25F5C";
+const C4 = "#70C1B3";
+const C5 = "#50514F";
+
 var game;
 var playerInput;
 var loginForm;
