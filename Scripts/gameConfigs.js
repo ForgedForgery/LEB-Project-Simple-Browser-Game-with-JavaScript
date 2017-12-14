@@ -29,12 +29,22 @@ const contrastingColors = {
     C5: "#89FC00"
 };
 
-const gameUIColor = greenColors.C1;
-const buttonBGColor = greenColors.C2;
-const titleBGColor = greenColors.C4;
-const textFieldColor = greenColors.C5;
-const buttonHoldColor = greenColors.C4;
-const buttonHoverColor = greenColors.C3;
+const purpleColors = {
+    C1: "#6B0F1A",
+    C2: "#B91372",
+    C3: "#31081F",
+    C4: "#0E0004",
+    C5: "#9D44B5"
+};
+
+const gameUIColor = purpleColors.C1;
+const buttonBGColor = contrastingColors.C2;
+const titleBGColor = contrastingColors.C4;
+const textFieldColor = greenColors.C2;
+const textFieldSideColor = contrastingColors.C5;
+const playerScoreFieldColor = contrastingColors.C3;
+const buttonHoldColor = contrastingColors.C4;
+const buttonHoverColor = contrastingColors.C3;
 
 const gameBGColor = paleColors.C4;
 const collectibleColor = paleColors.C3;

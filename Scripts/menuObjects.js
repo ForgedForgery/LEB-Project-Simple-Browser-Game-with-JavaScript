@@ -12,7 +12,7 @@ class GameUI {
         });
         
         this.saveButton = new Button({
-            x: this.x + 60,
+            x: this.x + 627,
             y: this.y + 25,
             width: 100,
             label: "Save",
@@ -21,7 +21,7 @@ class GameUI {
         });
         
         this.shopButton = new Button({
-            x: this.x + 500,
+            x: this.x + 740,
             y: this.y + 25,
             width: 100,
             label: "Shop",
@@ -30,22 +30,23 @@ class GameUI {
         });
         
         this.playerNameField = new TextField({
-            x: this.x + 160,
-            y: this.y + 15,
+            x: this.x + 10,
+            y: this.y + 12.5,
             text: this.player.name,
             align: 'left'
         });
                 
         this.playerScorePreField = new TextField({
-            x: this.x + 160,
-            y: this.y + 30,
+            x: this.x + 10,
+            y: this.y + 37.5,
             text: "Score: ",
             align: 'left'
         });
         
         this.playerScoreField = new TextField({
-            x: this.x + 196,
-            y: this.y + 30,
+            x: this.x + 75,
+            y: this.y + 37.5,
+            color: playerScoreFieldColor,
             text: this.player.score,
             align: 'start'
         });
@@ -146,19 +147,20 @@ class TextField {
 
         this.text = config.text || "No Text";
         this.align = config.align || "center";
-        this.size = config.size || "12px";
+        this.size = config.size || "20px";
         this.type = config.type || "Arial";
         this.color = config.color || textFieldColor;
+        this.sideColor = config.sideColor || textFieldSideColor;
     }
     
     draw() {
-        canvasContext.fillStyle = buttonHoverColor;
+        canvasContext.fillStyle = this.color;
         canvasContext.lineWidth = "3";
         canvasContext.font = this.size + " " + this.type;
         canvasContext.textAlign = this.align;   
         canvasContext.strokeStyle = "black";
         canvasContext.strokeText(this.text, this.x-2, this.y+2);
-        canvasContext.strokeStyle = this.color;
+        canvasContext.strokeStyle = this.sideColor;
         canvasContext.strokeText(this.text, this.x-1, this.y+1);
         canvasContext.fillText(this.text, this.x, this.y);
         canvasContext.textAlign = "left";
