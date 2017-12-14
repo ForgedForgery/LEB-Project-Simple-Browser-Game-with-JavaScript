@@ -6,7 +6,7 @@ class Button {
         this.width = config.width || 150;
         this.height = config.height || 40;
         
-        this.executeBehavior = config.onClick || function() {this.label = "Empty"};
+        this.executeBehavior = config.onClick || function() {this.label.text = "Empty"};
         this.backgroundColor = config.backgroundColor || buttonBGColor;
         
         this.label = new TextField({
@@ -72,13 +72,15 @@ class TextField {
         this.type = config.type || "Arial";
         this.color = config.color || textFieldColor;
         this.sideColor = config.sideColor || textFieldSideColor;
+        this.textBaseline = config.textBaseline || "middle";
     }
     
     draw() {
         canvasContext.fillStyle = this.color;
         canvasContext.lineWidth = "3";
         canvasContext.font = this.size + " " + this.type;
-        canvasContext.textAlign = this.align;   
+        canvasContext.textAlign = this.align;
+        canvasContext.textBaseline = this.textBaseline;
         canvasContext.strokeStyle = "black";
         canvasContext.strokeText(this.text, this.x-2, this.y+2);
         canvasContext.strokeStyle = this.sideColor;

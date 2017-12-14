@@ -37,6 +37,9 @@ const purpleColors = {
     C5: "#9D44B5"
 };
 
+const titleTextColor = purpleColors.C5;
+const titleTextSideColor = purpleColors.C2;
+
 const gameUIColor = purpleColors.C1;
 const buttonBGColor = contrastingColors.C2;
 const titleBGColor = contrastingColors.C4;

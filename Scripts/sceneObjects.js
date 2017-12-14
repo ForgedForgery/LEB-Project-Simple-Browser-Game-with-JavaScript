@@ -36,9 +36,10 @@ class TitleMenu {
         this.player = inPlayerReference;
         
         this.startButton = new Button({
-                        x: 425,
+                        x: 400,
                         y: 210,
-                        width: 250,
+                        width: 500,
+                        height: 70,
                         label: "Start Game",
                         fontSize: "40px",
                         fontType: "Arial",
@@ -48,6 +49,16 @@ class TitleMenu {
                             loginForm.delete();
                         }
                     });
+        this.titleText = new TextField({
+            x: 400,
+            y: 100,
+            color: titleTextColor,
+            sideColor: titleTextSideColor,
+            text: "Ressource Collector",
+            type: "Ravie",
+            size: "55px"
+            
+        });
     }
     
     update() {
@@ -55,23 +66,22 @@ class TitleMenu {
     }
     
     draw() {
-        this.drawTitleText();
+        this.drawBG();
+        this.titleText.draw();
         this.startButton.draw();
     }
     
-    drawTitleText() {
-        canvasContext.beginPath();
+    drawBG() {
         canvasContext.fillStyle = titleBGColor;
         canvasContext.rect(0, 0, width, height + heightUI);
         canvasContext.fill();
-        canvasContext.fillStyle = textFieldColor;
-        canvasContext.strokeStyle = "blue";
-        canvasContext.font = "40px Ravie";
-        canvasContext.textAlign = 'center';
-        canvasContext.textBaseline = 'middle';
-        canvasContext.fillText('Resource Collector',400,100);
-        canvasContext.closePath();
     }
+    
+//    draw {
+//        canvasContext.fillStyle = textFieldColor;
+//        canvasContext.strokeStyle = "blue";
+//        canvasContext.textBaseline = 'middle';
+//        canvasContext.closePath();
 }
 
 class MainGame {
@@ -129,8 +139,7 @@ class GameUI {
             y: this.y + 25,
             width: 100,
             label: "Shop",
-            fontSize: "20px",
-           //onClick effekt für Szenenwechseln
+            fontSize: "20px"
         });
         
         this.playerNameField = new TextField({
