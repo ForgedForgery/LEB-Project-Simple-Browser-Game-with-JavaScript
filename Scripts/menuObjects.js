@@ -17,8 +17,6 @@ class GameUI {
             width: 100,
             label: "Save",
             fontSize: "20px",
-            fontColor: C5,
-            backgroundColor: C2,
             onClick: () => doSave()
         });
         
@@ -28,8 +26,6 @@ class GameUI {
             width: 100,
             label: "Shop",
             fontSize: "20px",
-            fontColor: C5,
-            backgroundColor: C2
            //onClick effekt für Szenenwechseln
         });
         
@@ -37,7 +33,6 @@ class GameUI {
             x: this.x + 160,
             y: this.y + 15,
             text: this.player.name,
-            color: C5,
             type: 'Arial',
             align: 'left'
         });
@@ -46,7 +41,6 @@ class GameUI {
             x: this.x + 160,
             y: this.y + 30,
             text: "Score: ",
-            color: C5,
             type: 'Arial',
             align: 'left'
         });
@@ -55,7 +49,6 @@ class GameUI {
             x: this.x + 196,
             y: this.y + 30,
             text: this.player.score,
-            color: C5,
             type: 'Arial',
             align: 'start'
         });
@@ -80,7 +73,7 @@ class GameUI {
     drawBackground() {
         canvasContext.beginPath();
         canvasContext.rect(this.x, this.y, this.width, this.height);
-        canvasContext.fillStyle = C1;
+        canvasContext.fillStyle = gameUIColor;
         canvasContext.fill();
         canvasContext.closePath();
     }
@@ -95,7 +88,7 @@ class Button {
         this.height = config.height || 40;
         
         this.executeBehavior = config.onClick || function() {this.label = "Empty"};
-        this.backgroundColor = config.backgroundColor || C2;
+        this.backgroundColor = config.backgroundColor || buttonBGColor;
         
         this.label = new TextField({
                 x: this.x,
@@ -137,7 +130,7 @@ class Button {
         canvasContext.beginPath();       
         canvasContext.lineWidth = "5";
         canvasContext.strokeStyle = this.backgroundColor;
-        canvasContext.fillStyle = this.hovered ? (playerInput.mouseHold ? C5 : C1) : this.backgroundColor;
+        canvasContext.fillStyle = this.hovered ? (playerInput.mouseHold ? buttonHoldColor : buttonHoverColor) : this.backgroundColor;
         canvasContext.rect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
         canvasContext.stroke();
         canvasContext.fill();
@@ -155,8 +148,8 @@ class TextField {
         this.text = config.text || "No Text";
         this.align = config.align || "center";
         this.size = config.size || "12px";
-        this.type = config.type || "Comic Sans MS";
-        this.color = config.color || C5;
+        this.type = config.type || "Arial";
+        this.color = config.color || textFieldColor;
     }
     
     draw() {

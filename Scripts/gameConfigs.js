@@ -5,17 +5,40 @@ const heightUI = 50;
 const height = 550;
 const framesPerSecond = 60;
 
-//const C1 = "#878E88";
-//const C2 = "#C9F2C7";
-//const C3 = "#F06449";
-//const C4 = "#EDE6E3";
-//const C5 = "#36382E";
+const paleColors = {
+    C1: "#878E88",
+    C2: "#C9F2C7",
+    C3: "#F06449",
+    C4: "#EDE6E3",
+    C5: "#36382E"
+};
 
-const C1 = "#FFE066";
-const C2 = "#247BA0";
-const C3 = "#F25F5C";
-const C4 = "#70C1B3";
-const C5 = "#50514F";
+const greenColors = {
+    C1: "#ECBA82",
+    C2: "#81C14B",
+    C3: "#2E933C",
+    C4: "#297045",
+    C5: "#204E4A"
+};
+
+const contrastingColors = {
+    C1: "#04E762",
+    C2: "#F5B700",
+    C3: "#DC0073",
+    C4: "#008BF8",
+    C5: "#89FC00"
+};
+
+const gameUIColor = "#04E762";
+const buttonBGColor = "#F5B700";
+const titleBGColor = "#008BF8";
+const textFieldColor = "#89FC00";
+const buttonHoldColor = "#DC0073";
+const buttonHoverColor = "#DC0073";
+
+const gameBGColor = paleColors.C4;
+const collectibleColor = paleColors.C3;
+const playerColor = paleColors.C5;
 
 var game;
 var playerInput;

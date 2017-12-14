@@ -53,7 +53,7 @@ class MainGame {
     }
     
     drawBG() {
-        canvasContext.fillStyle = C4;
+        canvasContext.fillStyle = gameBGColor;
         canvasContext.rect(0, 0, width, height + heightUI);
         canvasContext.fill();
     }
@@ -69,8 +69,6 @@ class TitleMenu {
                         width: 250,
                         label: "Start Game",
                         fontSize: "40px",
-                        backgroundColor: C2,
-                        fontColor: C5,
                         fontType: "Arial",
                         onClick: function() {
                             game.player.setTo(playerData);
@@ -91,10 +89,10 @@ class TitleMenu {
     
     drawTitleText() {
         canvasContext.beginPath();
-        canvasContext.fillStyle = C4;
+        canvasContext.fillStyle = titleBGColor;
         canvasContext.rect(0, 0, width, height + heightUI);
         canvasContext.fill();
-        canvasContext.fillStyle = C5;
+        canvasContext.fillStyle = textFieldColor;
         canvasContext.strokeStyle = "blue";
         canvasContext.font = "40px Ravie";
         canvasContext.textAlign = 'center';
