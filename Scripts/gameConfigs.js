@@ -54,6 +54,8 @@ const collectibleColor = paleColors.C3;
 const playerColor = paleColors.C5;
 
 var game;
+var lastTick = (new Date).getTime();
+var deltaTime;
 var playerInput;
 var loginForm;
 var playerData = {

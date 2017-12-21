@@ -88,7 +88,7 @@ class MainGame {
     constructor(inPlayerReference, inCollectiblesReference) {
         this.player = inPlayerReference;
         this.collectibles = inCollectiblesReference;
-        this.gameUI = new GameUI(this.player);
+        this.gameUI = new GameUI(this.player, this.collectibles);
     }
     
     update() {
@@ -106,24 +106,23 @@ class MainGame {
     }
     
     drawBG() {
+        canvasContext.beginPath();
         canvasContext.fillStyle = gameBGColor;
         canvasContext.rect(0, 0, width, height + heightUI);
         canvasContext.fill();
+        canvasContext.closePath();
     }
 }
 
 class GameUI {
-    constructor(inPlayerReference) {
+    constructor(inPlayerReference, inCollectiblesReference) {
         this.x = 0;
         this.y = height;
         this.width = width;
         this.height = heightUI;
         
         this.player = inPlayerReference;
-        
-        this.menuButton = new Button({
-            
-        });
+        this.collectibles = inCollectiblesReference;
         
         this.saveButton = new Button({
             x: this.x + 627,
@@ -144,14 +143,14 @@ class GameUI {
         
         this.playerNameField = new TextField({
             x: this.x + 10,
-            y: this.y + 12.5,
+            y: this.y + 13,
             text: this.player.name,
             align: 'left'
         });
                 
         this.playerScorePreField = new TextField({
             x: this.x + 10,
-            y: this.y + 37.5,
+            y: this.y + 38,
             text: "Score: ",
             align: 'left'
         });
@@ -161,8 +160,8 @@ class GameUI {
             y: this.y + 37.5,
             color: playerScoreFieldColor,
             text: this.player.score,
-            align: 'start'
-        });
+            align: 'left'
+        });      
     }
     
     update() {
@@ -179,6 +178,7 @@ class GameUI {
         this.shopButton.draw();
         this.playerScoreField.draw();
         this.playerScorePreField.draw();
+        this.drawSpawnCooldown();
     }
     
     drawBackground() {
@@ -188,6 +188,40 @@ class GameUI {
         canvasContext.fill();
         canvasContext.closePath();
     }
+    
+    drawSpawnCooldown() {
+        canvasContext.beginPath();
+        
+        //background
+        canvasContext.fillStyle = textFieldSideColor;
+        canvasContext.fillRect(this.x + 80, this.y + 5, 200, 15);
+        
+        //bar
+        canvasContext.fillStyle = playerScoreFieldColor;
+        canvasContext.fillRect(this.x + 80, this.y + 5, this.collectibles.counter / this.collectibles.spawnTime * 200, 15);
+        
+        //border
+        canvasContext.strokeStyle = textFieldColor;
+        canvasContext.rect(this.x + 80, this.y + 5, 200, 15);
+        canvasContext.stroke();
+        
+        canvasContext.closePath();
+    }
+  
+//might be useful somewhere else 
+//
+//    drawCircleCooldown() {
+//        canvasContext.beginPath();
+//        canvasContext.moveTo(this.x + 80, this.y + 13);
+//        canvasContext.arc(this.x + 80, this.y + 13, 10, -(Math.PI / 2), (Math.PI * 2 * this.collectibles.counter / this.collectibles.spawnTime) - Math.PI / 2);
+//        canvasContext.lineTo(this.x + 80, this.y + 13);
+//        canvasContext.fillStyle = textFieldSideColor;
+//        canvasContext.fill();
+//        canvasContext.strokeStyle = playerScoreFieldColor;
+//        canvasContext.lineWidth = 1;
+//        canvasContext.stroke();
+//        canvasContext.closePath();
+//    }
 }
 
 class StoreMenu {

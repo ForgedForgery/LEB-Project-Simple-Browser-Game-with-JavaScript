@@ -7,9 +7,14 @@ function init() {
 }
 
 // animations go in here, I think
-function animate() {
-    requestAnimationFrame(animate);  
+function tick() {
+    var now = (new Date).getTime(); // current time in ms
+    deltaTime = now - lastTick; // amount of time elapsed since last tick
+    lastTick = now;
     
+    update();
+    
+    window.requestAnimationFrame(tick);  
 }
 
 function update() {
@@ -19,4 +24,4 @@ function update() {
 
 // start game
 init();
-animate();
+tick();
