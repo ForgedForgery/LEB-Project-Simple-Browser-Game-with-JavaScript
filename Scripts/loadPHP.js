@@ -40,8 +40,7 @@ function loadData(xhttp) {
         name: loadedData.name,
         score: loadedData.score
     };
-    game.player.name = loadData.name;
-    game.player.score = loadedData.score;
+    game.player.setTo(playerData);
     
     loginForm.delete();
     

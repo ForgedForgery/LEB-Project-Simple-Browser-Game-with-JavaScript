@@ -1,9 +1,9 @@
 class SceneManager {
-    constructor(inPlayerReference, inCollectiblesReference) {
+    constructor(inPlayerReference, inProgressionReference) {
         this.currentScenes = [];
         this.allScenes = {
             title: new TitleMenu(inPlayerReference),
-            game: new MainGame(inPlayerReference, inCollectiblesReference),
+            game: new MainGame(inPlayerReference, inProgressionReference),
             store: new StoreMenu()
         };
     }
@@ -105,22 +105,22 @@ class TitleMenu {
 }
 
 class MainGame {
-    constructor(inPlayerReference, inCollectiblesReference) {
+    constructor(inPlayerReference, inProgressionReference) {
         this.player = inPlayerReference;
-        this.collectibles = inCollectiblesReference;
-        this.gameUI = new GameUI(this.player, this.collectibles);
+        this.progression = inProgressionReference;
+        this.gameUI = new GameUI(this.player, this.progression);
     }
     
     update() {
-        this.collectibles.update();
+        this.progression.update();
         this.player.update();
-        this.player.checkCollisionWith(this.collectibles);
+        this.player.checkCollisionWith(this.progression);
         this.gameUI.update();
     }
     
     draw() {
         this.drawBG();
-        this.collectibles.draw();
+        this.progression.draw();
         this.player.draw();
         this.gameUI.draw();
     }
@@ -135,17 +135,17 @@ class MainGame {
 }
 
 class GameUI {
-    constructor(inPlayerReference, inCollectiblesReference) {
+    constructor(inPlayerReference, inProgressionReference) {
         this.x = 0;
         this.y = height;
         this.width = width;
         this.height = heightUI;
         
         this.player = inPlayerReference;
-        this.collectibles = inCollectiblesReference;
+        this.progression = inProgressionReference;
         
         this.saveButton = new Button({
-            x: this.x + 627,
+            x: this.x + 587,
             y: this.y + 25,
             width: 100,
             label: "Save",
@@ -156,7 +156,7 @@ class GameUI {
         });
         
         this.shopButton = new Button({
-            x: this.x + 740,
+            x: this.x + 700,
             y: this.y + 25,
             width: 100,
             label: "Shop",
@@ -187,24 +187,47 @@ class GameUI {
             color: playerScoreFieldColor,
             text: this.player.score,
             align: 'left'
-        });      
+        }); 
+        
+        this.subMenuButton = new Button({
+            x: this.x + width - 20,
+            y: this.y + heightUI - 25,
+            width: 30,
+            heigh: 80
+        });
+        
+        this.spawnCooldowns = [];
+        for(let i in this.progression.list) {
+            this.spawnCooldowns.push(new Cooldown({
+                x: this.x + 500,
+                y: this.y + 45,
+                progression: inProgressionReference
+            }));
+        }
     }
     
     update() {
         this.saveButton.update();
         this.shopButton.update();
+        this.subMenuButton.update();
+        
         this.playerNameField.setTextTo(this.player.name);
         this.playerScoreField.setTextTo(this.player.score);
     }
     
     draw() {
         this.drawBackground();
+        
         this.playerNameField.draw();
-        this.saveButton.draw();
-        this.shopButton.draw();
         this.playerScoreField.draw();
         this.playerScorePreField.draw();
-        this.drawSpawnCooldown();
+        
+        this.saveButton.draw();
+        this.shopButton.draw();
+        this.subMenuButton.draw();
+        
+        for(let i = 0; i < this.spawnCooldowns.length; i++)
+            this.spawnCooldowns[i].draw();
     }
     
     drawBackground() {
@@ -214,32 +237,13 @@ class GameUI {
         canvasContext.fill();
         canvasContext.closePath();
     }
-    
-    drawSpawnCooldown() {
-        canvasContext.beginPath();
-        
-        //background
-        canvasContext.fillStyle = textFieldSideColor;
-        canvasContext.fillRect(this.x + 80, this.y + 5, 200, 15);
-        
-        //bar
-        canvasContext.fillStyle = playerScoreFieldColor;
-        canvasContext.fillRect(this.x + 80, this.y + 5, this.collectibles.counter / this.collectibles.spawnTime * 200, 15);
-        
-        //border
-        canvasContext.strokeStyle = textFieldColor;
-        canvasContext.rect(this.x + 80, this.y + 5, 200, 15);
-        canvasContext.stroke();
-        
-        canvasContext.closePath();
-    }
   
 //might be useful somewhere else 
 //
 //    drawCircleCooldown() {
 //        canvasContext.beginPath();
 //        canvasContext.moveTo(this.x + 80, this.y + 13);
-//        canvasContext.arc(this.x + 80, this.y + 13, 10, -(Math.PI / 2), (Math.PI * 2 * this.collectibles.counter / this.collectibles.spawnTime) - Math.PI / 2);
+//        canvasContext.arc(this.x + 80, this.y + 13, 10, -(Math.PI / 2), (Math.PI * 2 * this.progression.counter / this.progression.spawnTime) - Math.PI / 2);
 //        canvasContext.lineTo(this.x + 80, this.y + 13);
 //        canvasContext.fillStyle = textFieldSideColor;
 //        canvasContext.fill();

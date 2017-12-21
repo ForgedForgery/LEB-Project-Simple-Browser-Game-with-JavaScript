@@ -10,9 +10,9 @@ class ResourceCollector {
         
         // game elements
         this.player = new Player(playerOptions);
-        this.collectibles = new Collectibles();
+        this.progression = new ProgressionSystem(this.player);
         // game systems
-        this.scenes = new SceneManager(this.player, this.collectibles);
+        this.scenes = new SceneManager(this.player, this.progression);
         this.screen = new Screen(this.scenes);
         
         //execute global update every 20ms
@@ -135,17 +135,49 @@ class Player {
     }
 }
 
+class ProgressionSystem {
+    constructor(inPlayerRef) {
+        this.player = inPlayerRef;
+        
+        this.currentLevel = 0;
+        this.activeLevels = [new Collectibles("BasicTri")];
+    }
+    
+    update() {
+        for(let i in this.activeLevels) {
+            this.activeLevels[i].update();
+        }
+        
+        // depending on level add new collectibles here
+    }
+    
+    draw() {
+        for(let i in this.activeLevels) {
+            this.activeLevels[i].draw();
+        }
+    }
+    
+    checkCollisionWith(obj) {
+        for(let i in this.activeLevels) {
+            this.activeLevels[i].checkCollisionWith(obj);
+        }
+    }
+}
+
 class Collectibles {
-    constructor() {
+    constructor(inType) {
+        this.type = inType;  
+        
         this.counter = 0;
         this.spawnTime = 0;
         this.previousAmount = 0;
         
-        this.spawner = new Spawner();
+        this.spawner = new Spawner(this.type);
     }
     
     update() {
         this.counter += deltaTime/1000;
+        
         if(this.spawner.list.length != this.previousAmount) {
             let counterPrecentage = this.counter / this.spawnTime;
             this.previousAmount = this.spawner.list.length;
@@ -173,7 +205,9 @@ class Collectibles {
 }
 
 class Spawner {
-    constructor() {
+    constructor(inType) {
+        this.type = inType;
+        
         this.list = [];
     }
     
@@ -184,6 +218,7 @@ class Spawner {
     }
     
     spawn() {
+        // move this to a new class with name saved in "type" and just execute it's spawn fucntion here
         let rx, ry, rr;
         rx = Math.random() * width;
         ry = Math.random() * height;

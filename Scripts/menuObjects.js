@@ -2,26 +2,27 @@ class Button {
     constructor(config) {
         this.x = config.x || 0;
         this.y = config.y || 0;
- 
+        
         this.shadowColor = config.shadowColor || "black";
         this.shadowBlur = config.shadowBlur || "5";       
         
         this.width = config.width || 150;
         this.height = config.height || 40;
         
-        this.executeBehavior = config.onClick || function() {this.label.text = "Empty"};
+        this.executeBehavior = config.onClick || function() {};
         this.backgroundColor = config.backgroundColor || buttonBGColor;
         
-        this.label = new TextField({
-                x: this.x,
-                y: this.y,
-                shadowColor: config.shadowColorText || false,
-                shadowBlur: config.shadowBlurText || "5",
-                text: config.label || false,
-                size: config.fontSize || false,
-                type: config.fontType || false,
-                color: config.fontColor || false
-            });
+        if(config.label)
+            this.label = new TextField({
+                    x: this.x,
+                    y: this.y,
+                    shadowColor: config.shadowColorText || false,
+                    shadowBlur: config.shadowBlurText || "5",
+                    text: config.label || false,
+                    size: config.fontSize || false,
+                    type: config.fontType || false,
+                    color: config.fontColor || false
+                });
         
         this.hovered = false;
     }
@@ -67,7 +68,9 @@ class Button {
         canvasContext.strokeStyle = "black";
         canvasContext.shadowBlur = 0;
         
-        this.label.draw();       
+        if(this.label)
+            this.label.draw();       
+        
         canvasContext.closePath();
     }
 }
@@ -121,5 +124,36 @@ class TextField {
     
     setTextTo(inText) {
         this.text = inText;
+    }
+}
+
+class Cooldown {
+    constructor(config) {
+        this.x = config.x;
+        this.y = config.y;
+        
+        this.width = config.width || 15;
+        this.height = config.height || -40;
+        
+        this.progression = config.progression;
+    }
+    
+    draw() {
+        canvasContext.beginPath();
+        
+        //background
+        canvasContext.fillStyle = textFieldSideColor;
+        canvasContext.fillRect(this.x, this.y, this.width, this.height);
+        
+        //bar
+        canvasContext.fillStyle = playerScoreFieldColor;
+        canvasContext.fillRect(this.x, this.y, this.width, (this.progression.counter / this.progression.spawnTime * this.height));
+        
+        //border
+        canvasContext.strokeStyle = textFieldColor;
+        canvasContext.rect(this.x, this.y, this.width, this.height);
+        canvasContext.stroke();
+        
+        canvasContext.closePath();
     }
 }
