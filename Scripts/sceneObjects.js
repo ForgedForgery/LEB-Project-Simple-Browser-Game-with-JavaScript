@@ -49,15 +49,17 @@ class TitleMenu {
                             loginForm.delete();
                         }
                     });
+        
         this.titleText = new TextField({
             x: 400,
             y: 100,
+            hasSide: true,
+            shadowBlur: 5,
             color: titleTextColor,
             sideColor: titleTextSideColor,
             text: "Ressource Collector",
             type: "Ravie",
             size: "55px"
-            
         });
     }
     
@@ -67,7 +69,10 @@ class TitleMenu {
     
     draw() {
         this.drawBG();
+        
         this.titleText.draw();
+        this.titleBGBlur();
+        
         this.startButton.draw();
     }
     
@@ -75,6 +80,21 @@ class TitleMenu {
         canvasContext.fillStyle = titleBGColor;
         canvasContext.rect(0, 0, width, height + heightUI);
         canvasContext.fill();
+    }
+    
+    titleBGBlur() {
+        canvasContext.beginPath();
+        
+        canvasContext.shadowBlur = 100;
+        canvasContext.shadowColor = "black";
+        canvasContext.fillStyle = this.titleText.color;
+        canvasContext.font = this.titleText.size + " " + this.titleText.type;
+        canvasContext.textAlign = this.titleText.align;
+        canvasContext.textBaseline = this.textBaseline;
+        
+        canvasContext.fillText(this.titleText.text, this.titleText.x, this.titleText.y);
+        
+        canvasContext.closePath();
     }
     
 //    draw {
@@ -130,7 +150,9 @@ class GameUI {
             width: 100,
             label: "Save",
             fontSize: "20px",
-            onClick: () => doSave()
+            onClick: () => doSave(),
+            shadowBlur: 5,
+            shadowBlurText: 5
         });
         
         this.shopButton = new Button({
@@ -138,21 +160,25 @@ class GameUI {
             y: this.y + 25,
             width: 100,
             label: "Shop",
-            fontSize: "20px"
+            fontSize: "20px",
+            shadowBlur: 5,
+            shadowBlurText: 5
         });
         
         this.playerNameField = new TextField({
             x: this.x + 10,
             y: this.y + 13,
             text: this.player.name,
-            align: 'left'
+            align: 'left',
+            shadowBlur: 5
         });
                 
         this.playerScorePreField = new TextField({
             x: this.x + 10,
             y: this.y + 38,
             text: "Score: ",
-            align: 'left'
+            align: 'left',
+            shadowBlur: 5
         });
         
         this.playerScoreField = new TextField({

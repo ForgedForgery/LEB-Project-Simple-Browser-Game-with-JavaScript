@@ -2,6 +2,9 @@ class Button {
     constructor(config) {
         this.x = config.x || 0;
         this.y = config.y || 0;
+ 
+        this.shadowColor = config.shadowColor || "black";
+        this.shadowBlur = config.shadowBlur || "5";       
         
         this.width = config.width || 150;
         this.height = config.height || 40;
@@ -12,6 +15,8 @@ class Button {
         this.label = new TextField({
                 x: this.x,
                 y: this.y,
+                shadowColor: config.shadowColorText || false,
+                shadowBlur: config.shadowBlurText || "5",
                 text: config.label || false,
                 size: config.fontSize || false,
                 type: config.fontType || false,
@@ -46,15 +51,21 @@ class Button {
     } 
     
     draw() {
-        canvasContext.beginPath();       
+        canvasContext.beginPath();  
+        canvasContext.shadowColor = this.shadowColor;
+        canvasContext.shadowBlur = this.shadowBlur;
+        
         canvasContext.lineWidth = "5";
         canvasContext.strokeStyle = this.backgroundColor;
         canvasContext.fillStyle = this.hovered ? (playerInput.mouseHold ? buttonHoldColor : buttonHoverColor) : this.backgroundColor;
         canvasContext.rect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
+        
         canvasContext.stroke();
         canvasContext.fill();
+        
         canvasContext.lineWidth = "1";
         canvasContext.strokeStyle = "black";
+        canvasContext.shadowBlur = 0;
         
         this.label.draw();       
         canvasContext.closePath();
@@ -65,30 +76,47 @@ class TextField {
     constructor(config) {
         this.x = config.x;
         this.y = config.y;
+        
+        this.hasSide = config.hasSide || false;
 
+        this.shadowColor = config.shadowColor || "Black";
+        this.shadowBlur = config.shadowBlur || 0;
+            
         this.text = config.text || "No Text";
-        this.align = config.align || "center";
         this.size = config.size || "20px";
         this.type = config.type || "Arial";
+        
+        this.align = config.align || "center";
+        this.textBaseline = config.textBaseline || "middle";
+        
         this.color = config.color || textFieldColor;
         this.sideColor = config.sideColor || textFieldSideColor;
-        this.textBaseline = config.textBaseline || "middle";
     }
     
     draw() {
+        canvasContext.shadowColor = this.shadowColor;
+        canvasContext.shadowBlur = this.shadowBlur; 
+        
         canvasContext.fillStyle = this.color;
-        canvasContext.lineWidth = "3";
         canvasContext.font = this.size + " " + this.type;
         canvasContext.textAlign = this.align;
         canvasContext.textBaseline = this.textBaseline;
+        
+        canvasContext.lineWidth = "3";
+        
         canvasContext.strokeStyle = "black";
-        canvasContext.strokeText(this.text, this.x-2, this.y+2);
-        canvasContext.strokeStyle = this.sideColor;
         canvasContext.strokeText(this.text, this.x-1, this.y+1);
+        
+        if(this.hasSide) {
+            canvasContext.strokeStyle = this.sideColor;
+            canvasContext.strokeText(this.text, this.x-1, this.y+1);
+        }
+        
         canvasContext.fillText(this.text, this.x, this.y);
+        
         canvasContext.textAlign = "left";
         canvasContext.fillStyle = 'black';
-        
+        canvasContext.shadowBlur = 0;
     }
     
     setTextTo(inText) {
