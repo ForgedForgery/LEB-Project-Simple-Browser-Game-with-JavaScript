@@ -146,11 +146,11 @@ class Collectibles {
     
     update() {
         this.counter += deltaTime/1000;
-        
-        // TODO: change this so the counter bar doesn't skip whenever you collect something
         if(this.spawner.list.length != this.previousAmount) {
+            let counterPrecentage = this.counter / this.spawnTime;
             this.previousAmount = this.spawner.list.length;
             this.spawnTime = Math.pow((this.previousAmount), 2) / 12;
+            this.counter = this.spawnTime * counterPrecentage;
         }
         
         if(this.counter >= this.spawnTime) {
