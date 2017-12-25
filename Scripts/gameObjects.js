@@ -8,15 +8,11 @@ class ResourceCollector {
             //speed: 1
             };      
         
-        // game elements
         this.player = new Player(playerOptions);
         this.progression = new ProgressionSystem(this.player);
-        // game systems
+        
         this.scenes = new SceneManager(this.player, this.progression);
         this.screen = new Screen(this.scenes);
-        
-        //execute global update every 20ms
-        //this.interval = setInterval(() => update(), 1000/framesPerSecond); 
     }
     
     update() {
@@ -123,11 +119,11 @@ class Player {
     }
     
     moveX(distancePerSecond) {
-        this.x += (deltaTime * distancePerSecond);
+        this.x += deltaTime * distancePerSecond;
     }
     
     moveY(distancePerSecond) {
-        this.y += (deltaTime * distancePerSecond);
+        this.y += deltaTime * distancePerSecond;
     }
     
     increaseScoreByOne() {
