@@ -1,4 +1,4 @@
-const baseCircleSpeed = 2;
+const baseCircleSpeed = 300; // in pixel per second the player can move
 const baseCircleRad = 20;
 const width = 800;
 const heightUI = 50;
@@ -39,21 +39,25 @@ const purpleColors = {
 
 const titleTextColor = purpleColors.C5;
 const titleTextSideColor = purpleColors.C2;
+const titleBGColor = paleColors.C4;
 
-const gameUIColor = purpleColors.C1;
-const buttonBGColor = contrastingColors.C2;
-const titleBGColor = contrastingColors.C4;
-const textFieldColor = greenColors.C2;
-const textFieldSideColor = contrastingColors.C5;
-const playerScoreFieldColor = contrastingColors.C3;
-const buttonHoldColor = contrastingColors.C4;
-const buttonHoverColor = contrastingColors.C3;
+const buttonBGColor = paleColors.C5;
+const buttonHoldColor = paleColors.C4;
+const buttonHoverColor = paleColors.C3;
+
+const textFieldColor = paleColors.C2;
+const textFieldSideColor = paleColors.C5;
+const playerScoreFieldColor = paleColors.C3; //normal text field that needs to be highlighted
+
+const gameUIColor = paleColors.C1;
 
 const gameBGColor = paleColors.C4;
-const collectibleColor = paleColors.C3;
 const playerColor = paleColors.C5;
+const collectibleColor = paleColors.C3;
 
 var game;
+var lastTick = (new Date).getTime();
+var deltaTime;
 var playerInput;
 var loginForm;
 var playerData = {

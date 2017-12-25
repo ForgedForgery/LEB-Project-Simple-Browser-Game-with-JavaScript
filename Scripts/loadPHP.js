@@ -17,6 +17,8 @@ function doLogin() {
 }
 
 function doSave() {
+    playerData.name = game.player.name;
+    playerData.score = game.player.score;
     loadPHP("Scripts/saveData.php?user=" + playerData.name + "&score=" + playerData.score, saveData);
 }
 
@@ -38,7 +40,7 @@ function loadData(xhttp) {
         name: loadedData.name,
         score: loadedData.score
     };
-    game.player.name = loadData.name;
+    game.player.setTo(playerData);
     
     loginForm.delete();
     
