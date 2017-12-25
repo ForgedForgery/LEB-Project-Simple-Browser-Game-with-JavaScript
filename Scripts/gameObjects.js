@@ -10,13 +10,13 @@ class ResourceCollector {
         
         // game elements
         this.player = new Player(playerOptions);
-        this.collectibles = new Collectibles();
+        this.progression = new ProgressionSystem(this.player);
         // game systems
-        this.scenes = new SceneManager(this.player, this.collectibles);
+        this.scenes = new SceneManager(this.player, this.progression);
         this.screen = new Screen(this.scenes);
         
         //execute global update every 20ms
-        this.interval = setInterval(() => update(), 1000/framesPerSecond); 
+        //this.interval = setInterval(() => update(), 1000/framesPerSecond); 
     }
     
     update() {
@@ -64,30 +64,18 @@ class Player {
         canvasContext.closePath();
     }
     
+    setTo(options) {
+        this.name = options.name;
+        this.score = options.score;
+    }
+    
     checkCollisionWith(obj) {
         obj.checkCollisionWith(this);
     }
         
     update() {
         this.checkInput();
-        
-        if(this.x > width + this.radius) {
-           this.x = 0 - this.radius;
-        }
-        if(this.x < 0 - this.radius) {
-           this.x = width + this.radius;
-        }
-        if(this.y > height + heightUI + this.radius) {
-           this.y = 0 - this.radius;
-        }
-        if(this.y < 0 - this.radius) {
-            this.y = height + heightUI + this.radius;
-        }
-    }
-    
-    setTo(options) {
-        this.name = options.name;
-        this.score = options.score;
+        this.checkOutOfBounds();
     }
     
     checkInput() {
@@ -119,6 +107,21 @@ class Player {
         }
     }
     
+    checkOutOfBounds() {
+        if(this.x > width + this.radius) {
+           this.x = 0 - this.radius;
+        }
+        if(this.x < 0 - this.radius) {
+           this.x = width + this.radius;
+        }
+        if(this.y > height + heightUI + this.radius) {
+           this.y = 0 - this.radius;
+        }
+        if(this.y < 0 - this.radius) {
+            this.y = height + heightUI + this.radius;
+        }
+    }
+    
     moveX(d) {
         this.x += d;
     }
@@ -132,30 +135,61 @@ class Player {
     }
 }
 
-class Collectibles {
-    constructor() {
-        this.counter = 0;
-        this.updateCounter = setInterval((() => this.counter++), 1000);
-        this.spawnTime = 0;
-        this.amountAtSpawn = 0;
+class ProgressionSystem {
+    constructor(inPlayerRef) {
+        this.player = inPlayerRef;
         
-        this.spawner = new Spawner();
-        
-        this.counterTextFiel = new TextField({
-            
-        });
+        this.currentLevel = 0;
+        this.activeLevels = [new Collectibles("BasicTri")];
     }
     
     update() {
-        if(this.spawner.list.length != this.amountAtSpawn) {
-            this.amountAtSpawn = this.spawner.list.length;
-            this.spawnTime = Math.pow((this.amountAtSpawn), 2) / 12;
+        for(let i in this.activeLevels) {
+            this.activeLevels[i].update();
         }
+        
+        // depending on level add new collectibles here
+    }
+    
+    draw() {
+        for(let i in this.activeLevels) {
+            this.activeLevels[i].draw();
+        }
+    }
+    
+    checkCollisionWith(obj) {
+        for(let i in this.activeLevels) {
+            this.activeLevels[i].checkCollisionWith(obj);
+        }
+    }
+}
+
+class Collectibles {
+    constructor(inType) {
+        this.type = inType;  
+        
+        this.counter = 0;
+        this.spawnTime = 0;
+        this.previousAmount = 0;
+        
+        this.spawner = new Spawner(this.type);
+    }
+    
+    update() {
+        this.counter += deltaTime/1000;
+        
+        if(this.spawner.list.length != this.previousAmount) {
+            let counterPrecentage = this.counter / this.spawnTime;
+            this.previousAmount = this.spawner.list.length;
+            this.spawnTime = Math.pow((this.previousAmount), 2) / 12;
+            this.counter = this.spawnTime * counterPrecentage;
+        }
+        
         if(this.counter >= this.spawnTime) {
             this.spawner.spawn();
             this.counter = 0;
-            this.amountAtSpawn = this.spawner.list.length;
-            this.spawnTime = Math.pow((this.amountAtSpawn), 2) / 12;
+            this.previousAmount = this.spawner.list.length;
+            this.spawnTime = Math.pow((this.previousAmount), 2) / 12;
         }
     }   
     
@@ -171,7 +205,9 @@ class Collectibles {
 }
 
 class Spawner {
-    constructor() {
+    constructor(inType) {
+        this.type = inType;
+        
         this.list = [];
     }
     
@@ -182,6 +218,7 @@ class Spawner {
     }
     
     spawn() {
+        // move this to a new class with name saved in "type" and just execute it's spawn fucntion here
         let rx, ry, rr;
         rx = Math.random() * width;
         ry = Math.random() * height;

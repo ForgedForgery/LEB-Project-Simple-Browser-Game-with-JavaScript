@@ -1,9 +1,9 @@
 class SceneManager {
-    constructor(inPlayerReference, inCollectiblesReference) {
+    constructor(inPlayerReference, inProgressionReference) {
         this.currentScenes = [];
         this.allScenes = {
             title: new TitleMenu(inPlayerReference),
-            game: new MainGame(inPlayerReference, inCollectiblesReference),
+            game: new MainGame(inPlayerReference, inProgressionReference),
             store: new StoreMenu()
         };
     }
@@ -49,15 +49,17 @@ class TitleMenu {
                             loginForm.delete();
                         }
                     });
+        
         this.titleText = new TextField({
             x: 400,
             y: 100,
+            hasSide: true,
+            shadowBlur: 5,
             color: titleTextColor,
             sideColor: titleTextSideColor,
             text: "Ressource Collector",
             type: "Ravie",
             size: "55px"
-            
         });
     }
     
@@ -67,7 +69,10 @@ class TitleMenu {
     
     draw() {
         this.drawBG();
+        
         this.titleText.draw();
+        this.titleBGBlur();
+        
         this.startButton.draw();
     }
     
@@ -75,6 +80,21 @@ class TitleMenu {
         canvasContext.fillStyle = titleBGColor;
         canvasContext.rect(0, 0, width, height + heightUI);
         canvasContext.fill();
+    }
+    
+    titleBGBlur() {
+        canvasContext.beginPath();
+        
+        canvasContext.shadowBlur = 100;
+        canvasContext.shadowColor = "black";
+        canvasContext.fillStyle = this.titleText.color;
+        canvasContext.font = this.titleText.size + " " + this.titleText.type;
+        canvasContext.textAlign = this.titleText.align;
+        canvasContext.textBaseline = this.textBaseline;
+        
+        canvasContext.fillText(this.titleText.text, this.titleText.x, this.titleText.y);
+        
+        canvasContext.closePath();
     }
     
 //    draw {
@@ -85,75 +105,80 @@ class TitleMenu {
 }
 
 class MainGame {
-    constructor(inPlayerReference, inCollectiblesReference) {
+    constructor(inPlayerReference, inProgressionReference) {
         this.player = inPlayerReference;
-        this.collectibles = inCollectiblesReference;
-        this.gameUI = new GameUI(this.player);
+        this.progression = inProgressionReference;
+        this.gameUI = new GameUI(this.player, this.progression);
     }
     
     update() {
-        this.collectibles.update();
+        this.progression.update();
         this.player.update();
-        this.player.checkCollisionWith(this.collectibles);
+        this.player.checkCollisionWith(this.progression);
         this.gameUI.update();
     }
     
     draw() {
         this.drawBG();
-        this.collectibles.draw();
+        this.progression.draw();
         this.player.draw();
         this.gameUI.draw();
     }
     
     drawBG() {
+        canvasContext.beginPath();
         canvasContext.fillStyle = gameBGColor;
         canvasContext.rect(0, 0, width, height + heightUI);
         canvasContext.fill();
+        canvasContext.closePath();
     }
 }
 
 class GameUI {
-    constructor(inPlayerReference) {
+    constructor(inPlayerReference, inProgressionReference) {
         this.x = 0;
         this.y = height;
         this.width = width;
         this.height = heightUI;
         
         this.player = inPlayerReference;
-        
-        this.menuButton = new Button({
-            
-        });
+        this.progression = inProgressionReference;
         
         this.saveButton = new Button({
-            x: this.x + 627,
+            x: this.x + 587,
             y: this.y + 25,
             width: 100,
             label: "Save",
             fontSize: "20px",
-            onClick: () => doSave()
+            onClick: () => doSave(),
+            shadowBlur: 5,
+            shadowBlurText: 5
         });
         
         this.shopButton = new Button({
-            x: this.x + 740,
+            x: this.x + 700,
             y: this.y + 25,
             width: 100,
             label: "Shop",
-            fontSize: "20px"
+            fontSize: "20px",
+            shadowBlur: 5,
+            shadowBlurText: 5
         });
         
         this.playerNameField = new TextField({
             x: this.x + 10,
-            y: this.y + 12.5,
+            y: this.y + 13,
             text: this.player.name,
-            align: 'left'
+            align: 'left',
+            shadowBlur: 5
         });
                 
         this.playerScorePreField = new TextField({
             x: this.x + 10,
-            y: this.y + 37.5,
+            y: this.y + 38,
             text: "Score: ",
-            align: 'left'
+            align: 'left',
+            shadowBlur: 5
         });
         
         this.playerScoreField = new TextField({
@@ -161,24 +186,48 @@ class GameUI {
             y: this.y + 37.5,
             color: playerScoreFieldColor,
             text: this.player.score,
-            align: 'start'
+            align: 'left'
+        }); 
+        
+        this.subMenuButton = new Button({
+            x: this.x + width - 20,
+            y: this.y + heightUI - 25,
+            width: 30,
+            heigh: 80
         });
+        
+        this.spawnCooldowns = [];
+        for(let i in this.progression.list) {
+            this.spawnCooldowns.push(new Cooldown({
+                x: this.x + 500,
+                y: this.y + 45,
+                progression: inProgressionReference
+            }));
+        }
     }
     
     update() {
         this.saveButton.update();
         this.shopButton.update();
+        this.subMenuButton.update();
+        
         this.playerNameField.setTextTo(this.player.name);
         this.playerScoreField.setTextTo(this.player.score);
     }
     
     draw() {
         this.drawBackground();
+        
         this.playerNameField.draw();
-        this.saveButton.draw();
-        this.shopButton.draw();
         this.playerScoreField.draw();
         this.playerScorePreField.draw();
+        
+        this.saveButton.draw();
+        this.shopButton.draw();
+        this.subMenuButton.draw();
+        
+        for(let i = 0; i < this.spawnCooldowns.length; i++)
+            this.spawnCooldowns[i].draw();
     }
     
     drawBackground() {
@@ -188,6 +237,21 @@ class GameUI {
         canvasContext.fill();
         canvasContext.closePath();
     }
+  
+//might be useful somewhere else 
+//
+//    drawCircleCooldown() {
+//        canvasContext.beginPath();
+//        canvasContext.moveTo(this.x + 80, this.y + 13);
+//        canvasContext.arc(this.x + 80, this.y + 13, 10, -(Math.PI / 2), (Math.PI * 2 * this.progression.counter / this.progression.spawnTime) - Math.PI / 2);
+//        canvasContext.lineTo(this.x + 80, this.y + 13);
+//        canvasContext.fillStyle = textFieldSideColor;
+//        canvasContext.fill();
+//        canvasContext.strokeStyle = playerScoreFieldColor;
+//        canvasContext.lineWidth = 1;
+//        canvasContext.stroke();
+//        canvasContext.closePath();
+//    }
 }
 
 class StoreMenu {
