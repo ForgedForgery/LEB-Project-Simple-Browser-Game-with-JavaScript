@@ -1,4 +1,4 @@
-const baseCircleSpeed = 2;
+const baseCircleSpeed = 300; // in pixel per second the player can move
 const baseCircleRad = 20;
 const width = 800;
 const heightUI = 50;

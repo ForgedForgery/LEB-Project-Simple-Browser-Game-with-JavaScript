@@ -79,7 +79,7 @@ class Player {
     }
     
     checkInput() {
-        let speed = this.speed + 5;
+        let speed = this.speed;
         
         let keys = playerInput.getKeysDown();
         for (let k in keys) {
@@ -122,12 +122,12 @@ class Player {
         }
     }
     
-    moveX(d) {
-        this.x += d;
+    moveX(distancePerSecond) {
+        this.x += (deltaTime * distancePerSecond);
     }
     
-    moveY(d) {
-        this.y += d;
+    moveY(distancePerSecond) {
+        this.y += (deltaTime * distancePerSecond);
     }
     
     increaseScoreByOne() {
@@ -140,7 +140,7 @@ class ProgressionSystem {
         this.player = inPlayerRef;
         
         this.currentLevel = 0;
-        this.activeLevels = [new Collectibles("BasicTri")];
+        this.activeLevels = [new Level("BasicTri")];
     }
     
     update() {
@@ -148,7 +148,7 @@ class ProgressionSystem {
             this.activeLevels[i].update();
         }
         
-        // depending on level add new collectibles here
+        // depending on level add new Level here
     }
     
     draw() {
@@ -164,19 +164,19 @@ class ProgressionSystem {
     }
 }
 
-class Collectibles {
-    constructor(inType) {
-        this.type = inType;  
+class Level {
+    constructor(enemyType) {
+        this.enemyType = enemyType;  
         
         this.counter = 0;
         this.spawnTime = 0;
         this.previousAmount = 0;
         
-        this.spawner = new Spawner(this.type);
+        this.spawner = new Spawner(this.enemyType);
     }
     
     update() {
-        this.counter += deltaTime/1000;
+        this.counter += deltaTime;
         
         if(this.spawner.list.length != this.previousAmount) {
             let counterPrecentage = this.counter / this.spawnTime;
@@ -205,8 +205,8 @@ class Collectibles {
 }
 
 class Spawner {
-    constructor(inType) {
-        this.type = inType;
+    constructor(enemyType) {
+        this.enemyType = enemyType;
         
         this.list = [];
     }
