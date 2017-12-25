@@ -3,7 +3,6 @@ function init() {
     loginForm = new LoginForm();
     playerInput = new Input();
     game = new ResourceCollector();
-    game.scenes.start(["title"]);
 }
 
 // animations go in here, I think

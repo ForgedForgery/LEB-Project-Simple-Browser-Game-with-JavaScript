@@ -1,6 +1,6 @@
 class SceneManager {
     constructor(inPlayerReference, inProgressionReference) {
-        this.currentScenes = [];
+        this.currentScenes = ["title"];
         this.allScenes = {
             title: new TitleMenu(inPlayerReference),
             game: new MainGame(inPlayerReference, inProgressionReference),
@@ -23,7 +23,7 @@ class SceneManager {
         }
     }
     
-    start(inScenes) {
+    changeTo(inScenes) {
         if(inScenes.isArray)
             this.currentScenes = inScenes;
         else
@@ -45,7 +45,7 @@ class TitleMenu {
                         fontType: "Arial",
                         onClick: function() {
                             game.player.setTo(playerData);
-                            game.scenes.start("game");
+                            game.scenes.changeTo("game");
                             loginForm.delete();
                         }
                     });
@@ -239,7 +239,7 @@ class GameUI {
     }
   
 //might be useful somewhere else 
-//
+//draws a circular timer
 //    drawCircleCooldown() {
 //        canvasContext.beginPath();
 //        canvasContext.moveTo(this.x + 80, this.y + 13);
