@@ -193,14 +193,14 @@ class GameUI {
             x: this.x + width - 20,
             y: this.y + heightUI - 25,
             width: 30,
-            heigh: 80
+            height: 40
         });
         
         this.spawnCooldowns = [];
     }
     
     update() {
-		this.checkCooldowns();
+		this.checkIfNewCooldown();
 		
         this.saveButton.update();
         this.shopButton.update();
@@ -210,7 +210,7 @@ class GameUI {
         this.playerScoreField.setTextTo(this.player.score);
     }
 	
-	checkCooldowns() {
+	checkIfNewCooldown() {
 		let cdAmountToAdd = this.progression.activeLevels.length - this.spawnCooldowns.length;
 		while(cdAmountToAdd > 0) {
 			this.spawnCooldowns.push(new Cooldown({

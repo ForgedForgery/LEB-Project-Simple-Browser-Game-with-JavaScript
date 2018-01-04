@@ -146,7 +146,7 @@ class Cooldown {
         canvasContext.fillRect(this.x, this.y, this.width, this.height);
         
         //bar
-        canvasContext.fillStyle = playerScoreFieldColor;
+        canvasContext.fillStyle = this.level.spawner.color;
         canvasContext.fillRect(this.x, this.y, this.width, (this.level.counter / this.level.spawnTime * this.height));
         
         //border

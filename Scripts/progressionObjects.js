@@ -2,8 +2,9 @@ class ProgressionSystem {
     constructor(inPlayerRef) {
         this.player = inPlayerRef;
         
-        this.currentLevel = 0;
-        this.activeLevels = [new Level("BasicTri")];
+		this.maxLevel = 15;
+        this.currentLevel = 1;
+        this.activeLevels = [new Level("RedTriangles")];
     }
     
     update() {
@@ -11,24 +12,22 @@ class ProgressionSystem {
             this.activeLevels[i].update();
         }
         
-		if(this.player.score > this.getRequiredScore()) {
+		if(this.nextLevelReached() && this.currentLevel <= this.maxLevel) {
 			this.currentLevel++;
-			this.activeLevels.push(new Level(this.generateLevel));
+			this.activeLevels.push(new Level(this.generateLevel()));
 		}
     }
 	
-	getRequiredScore() {
-		let score = 0;
-		
-		score = this.currentLevel * 2;
-		
-		return score;
+	nextLevelReached() {
+		let requiredScore = Math.pow(this.currentLevel, 2) * 4;
+
+		return this.player.score > requiredScore;
 	}
 	
 	generateLevel() {
 		let level = "";
 		
-		level = "BasicTri";
+		level = "BlueTriangles";
 		
 		return level;
 	}
@@ -47,14 +46,12 @@ class ProgressionSystem {
 }
 
 class Level {
-    constructor(enemyType) {
-        this.enemyType = enemyType;  
-        
+    constructor(type) {
         this.counter = 0;
         this.spawnTime = 0;
         this.previousAmount = 0;
         
-        this.spawner = new Spawner(this.enemyType);
+        this.spawner = new Spawner(type);
     }
     
     update() {
@@ -78,57 +75,55 @@ class Level {
     checkCollisionWith(obj) {
         this.spawner.checkCollisionWith(obj);
     }
-    
-    
+
     draw() {
         this.spawner.draw();
     }
 }
 
 class Spawner {
-    constructor(enemyType) {
-        this.enemyType = enemyType;
-        
+    constructor(type) {
+        this.type = type;
+        this.setAttributes();
+		
         this.list = [];
     }
+	
+	setAttributes() {
+		switch(this.type) {
+			case "RedTriangles":
+				this.color = "red";
+				break;
+			case "BlueTriangles":
+				this.color = "blue";
+				break;
+		}
+		
+        this.r = this.randomizeRadius();
+	}
     
     draw() {
         for(let i in this.list) {
             this.list[i].draw();
         }
     }
-    
+	
     spawn() {
         // move this to a new class with name saved in "type" and just execute it's spawn fucntion here
+		// or, you could create specific triangle classes that don't have predefined properties
         let rx, ry, rr;
         rx = Math.random() * width;
         ry = Math.random() * height;
-        rr = this.randomizeRadius();
         this.list.push(new Triangle({
             x: rx,
             y: ry,
-            r: rr
+            r: this.r,
+			color: this.color
         }));
     }
     
     randomizeRadius() {
         return 7 + Math.random() * 25;
-    }
-        
-    spawn5ForTest(){
-        let list = [];
-        let rx, ry, rr;
-        for (let i = 0; i < 5; i++){
-            rx = Math.random() * width;
-            ry = Math.random() * height;
-            rr = 15 + Math.random() * 50;
-            list.push(new Triangle({
-                x: rx,
-                y: ry,
-                r: rr
-            }));
-        }
-        return list;
     }
     
     checkCollisionWith(obj) {
@@ -141,12 +136,34 @@ class Spawner {
     }
 }
 
-class Triangle {
-    constructor(options) {
-        this.x = options.x;
+class Collectible {
+	constructor(options) {
+		this.x = options.x;
         this.y = options.y;
         this.r = options.r;
-        this.hitbox = this.r;
+		this.color = options.color;
+	}
+	
+	draw() {
+		
+	}
+	
+	isCollidedWith(obj) {
+        let dVector = {
+            x: obj.x - this.x,
+            y: obj.y - this.y
+        };
+        let vectorLength = Math.sqrt(dVector.x**2 + dVector.y**2);
+        if(vectorLength <= obj.radius + this.r) {
+            return true;
+        }
+        return false;
+    }
+}
+
+class Triangle extends Collectible {
+    constructor(options) {
+		super(options);
     }
     
     draw(){
@@ -155,10 +172,10 @@ class Triangle {
         canvasContext.lineTo(this.x + this.r, this.y + this.r);
         canvasContext.lineTo(this.x, this.y - this.r);
 
-        canvasContext.fillStyle = collectibleColor;
+        canvasContext.fillStyle = this.color;
         canvasContext.fill();
         canvasContext.closePath();
-        
+
         //draw middle point
 //        canvasContext.beginPath();
 //        canvasContext.rect(obj.x, obj.y, 3, 3)
@@ -166,18 +183,4 @@ class Triangle {
 //        canvasContext.fill();
 //        canvasContext.closePath();
     }
-    
-    isCollidedWith(obj) {
-        let dVector = {
-            x: obj.x - this.x,
-            y: obj.y - this.y,
-        };
-        let vLength = Math.sqrt(dVector.x**2 + dVector.y**2);
-        if (vLength <= obj.radius + this.hitbox) {
-            return true;
-        }
-        return false;
-    }
-    
-    
 }
