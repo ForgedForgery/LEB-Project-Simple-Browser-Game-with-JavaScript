@@ -15,7 +15,9 @@ if (!$conn) {
 $sql = "UPDATE benutzer  SET Score = '$score'  where Benutzername = '$name'";
 $results = mysqli_query($conn, $sql);
 if ($results == 1){
-   echo "The Game has been saved."; 
+    echo '{
+        status: "Game saved."
+    }'; 
 }
 mysqli_close($conn);
 

@@ -53,6 +53,11 @@ function loadData(xhttp) {
 
 function saveData(xhttp) {
     let status = document.getElementById("status");
-    status.innerText = xhttp.responseText;
+    let loadedData = JSON.parse(xhttp.responseText);
+    
+    if(loadedData.status == "Game saved.")
+        status.innerText += "Game has been saved.";
+    else
+        status.innerText += "Failed to save.";
     setTimeout(function(){status.innerText = "";}, 3000);
 }
