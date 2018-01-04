@@ -37,7 +37,7 @@ class TitleMenu {
         
         this.startButton = new Button({
                         x: 400,
-                        y: 210,
+                        y: 540,
                         width: 500,
                         height: 70,
                         label: "Start Game",
@@ -61,10 +61,18 @@ class TitleMenu {
             type: "Ravie",
             size: "55px"
         });
+        this.playerNameField = new TextField({
+            x: 650,
+            y: 480,
+            text: "Angemeldet als " + this.player.name,
+            align: 'right',
+            shadowBlur: 5
+        });
     }
     
     update() {
         this.startButton.update();
+        this.playerNameField.setTextTo("Angemeldet als " + this.player.name);
     }
     
     draw() {
@@ -72,7 +80,7 @@ class TitleMenu {
         
         this.titleText.draw();
         this.titleBGBlur();
-        
+        this.playerNameField.draw();      
         this.startButton.draw();
     }
     
@@ -145,18 +153,19 @@ class GameUI {
         this.progression = inProgressionReference;
         
         this.saveButton = new Button({
-            x: this.x + 587,
+            x: this.x + 769,
             y: this.y + 25,
-            width: 100,
+            width: 50,
+            height: 25,
             label: "Save",
-            fontSize: "20px",
+            fontSize: "17px",
             onClick: () => doSave(),
             shadowBlur: 5,
             shadowBlurText: 5
         });
         
         this.shopButton = new Button({
-            x: this.x + 700,
+            x: this.x + 680,
             y: this.y + 25,
             width: 100,
             label: "Shop",
@@ -189,13 +198,6 @@ class GameUI {
             align: 'left'
         }); 
         
-        this.subMenuButton = new Button({
-            x: this.x + width - 20,
-            y: this.y + heightUI - 25,
-            width: 30,
-            heigh: 80
-        });
-        
         this.spawnCooldowns = [];
         for(let i in this.progression.list) {
             this.spawnCooldowns.push(new Cooldown({
@@ -209,7 +211,6 @@ class GameUI {
     update() {
         this.saveButton.update();
         this.shopButton.update();
-        this.subMenuButton.update();
         
         this.playerNameField.setTextTo(this.player.name);
         this.playerScoreField.setTextTo(this.player.score);
@@ -224,7 +225,6 @@ class GameUI {
         
         this.saveButton.draw();
         this.shopButton.draw();
-        this.subMenuButton.draw();
         
         for(let i = 0; i < this.spawnCooldowns.length; i++)
             this.spawnCooldowns[i].draw();
