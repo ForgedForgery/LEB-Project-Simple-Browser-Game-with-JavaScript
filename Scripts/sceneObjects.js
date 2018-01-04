@@ -1,8 +1,8 @@
 class SceneManager {
-    constructor(inPlayerReference, inProgressionReference) {
+    constructor(inPlayerReference, inProgressionReference, inHighscoreReference) {
         this.currentScenes = ["title"];
         this.allScenes = {
-            title: new TitleMenu(inPlayerReference),
+            title: new TitleMenu(inPlayerReference, inHighscoreReference),
             game: new MainGame(inPlayerReference, inProgressionReference),
             store: new StoreMenu()
         };
@@ -32,9 +32,9 @@ class SceneManager {
 }
 
 class TitleMenu {
-    constructor(inPlayerReference) {
+    constructor(inPlayerReference,inHighscoreReference ) {
         this.player = inPlayerReference;
-        
+        this.highscore = inHighscoreReference;
         this.startButton = new Button({
                         x: 400,
                         y: 540,
@@ -48,6 +48,17 @@ class TitleMenu {
                             game.scenes.changeTo("game");
                             loginForm.delete();
                         }
+                    });
+        
+        this.highscoreButton =new Button({
+                        x: 400,
+                        y: 340,
+                        width: 500,
+                        height: 70,
+                        label: "See the Highscore",
+                        fontSize: "40px",
+                        fontType: "Arial",
+                        onClick: () => doHighscore(),
                     });
         
         this.titleText = new TextField({
@@ -68,11 +79,20 @@ class TitleMenu {
             align: 'right',
             shadowBlur: 5
         });
+        this.higscoreOneField = new TextField({
+            x: 600,
+            y: 400,
+            text: "Highscore von ", + this.highscore.name1,
+            align: 'right',
+            shadowBlur: 5
+        });
     }
     
     update() {
         this.startButton.update();
+        this.highscoreButton.update();
         this.playerNameField.setTextTo("Angemeldet als " + this.player.name);
+        this.higscoreOneField.setTextTo("Highscore von" + this.highscore.name1);
     }
     
     draw() {
@@ -82,6 +102,8 @@ class TitleMenu {
         this.titleBGBlur();
         this.playerNameField.draw();      
         this.startButton.draw();
+        this.highscoreButton.draw();
+        this.higscoreOneField.draw();
     }
     
     drawBG() {

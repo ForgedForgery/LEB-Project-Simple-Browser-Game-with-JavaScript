@@ -60,6 +60,14 @@ var lastTick = (new Date).getTime();
 var deltaTime;
 var playerInput;
 var loginForm;
+var highscore = {
+    name1: "Nicht vorhanden",
+    score1: 0,
+    name2: "Nicht vorhanden",
+    score2: 0,
+    name3: "Nicht vorhanden",
+    score3: 0
+};
 var playerData = {
     name: "Guest",
     score: 0

@@ -16,6 +16,10 @@ function doLogin() {
     loadPHP("Scripts/loadData.php?user=" + document.getElementById("nameInput").value + "&pass=" + document.getElementById("passInput").value, loadData);
 }
 
+function doHighscore() {
+    loadPHP("Scripts/loadHighscore.php", highscoreData);   
+}
+
 function doSave() {
     playerData.name = game.player.name;
     playerData.score = game.player.score;
@@ -50,6 +54,23 @@ function loadData(xhttp) {
     status.innerText += "Logged in as " + playerData.name + "...";
     setTimeout(function(){status.innerText = "";}, 3000);
 }
+
+function highscoreData(xhttp) {
+    let loadedData = JSON.parse(xhttp.responseText);
+    highscoreData = {
+        name1: loadedData.name1,
+        score1: loadedData.score1,
+        name2: loadedData.name2,
+        score2: loadedData.score2,
+        name3: loadedData.name3,
+        score3: loadedData.score3
+    };  
+    game.highscore.setTo(highscoreData);
+   
+    
+    let status = document.getElementById("status");
+}
+
 
 function saveData(xhttp) {
     let status = document.getElementById("status");
