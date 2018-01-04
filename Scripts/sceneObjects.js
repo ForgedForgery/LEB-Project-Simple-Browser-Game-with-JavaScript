@@ -197,16 +197,11 @@ class GameUI {
         });
         
         this.spawnCooldowns = [];
-        for(let i in this.progression.list) {
-            this.spawnCooldowns.push(new Cooldown({
-                x: this.x + 500,
-                y: this.y + 45,
-                progression: inProgressionReference
-            }));
-        }
     }
     
     update() {
+		this.checkCooldowns();
+		
         this.saveButton.update();
         this.shopButton.update();
         this.subMenuButton.update();
@@ -214,6 +209,22 @@ class GameUI {
         this.playerNameField.setTextTo(this.player.name);
         this.playerScoreField.setTextTo(this.player.score);
     }
+	
+	checkCooldowns() {
+		let cdAmountToAdd = this.progression.activeLevels.length - this.spawnCooldowns.length;
+		while(cdAmountToAdd > 0) {
+			this.spawnCooldowns.push(new Cooldown({
+				x: width - 300 - (this.spawnCooldowns.length * 20),
+				y: height + 45,
+				levelInstance: this.progression.activeLevels[this.spawnCooldowns.length]
+//				value: this.progression.activeLevels[this.spawnCooldowns.length].counter,
+//				maxValue: this.progression.activeLevels[this.spawnCooldowns.length].spawnTime
+			}));
+			
+			cdAmountToAdd--;
+		}
+			
+	}
     
     draw() {
         this.drawBackground();
