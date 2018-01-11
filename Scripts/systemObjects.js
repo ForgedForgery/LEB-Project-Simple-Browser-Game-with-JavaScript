@@ -39,11 +39,11 @@ class Input {
     }
     
     updateKeys(event, state) {
-        let keyWord = event.keyCode in this.possiblePlayerInput ?
+        let key = event.keyCode in this.possiblePlayerInput ?
                     this.possiblePlayerInput[event.keyCode] :
                     0;
-        if (keyWord != 0) {
-            this.keysHeldDown[keyWord] = state;
+        if (key != 0) {
+            this.keysHeldDown[key] = state;
         }
     }
     
