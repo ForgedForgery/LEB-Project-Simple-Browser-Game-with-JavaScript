@@ -200,7 +200,7 @@ class GameUI {
     }
     
     update() {
-		this.checkIfNewCooldown();
+		this.checkIfNewLevelReached();
 		
         this.saveButton.update();
         this.shopButton.update();
@@ -210,20 +210,20 @@ class GameUI {
         this.playerScoreField.setTextTo(this.player.score);
     }
 	
-	checkIfNewCooldown() {
-		let cdAmountToAdd = this.progression.activeLevels.length - this.spawnCooldowns.length;
-		while(cdAmountToAdd > 0) {
-			this.spawnCooldowns.push(new Cooldown({
+	checkIfNewLevelReached() {
+		let amountToAdd = this.progression.activeLevels.length - this.spawnCooldowns.length;
+		while(amountToAdd > 0) {
+			this.addNewCooldownBar();
+			amountToAdd--;
+		}
+	}
+	
+	addNewCooldownBar() {
+			this.spawnCooldowns.push(new CooldownBar({
 				x: width - 300 - (this.spawnCooldowns.length * 20),
 				y: height + 45,
 				levelInstance: this.progression.activeLevels[this.spawnCooldowns.length]
-//				value: this.progression.activeLevels[this.spawnCooldowns.length].counter,
-//				maxValue: this.progression.activeLevels[this.spawnCooldowns.length].spawnTime
 			}));
-			
-			cdAmountToAdd--;
-		}
-			
 	}
     
     draw() {

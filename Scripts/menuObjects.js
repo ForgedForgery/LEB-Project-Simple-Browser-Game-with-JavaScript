@@ -127,7 +127,7 @@ class TextField {
     }
 }
 
-class Cooldown {
+class CooldownBar {
     constructor(config) {
         this.x = config.x;
         this.y = config.y;
@@ -146,8 +146,8 @@ class Cooldown {
         canvasContext.fillRect(this.x, this.y, this.width, this.height);
         
         //bar
-        canvasContext.fillStyle = this.level.spawner.color;
-        canvasContext.fillRect(this.x, this.y, this.width, (this.level.counter / this.level.spawnTime * this.height));
+        canvasContext.fillStyle = this.level.color;
+        canvasContext.fillRect(this.x, this.y, this.width, (this.level.cooldown.timer / this.level.cooldown.maximum * this.height));
         
         //border
         canvasContext.strokeStyle = textFieldColor;

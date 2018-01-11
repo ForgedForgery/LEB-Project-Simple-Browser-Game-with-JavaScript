@@ -21,9 +21,12 @@ class ProgressionSystem {
 	nextLevelReached() {
 		let requiredScore = Math.pow(this.currentLevel, 2) * 4;
 
-		return this.player.score > requiredScore;
+		return this.player.score  > requiredScore;
 	}
 	
+	
+	// TODO: define proper level generation
+	// 		 will probably not be random and based on a list
 	generateLevel() {
 		let level = "";
 		
@@ -46,47 +49,13 @@ class ProgressionSystem {
 }
 
 class Level {
-    constructor(type) {
-        this.counter = 0;
-        this.spawnTime = 0;
-        this.previousAmount = 0;
-        
-        this.spawner = new Spawner(type);
-    }
-    
-    update() {
-        this.counter += deltaTime;
-        
-        if(this.spawner.list.length != this.previousAmount) {
-            let counterPrecentage = this.counter / this.spawnTime;
-            this.previousAmount = this.spawner.list.length;
-            this.spawnTime = Math.pow((this.previousAmount), 2) / 12;
-            this.counter = this.spawnTime * counterPrecentage;
-        }
-        
-        if(this.counter >= this.spawnTime) {
-            this.spawner.spawn();
-            this.counter = 0;
-            this.previousAmount = this.spawner.list.length;
-            this.spawnTime = Math.pow((this.previousAmount), 2) / 12;
-        }
-    }   
-    
-    checkCollisionWith(obj) {
-        this.spawner.checkCollisionWith(obj);
-    }
-
-    draw() {
-        this.spawner.draw();
-    }
-}
-
-class Spawner {
-    constructor(type) {
-        this.type = type;
+    constructor(inType) {
+        this.type = inType;
         this.setAttributes();
 		
         this.list = [];
+		
+		this.cooldown = new SpawnCooldown();
     }
 	
 	setAttributes() {
@@ -101,13 +70,19 @@ class Spawner {
 		
         this.r = this.randomizeRadius();
 	}
-    
-    draw() {
-        for(let i in this.list) {
-            this.list[i].draw();
-        }
+	
+    randomizeRadius() {
+        return 7 + Math.random() * 25;
     }
 	
+    update() {
+        this.cooldown.tick();
+		
+		if(this.cooldown.isFinished()) {
+            this.spawn();
+        }
+    }
+
     spawn() {
         // move this to a new class with name saved in "type" and just execute it's spawn fucntion here
 		// or, you could create specific triangle classes that don't have predefined properties
@@ -120,67 +95,59 @@ class Spawner {
             r: this.r,
 			color: this.color
         }));
+		
+		this.cooldown.reset(this.list.length);
     }
-    
-    randomizeRadius() {
-        return 7 + Math.random() * 25;
+	
+    draw() {
+        for(let i in this.list) {
+            this.list[i].draw();
+        }
     }
     
     checkCollisionWith(obj) {
         for (let i in this.list) {
             if (this.list[i].isCollidedWith(obj)) {
                 this.list.splice(i, 1);
-                game.player.score++;
+                obj.score++;
+				this.cooldown.adjustTimer(this.list.length);
             }
         }
     }
 }
 
-class Collectible {
-	constructor(options) {
-		this.x = options.x;
-        this.y = options.y;
-        this.r = options.r;
-		this.color = options.color;
+class SpawnCooldown {
+	constructor() {
+		this.timer = 0;
+		this.maximum = 0;
 	}
 	
-	draw() {
+	tick() {
+		if(!this.isFinished())
+			this.timer += deltaTime;
+	}
+	
+	isFinished() {
+		return this.timer >= this.maximum;
+	}
+	
+	reset(spawnAmount) {
+		this.timer = 0;
+		this.maximum = this.generateNewMaximum(spawnAmount);
+	}
+	
+	adjustTimer(spawnAmount) {
+		let previousPercentage = this.getPercentage();
 		
+		this.maximum = this.generateNewMaximum(spawnAmount);
+		this.timer = this.maximum * previousPercentage;
 	}
 	
-	isCollidedWith(obj) {
-        let dVector = {
-            x: obj.x - this.x,
-            y: obj.y - this.y
-        };
-        let vectorLength = Math.sqrt(dVector.x**2 + dVector.y**2);
-        if(vectorLength <= obj.radius + this.r) {
-            return true;
-        }
-        return false;
-    }
-}
-
-class Triangle extends Collectible {
-    constructor(options) {
-		super(options);
-    }
-    
-    draw(){
-        canvasContext.beginPath();
-        canvasContext.moveTo(this.x - this.r, this.y + this.r);
-        canvasContext.lineTo(this.x + this.r, this.y + this.r);
-        canvasContext.lineTo(this.x, this.y - this.r);
-
-        canvasContext.fillStyle = this.color;
-        canvasContext.fill();
-        canvasContext.closePath();
-
-        //draw middle point
-//        canvasContext.beginPath();
-//        canvasContext.rect(obj.x, obj.y, 3, 3)
-//        canvasContext.fillStyle = 'black';
-//        canvasContext.fill();
-//        canvasContext.closePath();
-    }
+	getPercentage() {
+		return this.timer / this.maximum;
+	}
+		
+	generateNewMaximum(spawnAmount) {
+		return Math.pow((spawnAmount), 2) / 12;
+	}
 }
