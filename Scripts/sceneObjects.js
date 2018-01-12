@@ -215,7 +215,13 @@ class HighscoreBoard {
     }
     
     update() {
+        this.firstPlayerName.setTextTo(highscoreData.name1);      
+        this.secondPlayerName.setTextTo(highscoreData.name2);       
+        this.thirdPlayerName.setTextTo(highscoreData.name3);
         
+        this.firstPlayerScore.setTextTo(highscoreData.score1);      
+        this.secondPlayerScore.setTextTo(highscoreData.score2);       
+        this.thirdPlayerScore.setTextTo(highscoreData.score3);
     }
     
     draw() {

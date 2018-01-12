@@ -1,9 +1,9 @@
 // game starts with this
 function init() {
+    doHighscore();
     loginForm = new LoginForm();
     playerInput = new Input();
     game = new ResourceCollector();
-    doHighscore;
     setInterval(doHighscore, 5000);
 }
 
