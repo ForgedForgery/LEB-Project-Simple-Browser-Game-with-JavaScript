@@ -1,8 +1,10 @@
 // game starts with this
 function init() {
+    doHighscore();
     loginForm = new LoginForm();
     playerInput = new Input();
     game = new ResourceCollector();
+    updateHighscoreInterval = setInterval(doHighscore, 5000);
 }
 
 // animations go in here, I think
