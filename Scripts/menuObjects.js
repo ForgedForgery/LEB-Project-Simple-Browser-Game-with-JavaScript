@@ -12,17 +12,23 @@ class Button {
         this.executeBehavior = config.onClick || function() {};
         this.backgroundColor = config.backgroundColor || buttonBGColor;
         
-        if(config.label)
-            this.label = new TextField({
-                    x: this.x,
-                    y: this.y,
-                    shadowColor: config.shadowColorText || false,
-                    shadowBlur: config.shadowBlurText || "5",
-                    text: config.label || false,
-                    size: config.fontSize || false,
-                    type: config.fontType || false,
-                    color: config.fontColor || false
-                });
+        if(config.label) {
+            if(typeof config.label == "string") {
+                this.label = new TextField({
+                        x: this.x,
+                        y: this.y,
+                        shadowColor: config.shadowColorText || false,
+                        shadowBlur: config.shadowBlurText || "5",
+                        text: config.label || false,
+                        size: config.fontSize || false,
+                        type: config.fontType || false,
+                        color: config.fontColor || false
+                    });
+            } else if (config.label instanceof Image) {
+                this.label = config.label;
+                
+            }
+        }
         
         this.hovered = false;
     }
@@ -68,8 +74,15 @@ class Button {
         canvasContext.strokeStyle = "black";
         canvasContext.shadowBlur = 0;
         
-        if(this.label)
-            this.label.draw();       
+        if(this.label instanceof TextField)
+            this.label.draw();  
+        else if((this.label instanceof Image) && this.label.complete) {
+            canvasContext.drawImage(this.label, this.x - 19, this.y - 20, 38, 40);
+            
+            canvasContext.fillStyle = this.hovered ? (playerInput.mouseHold ? "rgba(0, 0, 0, 0.4)" :  "rgba(255, 0, 0, 0.15)") : "rgba(255, 255, 255, 0)";
+            canvasContext.rect(this.x - 19, this.y - 20, 38, 40);
+            canvasContext.fill();
+        }
         
         canvasContext.closePath();
     }
@@ -85,7 +98,7 @@ class TextField {
         this.shadowColor = config.shadowColor || "Black";
         this.shadowBlur = config.shadowBlur || 0;
             
-        this.text = config.text || "No Text";
+        this.text = (config.text === 0 ? "0" : config.text) || "No Text";
         this.size = config.size || "20px";
         this.type = config.type || "Arial";
         

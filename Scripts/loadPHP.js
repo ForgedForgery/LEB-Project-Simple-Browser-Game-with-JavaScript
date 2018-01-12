@@ -17,7 +17,7 @@ function doLogin() {
 }
 
 function doHighscore() {
-    loadPHP("Scripts/loadHighscore.php", highscoreData);   
+    loadPHP("Scripts/loadHighscore.php", handelHighscoreLoading);   
 }
 
 function doSave() {
@@ -55,8 +55,9 @@ function loadData(xhttp) {
     setTimeout(function(){status.innerText = "";}, 3000);
 }
 
-function highscoreData(xhttp) {
+function handelHighscoreLoading(xhttp) {
     let loadedData = JSON.parse(xhttp.responseText);
+    
     highscoreData = {
         name1: loadedData.name1,
         score1: loadedData.score1,
@@ -64,11 +65,7 @@ function highscoreData(xhttp) {
         score2: loadedData.score2,
         name3: loadedData.name3,
         score3: loadedData.score3
-    };  
-    game.highscore.setTo(highscoreData);
-   
-    
-    let status = document.getElementById("status");
+    };
 }
 
 

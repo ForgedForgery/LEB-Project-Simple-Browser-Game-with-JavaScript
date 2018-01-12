@@ -3,6 +3,8 @@ function init() {
     loginForm = new LoginForm();
     playerInput = new Input();
     game = new ResourceCollector();
+    doHighscore;
+    setInterval(doHighscore, 5000);
 }
 
 // animations go in here, I think

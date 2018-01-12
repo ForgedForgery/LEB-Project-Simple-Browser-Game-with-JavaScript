@@ -60,7 +60,7 @@ var lastTick = (new Date).getTime();
 var deltaTime;
 var playerInput;
 var loginForm;
-var highscore = {
+var highscoreData = {
     name1: "Nicht vorhanden",
     score1: 0,
     name2: "Nicht vorhanden",
@@ -75,6 +75,9 @@ var playerData = {
 
 var canvas = document.querySelector('canvas');
 var canvasContext = canvas.getContext('2d');
+
+var disketteImg = new Image(40,40);
+disketteImg.src = "Scripts/Diskette.jpg";   
 
 //key and mouse events
 window.addEventListener('keydown',
