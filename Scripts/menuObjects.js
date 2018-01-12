@@ -84,7 +84,7 @@ class TextField {
 
         this.shadowColor = config.shadowColor || "Black";
         this.shadowBlur = config.shadowBlur || 0;
-            
+        
         this.text = config.text || "No Text";
         this.size = config.size || "20px";
         this.type = config.type || "Arial";
@@ -127,7 +127,7 @@ class TextField {
     }
 }
 
-class Cooldown {
+class CooldownBar {
     constructor(config) {
         this.x = config.x;
         this.y = config.y;
@@ -135,7 +135,7 @@ class Cooldown {
         this.width = config.width || 15;
         this.height = config.height || -40;
         
-        this.progression = config.progression;
+		this.level = config.levelInstance;
     }
     
     draw() {
@@ -146,8 +146,8 @@ class Cooldown {
         canvasContext.fillRect(this.x, this.y, this.width, this.height);
         
         //bar
-        canvasContext.fillStyle = playerScoreFieldColor;
-        canvasContext.fillRect(this.x, this.y, this.width, (this.progression.counter / this.progression.spawnTime * this.height));
+        canvasContext.fillStyle = this.level.color;
+        canvasContext.fillRect(this.x, this.y, this.width, (this.level.cooldown.timer / this.level.cooldown.maximum * this.height));
         
         //border
         canvasContext.strokeStyle = textFieldColor;
@@ -156,4 +156,8 @@ class Cooldown {
         
         canvasContext.closePath();
     }
+	
+	setValuesTo() {
+		
+	}
 }
