@@ -45,6 +45,7 @@ class TitleMenu {
                         fontSize: "40px",
                         fontType: "Arial",
                         onClick: function() {
+							clearInterval(updateHighscoreInterval);
                             game.player.setTo(playerData);
                             game.scenes.changeTo("game");
                             loginForm.delete();

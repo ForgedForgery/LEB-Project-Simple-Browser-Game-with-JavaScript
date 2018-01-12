@@ -4,7 +4,7 @@ function init() {
     loginForm = new LoginForm();
     playerInput = new Input();
     game = new ResourceCollector();
-    setInterval(doHighscore, 5000);
+    var updateHighscoreInterval = setInterval(doHighscore, 5000);
 }
 
 // animations go in here, I think
