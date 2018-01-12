@@ -1,8 +1,8 @@
 class SceneManager {
-    constructor(inPlayerReference, inProgressionReference) {
+    constructor(inPlayerReference, inProgressionReference, inHighscoreReference) {
         this.currentScenes = ["title"];
         this.allScenes = {
-            title: new TitleMenu(inPlayerReference),
+            title: new TitleMenu(inPlayerReference, inHighscoreReference),
             game: new MainGame(inPlayerReference, inProgressionReference),
             store: new StoreMenu()
         };
@@ -32,15 +32,16 @@ class SceneManager {
 }
 
 class TitleMenu {
-    constructor(inPlayerReference) {
+    constructor(inPlayerReference,inHighscoreReference ) {
         this.player = inPlayerReference;
-        
+        this.highscore = inHighscoreReference;
         this.startButton = new Button({
                         x: 400,
-                        y: 210,
+                        y: 540,
                         width: 500,
                         height: 70,
                         label: "Start Game",
+                        backgroundColor: "white",
                         fontSize: "40px",
                         fontType: "Arial",
                         onClick: function() {
@@ -61,19 +62,37 @@ class TitleMenu {
             type: "Ravie",
             size: "55px"
         });
+        this.playerNameField = new TextField({
+            x: 650,
+            y: 480,
+            text: "Angemeldet als " + this.player.name,
+            align: 'right',
+            shadowBlur: 5
+        });
+        
+        this.highscoreBoard = new HighscoreBoard({
+            x: width/2,
+            y: (height + heightUI)/2,
+            height: 200,
+            width: 500
+        });
+
     }
     
     update() {
         this.startButton.update();
+        this.playerNameField.setTextTo("Angemeldet als " + this.player.name);
+        this.highscoreBoard.update();
     }
     
     draw() {
         this.drawBG();
-        
+
         this.titleText.draw();
         this.titleBGBlur();
-        
+        this.playerNameField.draw();      
         this.startButton.draw();
+        this.highscoreBoard.draw();
     }
     
     drawBG() {
@@ -102,6 +121,168 @@ class TitleMenu {
 //        canvasContext.strokeStyle = "blue";
 //        canvasContext.textBaseline = 'middle';
 //        canvasContext.closePath();
+}
+
+class HighscoreBoard {
+    constructor(options) {
+        this.data = highscoreData;
+        this.x = options.x;
+        this.y = options.y;
+        this.height = options.height;
+        this.width = options.width;
+        
+        this.left = this.x - this.width/2;
+        this.top = this.y - this.height/2;
+        
+        this.firstPlace = new TextField({
+            x: this.left + 30,
+            y: this.top + this.height/3 * 0 + this.height/3/2,
+            text: "#1", 
+            align: 'center',
+            shadowBlur: 5
+        });
+        
+        this.secondPlace = new TextField({
+            x: this.left + 30,
+            y: this.top + this.height/3 * 1 + this.height/3/2,
+            text: "#2", 
+            align: 'center',
+            shadowBlur: 5
+        });
+        
+        this.thirdPlace = new TextField({
+            x: this.left + 30,
+            y: this.top + this.height/3 * 2 + this.height/3/2,
+            text: "#3", 
+            align: 'center',
+            shadowBlur: 5
+        });
+        
+        this.firstPlayerName = new TextField({
+            x: this.left + 60 + 30,
+            y: this.top + this.height/3 * 0 + this.height/3/2/2,
+            text: highscoreData.name1, 
+            align: 'left',
+            shadowBlur: 5
+        });
+        this.secondPlayerName = new TextField({
+            x: this.left + 60 + 30,
+            y: this.top + this.height/3 * 1 + this.height/3/2/2,
+            text: highscoreData.name2, 
+            align: 'left',
+            shadowBlur: 5
+        });
+        this.thirdPlayerName = new TextField({
+            x: this.left + 60 + 30,
+            y: this.top + this.height/3 * 2 + this.height/3/2/2,
+            text: highscoreData.name3, 
+            align: 'left',
+            shadowBlur: 5
+        });
+        
+        this.firstPlayerScore = new TextField({
+            x: this.left + 60 + 30,
+            y: this.top + this.height/3 * 0 + this.height/3/2/2*3,
+            text: highscoreData.score1, 
+            align: 'left',
+            shadowBlur: 5
+        });
+        this.secondPlayerScore = new TextField({
+            x: this.left + 60 + 30,
+            y: this.top + this.height/3 * 1 + this.height/3/2/2*3,
+            text: highscoreData.score2, 
+            align: 'left',
+            shadowBlur: 5
+        });
+        this.thirdPlayerScore = new TextField({
+            x: this.left + 60 + 30,
+            y: this.top + this.height/3 * 2 + this.height/3/2/2*3,
+            text: highscoreData.score3, 
+            align: 'left',
+            shadowBlur: 5
+        });
+        
+        this.highscoreText = new TextField ({
+            x: this.left,
+            y: this.top - 15,
+            text: "Highscore",
+            align: 'left',
+            hasSide: true,
+            shadowBlur: 5,
+            type: "Ravie",
+            size: "25px"            
+        });
+    }
+    
+    update() {
+        this.firstPlayerName.setTextTo(highscoreData.name1);      
+        this.secondPlayerName.setTextTo(highscoreData.name2);       
+        this.thirdPlayerName.setTextTo(highscoreData.name3);
+        
+        this.firstPlayerScore.setTextTo(highscoreData.score1);      
+        this.secondPlayerScore.setTextTo(highscoreData.score2);       
+        this.thirdPlayerScore.setTextTo(highscoreData.score3);
+    }
+    
+    draw() {
+        this.drawBase();
+        this.drawGrid();
+        
+        this.highscoreText.draw();
+        
+        this.firstPlace.draw();
+        this.secondPlace.draw();
+        this.thirdPlace.draw();
+        
+        this.firstPlayerName.draw();
+        this.secondPlayerName.draw();
+        this.thirdPlayerName.draw();
+        
+        this.firstPlayerScore.draw();
+        this.secondPlayerScore.draw();
+        this.thirdPlayerScore.draw();
+    }
+    
+    drawBase() {
+        canvasContext.beginPath();
+        canvasContext.shadowColor = "black";
+        canvasContext.shadowBlur = "5";
+        
+        canvasContext.lineWidth = "5";
+        canvasContext.strokeStyle = "white";
+        canvasContext.fillStyle = "white";
+        canvasContext.rect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
+        
+        canvasContext.stroke();
+        canvasContext.fill();
+        
+        canvasContext.lineWidth = "1";
+        canvasContext.strokeStyle = "black";
+        canvasContext.shadowBlur = 0;
+        canvasContext.closePath();
+    }
+    
+    drawGrid() {
+        this.drawHorizontalGridLine(this.top + this.height/3);
+        this.drawHorizontalGridLine(this.top + this.height/3 * 2);
+        this.drawVerticalGridLine(this.left + 60);
+    }
+    
+    drawHorizontalGridLine(h) {
+        canvasContext.beginPath();
+        canvasContext.moveTo(this.left, h);
+        canvasContext.lineTo(this.left + this.width, h);
+        canvasContext.stroke();
+        canvasContext.closePath();
+    }
+    
+    drawVerticalGridLine(b) {
+        canvasContext.beginPath();
+        canvasContext.moveTo(b, this.top);
+        canvasContext.lineTo(b, this.top + this.height);
+        canvasContext.stroke();
+        canvasContext.closePath();
+    }
 }
 
 class MainGame {
@@ -145,18 +326,19 @@ class GameUI {
         this.progression = inProgressionReference;
         
         this.saveButton = new Button({
-            x: this.x + 587,
+            x: this.x + 769,
             y: this.y + 25,
-            width: 100,
-            label: "Save",
-            fontSize: "20px",
+            width: 38,
+            height: 40,
+            label: disketteImg,
+            fontSize: "17px",
             onClick: () => doSave(),
             shadowBlur: 5,
             shadowBlurText: 5
         });
         
         this.shopButton = new Button({
-            x: this.x + 700,
+            x: this.x + 680,
             y: this.y + 25,
             width: 100,
             label: "Shop",
@@ -195,7 +377,7 @@ class GameUI {
             width: 30,
             height: 40
         });
-        
+      
         this.spawnCooldowns = [];
     }
     
@@ -204,7 +386,6 @@ class GameUI {
 		
         this.saveButton.update();
         this.shopButton.update();
-        this.subMenuButton.update();
         
         this.playerNameField.setTextTo(this.player.name);
         this.playerScoreField.setTextTo(this.player.score);
@@ -235,7 +416,6 @@ class GameUI {
         
         this.saveButton.draw();
         this.shopButton.draw();
-        this.subMenuButton.draw();
         
         for(let i = 0; i < this.spawnCooldowns.length; i++)
             this.spawnCooldowns[i].draw();
