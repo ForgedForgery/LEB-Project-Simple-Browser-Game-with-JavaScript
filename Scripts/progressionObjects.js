@@ -1,10 +1,26 @@
+var possibleLevelProperties = {
+	BlueTriangles: function() {
+		return new Triangle({
+			color: "blue",
+			pointsGiven: 20
+		});
+	},
+	RedTriangles: function() {
+		return new Triangle({
+			r: 20,
+			color: "red",
+			pointsGiven: 10
+		});
+	}
+};
+
 class ProgressionSystem {
     constructor(inPlayerRef) {
         this.player = inPlayerRef;
         
 		this.maxLevel = 15;
         this.currentLevel = 1;
-        this.activeLevels = [new Level("RedTriangles")];
+        this.activeLevels = [new Level(possibleLevelProperties["RedTriangles"])];
     }
     
     update() {
@@ -12,27 +28,28 @@ class ProgressionSystem {
             this.activeLevels[i].update();
         }
         
-		if(this.nextLevelReached() && this.currentLevel <= this.maxLevel) {
+		if(this.nextLevelReached()) {
+			this.generateNewLevel();
 			this.currentLevel++;
-			this.activeLevels.push(new Level(this.generateLevel()));
 		}
     }
 	
 	nextLevelReached() {
 		let requiredScore = Math.pow(this.currentLevel, 2) * 4;
 
-		return this.player.score  > requiredScore;
+		return this.player.score > requiredScore && this.currentLevel <= this.maxLevel;
 	}
-	
 	
 	// TODO: define proper level generation
 	// 		 will probably not be random and based on a list
-	generateLevel() {
-		let level = "";
+	generateNewLevel() {
+		let newLevelName;
 		
-		level = "BlueTriangles";
+		newLevelName = "BlueTriangles";
 		
-		return level;
+		//this.activeLevels.push(new Level(newLevelName));
+		
+		this.activeLevels.push(new Level(possibleLevelProperties[newLevelName]));
 	}
     
     draw() {
@@ -49,30 +66,12 @@ class ProgressionSystem {
 }
 
 class Level {
-    constructor(inType) {
-        this.type = inType;
-        this.setAttributes();
+    constructor(createCollectibleFunction) {
+        this.createCollectible = createCollectibleFunction;
 		
         this.list = [];
 		
 		this.cooldown = new SpawnCooldown();
-    }
-	
-	setAttributes() {
-		switch(this.type) {
-			case "RedTriangles":
-				this.color = "red";
-				break;
-			case "BlueTriangles":
-				this.color = "blue";
-				break;
-		}
-		
-        this.r = this.randomizeRadius();
-	}
-	
-    randomizeRadius() {
-        return 7 + Math.random() * 25;
     }
 	
     update() {
@@ -84,19 +83,9 @@ class Level {
     }
 
     spawn() {
-        // move this to a new class with name saved in "type" and just execute it's spawn fucntion here
-		// or, you could create specific triangle classes that don't have predefined properties
-        let rx, ry, rr;
-        rx = Math.random() * width;
-        ry = Math.random() * height;
-        this.list.push(new Triangle({
-            x: rx,
-            y: ry,
-            r: this.r,
-			color: this.color
-        }));
+        this.list.push(this.createCollectible());
 		
-		this.cooldown.reset(this.list.length);
+		this.cooldown.resetBasedOn(this.list.length);
     }
 	
     draw() {
@@ -108,9 +97,9 @@ class Level {
     checkCollisionWith(obj) {
         for (let i in this.list) {
             if (this.list[i].isCollidedWith(obj)) {
+                obj.score += this.list[i].pointsGiven;
                 this.list.splice(i, 1);
-                obj.score++;
-				this.cooldown.adjustTimer(this.list.length);
+				this.cooldown.adjustTimerBasedOn(this.list.length);
             }
         }
     }
@@ -131,12 +120,12 @@ class SpawnCooldown {
 		return this.timer >= this.maximum;
 	}
 	
-	reset(spawnAmount) {
+	resetBasedOn(spawnAmount) {
 		this.timer = 0;
 		this.maximum = this.generateNewMaximum(spawnAmount);
 	}
 	
-	adjustTimer(spawnAmount) {
+	adjustTimerBasedOn(spawnAmount) {
 		let previousPercentage = this.getPercentage();
 		
 		this.maximum = this.generateNewMaximum(spawnAmount);

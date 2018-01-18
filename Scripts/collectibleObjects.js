@@ -1,36 +1,50 @@
 class Collectible {
 	constructor(options) {
-		this.x = options.x;
-        this.y = options.y;
-        this.r = options.r; // radius, also hitbox
+		let rx, ry, rr;
+        rx = Math.random() * width;
+        ry = Math.random() * height;
+		rr = this.randomizeRadius();
+		this.x = options.x || rx;
+        this.y = options.y || ry;
+        this.r = options.r || rr; // radius, also hitbox
+		this.color = options.color;
 		this.pointsGiven = options.pointsGiven;
 	}
+	
+	randomizeRadius() {
+        return 20 - 5 + Math.random() * 10;
+    }
 	
 	draw() {
 		
 	}
 	
 	isCollidedWith(obj) {
-        let dVector = {
-            x: obj.x - this.x,
-            y: obj.y - this.y
-        };
-        let vectorLength = Math.sqrt(dVector.x**2 + dVector.y**2);
-        if(vectorLength <= obj.radius + this.r) {
+		let distance = getDistanceTo(obj);
+		let maximumDistance = obj.radius + this.r;
+        if(distance <= maximumDistance) {
             return true;
         }
         return false;
     }
+	
+	getDistance(obj) {
+		let dVector = {
+            x: obj.x - this.x,
+            y: obj.y - this.y
+        };
+        let vectorLength = Math.sqrt(dVector.x**2 + dVector.y**2);
+	}
 }
 
 class Triangle extends Collectible {
     constructor(options) {
 		super(options);
-		this.color = options.color;
     }
     
     draw(){
         canvasContext.beginPath();
+		
         canvasContext.moveTo(this.x - this.r, this.y + this.r);
         canvasContext.lineTo(this.x + this.r, this.y + this.r);
         canvasContext.lineTo(this.x, this.y - this.r);
@@ -46,4 +60,35 @@ class Triangle extends Collectible {
 //        canvasContext.fill();
 //        canvasContext.closePath();
     }
+}
+
+// TODO: add new forms
+
+// ideas:
+//  new collectible forms: triangle, square, pentagon, octagon, pentagram, hexagram, octagram, crescent
+//                         expand/shrink, rotates
+//  colors gotten from gambling: rainbow gradient, gradients, blinking, pulse
+//  colors for normal levels: plain colors, maybe dual colored
+//  challenging mechanics: running away, collecting at the right time (pulsing object influences speed depending on timing for a bit), players needs to have correct color
+
+class Square extends Collectible {
+	construtor(options) {
+		//super(options);
+		
+	}
+	
+	draw() {
+		
+	}
+}
+
+class Pentagon extends Collectible {
+	construtor(options) {
+		//super(options);
+	}
+	
+	draw() {
+		// step = 2 * Math.PI / 5
+		// this.x + this.r * Math.cos(start + step * i)
+	}
 }
