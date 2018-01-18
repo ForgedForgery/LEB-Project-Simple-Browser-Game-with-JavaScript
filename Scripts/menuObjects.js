@@ -9,6 +9,7 @@ class Button {
         this.width = config.width || 150;
         this.height = config.height || 40;
         
+        this.affectedReference = config.affectedReference;
         this.executeBehavior = config.onClick || function() {};
         this.backgroundColor = config.backgroundColor || buttonBGColor;
         
@@ -37,7 +38,10 @@ class Button {
         this.hovered = this.isHovered();
         
         if(this.hovered && playerInput.upClick) {
-            this.executeBehavior();
+            if(this.executeBehavior.length == 1)
+                this.executeBehavior(this.affectedReference);
+            else
+                this.executeBehavior();
         }
     }
     
@@ -60,7 +64,7 @@ class Button {
     draw() {
         canvasContext.beginPath();  
         canvasContext.shadowColor = this.shadowColor;
-        canvasContext.shadowBlur = this.shadowBlur;
+        //canvasContext.shadowBlur = this.shadowBlur;
         
         canvasContext.lineWidth = "5";
         canvasContext.strokeStyle = this.backgroundColor;
@@ -112,7 +116,7 @@ class TextField {
     
     draw() {
         canvasContext.shadowColor = this.shadowColor;
-        canvasContext.shadowBlur = this.shadowBlur; 
+        //canvasContext.shadowBlur = this.shadowBlur; 
         
         canvasContext.fillStyle = this.color;
         canvasContext.font = this.size + " " + this.type;
@@ -151,7 +155,7 @@ class CooldownBar {
         
 		this.level = config.levelInstance;
     }
-    
+  
     draw() {
         canvasContext.beginPath();
         
