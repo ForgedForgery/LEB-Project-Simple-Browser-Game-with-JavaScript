@@ -1,18 +1,21 @@
-var possibleLevelProperties = {
-	BlueTriangles: function() {
-		return new Triangle({
-			color: "blue",
-			pointsGiven: 20
-		});
+var baseLevels = [
+	{
+		shapeType: "triangle",
+		color: "red"
 	},
-	RedTriangles: function() {
-		return new Triangle({
-			r: 20,
-			color: "red",
-			pointsGiven: 10
-		});
+	{
+		shapeType: "triangle",
+		color: "blue"
+	},
+	{
+		shapeType: "triangle",
+		color: "yellow"
+	},
+	{
+		shapeType: "square",
+		color: "purple"
 	}
-};
+];
 
 class ProgressionSystem {
     constructor(inPlayerRef) {
@@ -20,7 +23,7 @@ class ProgressionSystem {
         
 		this.maxLevel = 15;
         this.currentLevel = 1;
-        this.activeLevels = [new Level(possibleLevelProperties["RedTriangles"])];
+        this.activeLevels = [new Level(baseLevels[0])];
     }
     
     update() {
@@ -39,17 +42,9 @@ class ProgressionSystem {
 
 		return this.player.score > requiredScore && this.currentLevel <= this.maxLevel;
 	}
-	
-	// TODO: define proper level generation
-	// 		 will probably not be random and based on a list
+
 	generateNewLevel() {
-		let newLevelName;
-		
-		newLevelName = "BlueTriangles";
-		
-		//this.activeLevels.push(new Level(newLevelName));
-		
-		this.activeLevels.push(new Level(possibleLevelProperties[newLevelName]));
+		this.activeLevels.push(new Level(baseLevels[this.currentLevel]));
 	}
     
     draw() {
@@ -57,6 +52,14 @@ class ProgressionSystem {
             this.activeLevels[i].draw();
         }
     }
+	
+	// TODO: randomly select a collectible type and replace it with the passed on level
+	randomizeForLevel(level) {
+		let formType = possibleCollectibleShapes[Math.round(Math.random() * (possibleCollectibleShapes.length - 1))];
+		let color = possibleCollectibleColor[Math.round(Math.random() * (possibleCollectibleColor.length - 1))];
+		
+		this.activeLevels[level] = new Collectible({formType: formType, color: color});
+	}
     
     checkCollisionWith(obj) {
         for(let i in this.activeLevels) {
@@ -66,8 +69,9 @@ class ProgressionSystem {
 }
 
 class Level {
-    constructor(createCollectibleFunction) {
-        this.createCollectible = createCollectibleFunction;
+    constructor(levelProperties) {
+        this.form = levelProperties.shapeType;
+		this.color = levelProperties.color;
 		
         this.list = [];
 		
@@ -88,6 +92,10 @@ class Level {
 		this.cooldown.resetBasedOn(this.list.length);
     }
 	
+	createCollectible() {
+		return new Collectible(this.form, this.color, {});
+	}
+	
     draw() {
         for(let i in this.list) {
             this.list[i].draw();
@@ -97,7 +105,7 @@ class Level {
     checkCollisionWith(obj) {
         for (let i in this.list) {
             if (this.list[i].isCollidedWith(obj)) {
-                obj.score += this.list[i].pointsGiven;
+                obj.score += this.list[i].points;
                 this.list.splice(i, 1);
 				this.cooldown.adjustTimerBasedOn(this.list.length);
             }

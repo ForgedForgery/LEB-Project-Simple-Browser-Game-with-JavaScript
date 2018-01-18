@@ -30,6 +30,9 @@ var possibleCollectibleColor = {
 	},
 	yellow: {
 		points: 3
+	},
+	purple: {
+		points: 5
 	}
 };
 
