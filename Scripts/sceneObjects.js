@@ -493,11 +493,11 @@ class RandomizeCollectiblesMenu{
     
     createNewButton() {
         this.levelUpgradeButtons.push(new Button({
-            x: width - 300 - (this.levelUpgradeButtons.length * 20) +7,
-            y: this.y - 20,
+            x: width - 300 - (this.levelUpgradeButtons.length * 20) + 7,
+            y: this.y - 10,
             width: 12,
-            height: 20,
-            label: "R",// TODO: dice picture
+            height: 15,
+            label: diceImg,// TODO: dice picture
             affectedReference: this.progression,
             onClick: function(reference) {
                 reference.randomizeForLevel(this.levelUpgradeButtons.length);

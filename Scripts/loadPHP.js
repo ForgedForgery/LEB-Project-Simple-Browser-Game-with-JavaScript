@@ -57,6 +57,7 @@ function loadData(xhttp) {
 
 function handelHighscoreLoading(xhttp) {
     let loadedData = JSON.parse(xhttp.responseText);
+    console.log(loadedData);
     highscoreData = {
         name1: loadedData.name1,
         score1: loadedData.score1,

@@ -81,10 +81,10 @@ class Button {
         if(this.label instanceof TextField)
             this.label.draw();  
         else if((this.label instanceof Image) && this.label.complete) {
-            canvasContext.drawImage(this.label, this.x - 19, this.y - 20, 38, 40);
+            canvasContext.drawImage(this.label, this.x - this.label.width / 2, this.y - this.label.height / 2, this.label.width, this.label.height);
             
             canvasContext.fillStyle = this.hovered ? (playerInput.mouseHold ? "rgba(0, 0, 0, 0.4)" :  "rgba(255, 0, 0, 0.15)") : "rgba(255, 255, 255, 0)";
-            canvasContext.rect(this.x - 19, this.y - 20, 38, 40);
+            canvasContext.rect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
             canvasContext.fill();
         }
         
@@ -154,11 +154,13 @@ class CooldownBar {
         this.height = config.height || -40;
         
 		this.level = config.levelInstance;
+        
+        this.detailPanel = new DetailPanel();
     }
   
     draw() {
         canvasContext.beginPath();
-        
+
         //background
         canvasContext.fillStyle = textFieldSideColor;
         canvasContext.fillRect(this.x, this.y, this.width, this.height);
@@ -173,9 +175,46 @@ class CooldownBar {
         canvasContext.stroke();
         
         canvasContext.closePath();
+        this.detailPanel.draw();  
     }
 	
 	setValuesTo() {
 		
 	}
+}
+
+class DetailPanel {
+    constroctor(config){
+        this.x = config.x;
+        this.y = config.y;
+        this.width = config.width;
+        this.height = config.height;
+        this.hovered = true;
+    }
+    
+    update(){
+        this.hovered = this.isHovered();
+    }
+    
+    isHovered() {
+        let mouseX = playerInput.mouseX;
+        let mouseY = playerInput.mouseY;
+        let topleftCorner = {
+            x: this.x - this.width/2,
+            y: this.y - this.height/2
+        }
+        
+        return mouseX > topleftCorner.x &&
+            mouseX < (topleftCorner.x + this.width) &&
+            mouseY > topleftCorner.y &&
+            mouseY < (topleftCorner.y + this.height);
+    } 
+    
+    draw(){
+        if(this.hovered){
+            canvasContext.rect(this.x - this.width/2, this.y - this.height/2, this.width, this.height); 
+            canvasContext.fillStyle = this.level.color; 
+            
+        }
+    }
 }
