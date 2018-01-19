@@ -1,10 +1,29 @@
+var baseLevels = [
+	{
+		shapeType: "triangle",
+		color: "red"
+	},
+	{
+		shapeType: "triangle",
+		color: "blue"
+	},
+	{
+		shapeType: "triangle",
+		color: "yellow"
+	},
+	{
+		shapeType: "square",
+		color: "purple"
+	}
+];
+
 class ProgressionSystem {
     constructor(inPlayerRef) {
         this.player = inPlayerRef;
         
 		this.maxLevel = 15;
         this.currentLevel = 1;
-        this.activeLevels = [new Level("RedTriangles")];
+        this.activeLevels = [new Level(baseLevels[0])];
     }
     
     update() {
@@ -12,27 +31,20 @@ class ProgressionSystem {
             this.activeLevels[i].update();
         }
         
-		if(this.nextLevelReached() && this.currentLevel <= this.maxLevel) {
+		if(this.nextLevelReached()) {
+			this.generateNewLevel();
 			this.currentLevel++;
-			this.activeLevels.push(new Level(this.generateLevel()));
 		}
     }
 	
 	nextLevelReached() {
 		let requiredScore = Math.pow(this.currentLevel, 2) * 4;
 
-		return this.player.score  > requiredScore;
+		return this.player.score > requiredScore && this.currentLevel <= this.maxLevel;
 	}
-	
-	
-	// TODO: define proper level generation
-	// 		 will probably not be random and based on a list
-	generateLevel() {
-		let level = "";
-		
-		level = "BlueTriangles";
-		
-		return level;
+
+	generateNewLevel() {
+		this.activeLevels.push(new Level(baseLevels[this.currentLevel]));
 	}
     
     draw() {
@@ -40,6 +52,13 @@ class ProgressionSystem {
             this.activeLevels[i].draw();
         }
     }
+	
+	randomizeForLevel(level) {
+		let formType = possibleCollectibleShapes[Math.round(Math.random() * (possibleCollectibleShapes.length - 1))];
+		let color = possibleCollectibleColor[Math.round(Math.random() * (possibleCollectibleColor.length - 1))];
+		
+		this.activeLevels[level] = new Collectible({formType: formType, color: color});
+	}
     
     checkCollisionWith(obj) {
         for(let i in this.activeLevels) {
@@ -49,30 +68,13 @@ class ProgressionSystem {
 }
 
 class Level {
-    constructor(inType) {
-        this.type = inType;
-        this.setAttributes();
+    constructor(levelProperties) {
+        this.form = levelProperties.shapeType;
+		this.color = levelProperties.color;
 		
         this.list = [];
 		
 		this.cooldown = new SpawnCooldown();
-    }
-	
-	setAttributes() {
-		switch(this.type) {
-			case "RedTriangles":
-				this.color = "red";
-				break;
-			case "BlueTriangles":
-				this.color = "blue";
-				break;
-		}
-		
-        this.r = this.randomizeRadius();
-	}
-	
-    randomizeRadius() {
-        return 7 + Math.random() * 25;
     }
 	
     update() {
@@ -84,20 +86,14 @@ class Level {
     }
 
     spawn() {
-        // move this to a new class with name saved in "type" and just execute it's spawn fucntion here
-		// or, you could create specific triangle classes that don't have predefined properties
-        let rx, ry, rr;
-        rx = Math.random() * width;
-        ry = Math.random() * height;
-        this.list.push(new Triangle({
-            x: rx,
-            y: ry,
-            r: this.r,
-			color: this.color
-        }));
+        this.list.push(this.createCollectible());
 		
-		this.cooldown.reset(this.list.length);
+		this.cooldown.resetBasedOn(this.list.length);
     }
+	
+	createCollectible() {
+		return new Collectible(this.form, this.color, {});
+	}
 	
     draw() {
         for(let i in this.list) {
@@ -108,9 +104,9 @@ class Level {
     checkCollisionWith(obj) {
         for (let i in this.list) {
             if (this.list[i].isCollidedWith(obj)) {
+                obj.score += this.list[i].points;
                 this.list.splice(i, 1);
-                obj.score++;
-				this.cooldown.adjustTimer(this.list.length);
+				this.cooldown.adjustTimerBasedOn(this.list.length);
             }
         }
     }
@@ -131,12 +127,12 @@ class SpawnCooldown {
 		return this.timer >= this.maximum;
 	}
 	
-	reset(spawnAmount) {
+	resetBasedOn(spawnAmount) {
 		this.timer = 0;
 		this.maximum = this.generateNewMaximum(spawnAmount);
 	}
 	
-	adjustTimer(spawnAmount) {
+	adjustTimerBasedOn(spawnAmount) {
 		let previousPercentage = this.getPercentage();
 		
 		this.maximum = this.generateNewMaximum(spawnAmount);
