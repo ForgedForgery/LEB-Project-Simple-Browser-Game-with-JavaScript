@@ -10,6 +10,10 @@ var baseLevels = [
 	{
 		shapeType: "triangle",
 		color: "yellow"
+	},
+	{
+		shapeType: "square",
+		color: "purple"
 	}
 ];
 
@@ -49,9 +53,11 @@ class ProgressionSystem {
         }
     }
 	
-	// TODO: randomly select a collectible type and replace it with the passed on level
 	randomizeForLevel(level) {
+		let formType = possibleCollectibleShapes[Math.round(Math.random() * (possibleCollectibleShapes.length - 1))];
+		let color = possibleCollectibleColor[Math.round(Math.random() * (possibleCollectibleColor.length - 1))];
 		
+		this.activeLevels[level] = new Collectible({formType: formType, color: color});
 	}
     
     checkCollisionWith(obj) {
