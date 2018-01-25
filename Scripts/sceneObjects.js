@@ -60,7 +60,6 @@ class TitleMenu {
             x: 400,
             y: 100,
             hasSide: true,
-            shadowBlur: 5,
             color: titleTextColor,
             sideColor: titleTextSideColor,
             text: "Ressource Collector",
@@ -72,7 +71,6 @@ class TitleMenu {
             y: 480,
             text: "Angemeldet als " + this.player.name,
             align: 'right',
-            shadowBlur: 0
         });
         
         this.highscoreBoard = new HighscoreBoard({
