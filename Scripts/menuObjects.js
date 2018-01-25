@@ -186,7 +186,8 @@ class CooldownBar {
         canvasContext.fillRect(this.x, this.y, this.width, this.height);
         
         //bar
-        canvasContext.fillStyle = this.level.color;
+		if(this.level.list[0])
+        	canvasContext.fillStyle = this.level.list[0].color;
         canvasContext.fillRect(this.x, this.y, this.width, (this.level.cooldown.timer / this.level.cooldown.maximum * this.height));
         
         //border
