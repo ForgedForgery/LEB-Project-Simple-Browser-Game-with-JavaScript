@@ -72,7 +72,7 @@ class TitleMenu {
             y: 480,
             text: "Angemeldet als " + this.player.name,
             align: 'right',
-            shadowBlur: 5
+            shadowBlur: 0
         });
         
         this.highscoreBoard = new HighscoreBoard({
