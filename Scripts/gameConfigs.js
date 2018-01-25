@@ -78,8 +78,11 @@ var playerData = {
 var canvas = document.querySelector('canvas');
 var canvasContext = canvas.getContext('2d');
 
-var disketteImg = new Image(40,40);
+var disketteImg = new Image(40, 40);
 disketteImg.src = "Scripts/Diskette.jpg";   
+
+var diceImg = new Image(15, 15);
+diceImg.src = "Scripts/dice.png";
 
 //key and mouse events
 window.addEventListener('keydown',

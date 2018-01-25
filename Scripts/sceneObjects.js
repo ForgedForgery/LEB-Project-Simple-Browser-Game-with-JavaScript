@@ -1,8 +1,8 @@
 class SceneManager {
-    constructor(inPlayerReference, inProgressionReference, inHighscoreReference) {
+    constructor(inPlayerReference, inProgressionReference) {
         this.currentScenes = ["title"];
         this.allScenes = {
-            title: new TitleMenu(inPlayerReference, inHighscoreReference),
+            title: new TitleMenu(inPlayerReference),
             game: new MainGame(inPlayerReference, inProgressionReference),
             store: new StoreMenu()
         };
@@ -32,25 +32,29 @@ class SceneManager {
 }
 
 class TitleMenu {
-    constructor(inPlayerReference,inHighscoreReference ) {
+    constructor(inPlayerReference) {
         this.player = inPlayerReference;
-        this.highscore = inHighscoreReference;
+        
+        this.createMenuObjects();
+    }
+    
+    createMenuObjects() {
         this.startButton = new Button({
-                        x: 400,
-                        y: 540,
-                        width: 500,
-                        height: 70,
-                        label: "Start Game",
-                        backgroundColor: "white",
-                        fontSize: "40px",
-                        fontType: "Arial",
-                        onClick: function() {
-							clearInterval(updateHighscoreInterval);
-                            game.player.setTo(playerData);
-                            game.scenes.changeTo("game");
-                            loginForm.delete();
-                        }
-                    });
+                x: 400,
+                y: 540,
+                width: 500,
+                height: 70,
+                label: "Start Game",
+                backgroundColor: "white",
+                fontSize: "40px",
+                fontType: "Arial",
+                onClick: function() {
+                    clearInterval(updateHighscoreInterval);
+                    game.player.setTo(playerData);
+                    game.scenes.changeTo("game");
+                    loginForm.delete();
+                }
+            });
         
         this.titleText = new TextField({
             x: 400,
@@ -77,7 +81,6 @@ class TitleMenu {
             height: 200,
             width: 500
         });
-
     }
     
     update() {
@@ -326,6 +329,12 @@ class GameUI {
         this.player = inPlayerReference;
         this.progression = inProgressionReference;
         
+        this.createMenuObjects();
+      
+        this.spawnCooldownBars = [];
+    }
+    
+    createMenuObjects() {
         this.saveButton = new Button({
             x: this.x + 769,
             y: this.y + 25,
@@ -345,7 +354,10 @@ class GameUI {
             label: "Shop",
             fontSize: "20px",
             shadowBlur: 5,
-            shadowBlurText: 5
+            shadowBlurText: 5,
+            onClick: function() {
+                    game.scenes.changeTo("store");
+            }
         });
         
         this.playerNameField = new TextField({
@@ -371,29 +383,20 @@ class GameUI {
             text: this.player.score,
             align: 'left'
         }); 
-        
-        this.subMenuButton = new Button({
-            x: this.x + width - 20,
-            y: this.y + heightUI - 25,
-            width: 30,
-            height: 40
-        });
-      
-        this.spawnCooldowns = [];
     }
     
     update() {
-		this.checkIfNewLevelReached();
-		
+		this.checkIfNewLevelReached();		
         this.saveButton.update();
         this.shopButton.update();
-        
         this.playerNameField.setTextTo(this.player.name);
         this.playerScoreField.setTextTo(this.player.score);
+		for(let i = 0; i < this.spawnCooldownBars.length; i++)
+            this.spawnCooldownBars[i].update();
     }
 	
 	checkIfNewLevelReached() {
-		let amountToAdd = this.progression.activeLevels.length - this.spawnCooldowns.length;
+		let amountToAdd = this.progression.activeLevels.length - this.spawnCooldownBars.length;
 		while(amountToAdd > 0) {
 			this.addNewCooldownBar();
 			amountToAdd--;
@@ -401,25 +404,22 @@ class GameUI {
 	}
 	
 	addNewCooldownBar() {
-			this.spawnCooldowns.push(new CooldownBar({
-				x: width - 300 - (this.spawnCooldowns.length * 20),
+			this.spawnCooldownBars.push(new CooldownBar({
+				x: width - 300 - (this.spawnCooldownBars.length * 20),
 				y: height + 45,
-				levelInstance: this.progression.activeLevels[this.spawnCooldowns.length]
+				levelInstance: this.progression.activeLevels[this.spawnCooldownBars.length]
 			}));
 	}
     
     draw() {
         this.drawBackground();
-        
         this.playerNameField.draw();
         this.playerScoreField.draw();
         this.playerScorePreField.draw();
-        
         this.saveButton.draw();
         this.shopButton.draw();
-        
-        for(let i = 0; i < this.spawnCooldowns.length; i++)
-            this.spawnCooldowns[i].draw();
+        for(let i = 0; i < this.spawnCooldownBars.length; i++)
+            this.spawnCooldownBars[i].draw();
     }
     
     drawBackground() {
@@ -446,6 +446,65 @@ class GameUI {
 //    }
 }
 
+class RandomizeCollectiblesMenu{
+    constructor(gameUIRef, progressionRef, config) {
+        this.gameUI = gameUIRef;
+        this.progression = progressionRef;
+        
+        this.x = config.x;
+        this.y = config.y;
+        this.width = config.width ;
+        this.height = config.height;        
+        this.visible = false;
+        
+        this.levelUpgradeButtons = [];
+    
+        this.randomizeLevelsButton = new Button({
+            x: this.x + width - 265,
+            y: this.y + heightUI - 33,
+            width: 20,
+            height: 20,
+            label: "^",// TODO: dice picture
+            affectedReference: this,
+            onClick: function(reference){
+                reference.visible = reference.visible ? false : true;
+           //     x: width - 300 - (this.spawnCooldownBars.length * 20),
+            }
+        }); 
+    }
+
+    update(){
+        if(this.gameUI.spawnCooldownBars.length > this.levelUpgradeButtons.length)
+            this.createNewButton();
+        
+        if(this.visible)
+            for(let i = 0; i < this.levelUpgradeButtons.length; i++)
+                this.levelUpgradeButtons[i].update();
+        this.randomizeLevelsButton.update(); 
+    } 
+    
+    createNewButton() {
+        this.levelUpgradeButtons.push(new Button({
+            x: width - 300 - (this.levelUpgradeButtons.length * 20) + 7,
+            y: this.y - 10,
+            width: 12,
+            height: 15,
+            label: diceImg,// TODO: dice picture
+            affectedReference: this.progression,
+            onClick: function(reference) {
+                reference.randomizeForLevel(this.levelUpgradeButtons.length);
+            }
+        }));
+    }
+
+    draw(){
+        if(this.visible)
+            for(let i = 0; i < this.levelUpgradeButtons.length; i++)
+                this.levelUpgradeButtons[i].draw();
+        this.randomizeLevelsButton.draw(); 
+    }
+}
+    
 class StoreMenu {
     constructor() {
         
