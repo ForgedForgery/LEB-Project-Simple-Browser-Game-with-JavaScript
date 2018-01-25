@@ -383,23 +383,16 @@ class GameUI {
             text: this.player.score,
             align: 'left'
         }); 
-        
-        this.randomizeCollectiblesMenu = new RandomizeCollectiblesMenu(this , this.progression, {
-            x: this.x,
-            y: this.y,
-            width: this.width,
-            height: 20
-        });
-        
     }
     
     update() {
 		this.checkIfNewLevelReached();		
         this.saveButton.update();
         this.shopButton.update();
-        this.randomizeCollectiblesMenu.update();
         this.playerNameField.setTextTo(this.player.name);
         this.playerScoreField.setTextTo(this.player.score);
+		for(let i = 0; i < this.spawnCooldownBars.length; i++)
+            this.spawnCooldownBars[i].update();
     }
 	
 	checkIfNewLevelReached() {
@@ -420,7 +413,6 @@ class GameUI {
     
     draw() {
         this.drawBackground();
-        this.randomizeCollectiblesMenu.draw();
         this.playerNameField.draw();
         this.playerScoreField.draw();
         this.playerScorePreField.draw();
