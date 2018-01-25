@@ -64,7 +64,7 @@ class Button {
     draw() {
         canvasContext.beginPath();  
         canvasContext.shadowColor = this.shadowColor;
-        //canvasContext.shadowBlur = this.shadowBlur;
+        canvasContext.shadowBlur = this.shadowBlur;
         
         canvasContext.lineWidth = "5";
         canvasContext.strokeStyle = this.backgroundColor;
@@ -116,7 +116,7 @@ class TextField {
     
     draw() {
         canvasContext.shadowColor = this.shadowColor;
-        //canvasContext.shadowBlur = this.shadowBlur; 
+        canvasContext.shadowBlur = 0; 
         
         canvasContext.fillStyle = this.color;
         canvasContext.font = this.size + " " + this.type;
