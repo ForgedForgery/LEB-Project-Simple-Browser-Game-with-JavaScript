@@ -13,22 +13,22 @@ class LoginForm {
 }
 
 function doLogin() {
-    loadPHP("Scripts/loadData.php?user=" + document.getElementById("nameInput").value + "&pass=" + document.getElementById("passInput").value, loadData);
+    loadPHP("scripts/server/loadData.php?user=" + document.getElementById("nameInput").value + "&pass=" + document.getElementById("passInput").value, loadData);
 }
 
-function doHighscore() {
-    loadPHP("Scripts/loadHighscore.php", handelHighscoreLoading);   
+function doLoadHighscore() {
+    loadPHP("scripts/server/loadHighscore.php", handleHighscoreLoading);   
 }
 
 function doSave() {
     playerData.name = game.player.name;
     playerData.score = game.player.score;
-    loadPHP("Scripts/saveData.php?user=" + playerData.name + "&score=" + playerData.score, saveData);
+    loadPHP("scripts/server/saveData.php?user=" + playerData.name + "&score=" + playerData.score, saveData);
 }
 
 function loadPHP(url, cFunction) {
   var xhttp;
-  xhttp=new XMLHttpRequest();
+  xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       cFunction(this);
@@ -55,19 +55,6 @@ function loadData(xhttp) {
     setTimeout(function(){status.innerText = "";}, 3000);
 }
 
-function handelHighscoreLoading(xhttp) {
-    let loadedData = JSON.parse(xhttp.responseText);
-    highscoreData = {
-        name1: loadedData.name1,
-        score1: loadedData.score1,
-        name2: loadedData.name2,
-        score2: loadedData.score2,
-        name3: loadedData.name3,
-        score3: loadedData.score3
-    };
-}
-
-
 function saveData(xhttp) {
     let status = document.getElementById("status");
     let loadedData = JSON.parse(xhttp.responseText);
@@ -77,4 +64,16 @@ function saveData(xhttp) {
     else
         status.innerText += "Failed to save.";
     setTimeout(function(){status.innerText = "";}, 3000);
+}
+
+function handleHighscoreLoading(xhttp) {
+    let loadedData = JSON.parse(xhttp.responseText);
+    highscoreData = {
+        name1: loadedData.name1,
+        score1: loadedData.score1,
+        name2: loadedData.name2,
+        score2: loadedData.score2,
+        name3: loadedData.name3,
+        score3: loadedData.score3
+    };
 }
