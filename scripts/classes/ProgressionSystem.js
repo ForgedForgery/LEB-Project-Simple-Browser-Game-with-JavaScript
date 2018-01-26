@@ -1,22 +1,3 @@
-var baseLevels = [
-	{
-		shapeType: "triangle",
-		color: "red"
-	},
-	{
-		shapeType: "triangle",
-		color: "blue"
-	},
-	{
-		shapeType: "triangle",
-		color: "yellow"
-	},
-	{
-		shapeType: "square",
-		color: "purple"
-	}
-];
-
 class ProgressionSystem {
     constructor(inPlayerRef) {
         this.player = inPlayerRef;

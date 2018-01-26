@@ -1,49 +1,7 @@
-class ResourceCollector {
-    constructor() {     
-        let playerOptions =
-            {
-            name: playerData.name,
-            score: playerData.score
-            //radius: 5,
-            //speed: 1
-            };      
-        
-        this.player = new Player(playerOptions);
-        this.progression = new ProgressionSystem(this.player);
-        
-        this.scenes = new SceneManager(this.player, this.progression);
-        this.screen = new Screen(this.scenes);
-    }
-    
-    update() {
-        playerInput.update();
-        this.scenes.update();
-    }
-    
-    draw() {
-        this.screen.draw();
-    }
-}
-
-class Screen {
-    constructor(inSceneObj) {
-        canvas.width = width;
-        canvas.height = height + heightUI;
-        this.scenes = inSceneObj;
-    }
-    
-    draw() {
-        this.clear();
-        this.scenes.draw();
-    }
-        
-    clear() {
-        canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-    }
-}
-
 class Player {
     constructor(options) {
+		this.input = options.input;
+		
         this.radius = options.radius || baseCircleRad;
         this.x = options.x || width/2;
         this.y = options.y || height/2;
@@ -54,7 +12,7 @@ class Player {
     
     draw() {
         canvasContext.beginPath();
-        canvasContext.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+        canvasContext.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         canvasContext.fillStyle = playerColor;
         canvasContext.fill();
         canvasContext.closePath();
@@ -77,7 +35,7 @@ class Player {
     checkInput() {
         let speed = this.speed;
         
-        let keys = playerInput.getKeysDown();
+        let keys = this.input.getKeysDown();
         for (let k in keys) {
             if (keys[k]) {
                 switch(k) {
