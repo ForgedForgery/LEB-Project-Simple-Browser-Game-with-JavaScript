@@ -13,22 +13,22 @@ class LoginForm {
 }
 
 function doLogin() {
-    loadPHP("scripts/server/loadData.php?user=" + document.getElementById("nameInput").value + "&pass=" + document.getElementById("passInput").value, loadData);
+    loadPHP("Scripts/loadData.php?user=" + document.getElementById("nameInput").value + "&pass=" + document.getElementById("passInput").value, loadData);
 }
 
-function doLoadHighscore() {
-    loadPHP("scripts/server/loadHighscore.php", handleHighscoreLoading);   
+function doHighscore() {
+    loadPHP("Scripts/loadHighscore.php", handelHighscoreLoading);   
 }
 
 function doSave() {
     playerData.name = game.player.name;
     playerData.score = game.player.score;
-    loadPHP("scripts/server/saveData.php?user=" + playerData.name + "&score=" + playerData.score, saveData);
+    loadPHP("Scripts/saveData.php?user=" + playerData.name + "&score=" + playerData.score, saveData);
 }
 
 function loadPHP(url, cFunction) {
   var xhttp;
-  xhttp = new XMLHttpRequest();
+  xhttp=new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       cFunction(this);
@@ -55,18 +55,7 @@ function loadData(xhttp) {
     setTimeout(function(){status.innerText = "";}, 3000);
 }
 
-function saveData(xhttp) {
-    let status = document.getElementById("status");
-    let loadedData = JSON.parse(xhttp.responseText);
-    
-    if(loadedData.status == "Game saved.")
-        status.innerText += "Game has been saved.";
-    else
-        status.innerText += "Failed to save.";
-    setTimeout(function(){status.innerText = "";}, 3000);
-}
-
-function handleHighscoreLoading(xhttp) {
+function handelHighscoreLoading(xhttp) {
     let loadedData = JSON.parse(xhttp.responseText);
     highscoreData = {
         name1: loadedData.name1,
@@ -76,4 +65,16 @@ function handleHighscoreLoading(xhttp) {
         name3: loadedData.name3,
         score3: loadedData.score3
     };
+}
+
+
+function saveData(xhttp) {
+    let status = document.getElementById("status");
+    let loadedData = JSON.parse(xhttp.responseText);
+    
+    if(loadedData.status == "Game saved.")
+        status.innerText += "Game has been saved.";
+    else
+        status.innerText += "Failed to save.";
+    setTimeout(function(){status.innerText = "";}, 3000);
 }
