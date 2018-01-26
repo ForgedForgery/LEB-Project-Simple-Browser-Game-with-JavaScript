@@ -16,14 +16,14 @@ function doLogin() {
     loadPHP("scripts/server/loadData.php?user=" + document.getElementById("nameInput").value + "&pass=" + document.getElementById("passInput").value, loadData);
 }
 
-function doLoadHighscore() {
-    loadPHP("scripts/server/loadHighscore.php", handleHighscoreLoading);   
-}
-
 function doSave() {
     playerData.name = game.player.name;
     playerData.score = game.player.score;
     loadPHP("scripts/server/saveData.php?user=" + playerData.name + "&score=" + playerData.score, saveData);
+}
+
+function doLoadHighscore() {
+    loadPHP("scripts/server/loadHighscore.php", handleHighscoreLoading);   
 }
 
 function loadPHP(url, cFunction) {
