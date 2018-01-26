@@ -37,6 +37,64 @@ const purpleColors = {
     C5: "#9D44B5"
 };
 
+var baseLevels = [
+	{
+		shapeType: "triangle",
+		color: "red"
+	},
+	{
+		shapeType: "triangle",
+		color: "blue"
+	},
+	{
+		shapeType: "triangle",
+		color: "yellow"
+	},
+	{
+		shapeType: "square",
+		color: "purple"
+	}
+];
+
+//TODO: draw more shapes
+var possibleCollectibleShapes = {
+	triangle: {
+		points: 3,
+		fn: function() {
+			canvasContext.beginPath();
+
+			canvasContext.moveTo(this.x - this.r, this.y + this.r);
+			canvasContext.lineTo(this.x + this.r, this.y + this.r);
+			canvasContext.lineTo(this.x, this.y - this.r);
+
+			canvasContext.fillStyle = this.color;
+			canvasContext.fill();
+			canvasContext.closePath();
+		}
+	},
+	square: {
+		points: 5,
+		fn: function() {
+			
+		}
+	}
+};
+
+var possibleCollectibleColor = {
+	blue: {
+		points: 1
+	},
+	red: {
+		points: 2
+	},
+	yellow: {
+		points: 3
+	},
+	purple: {
+		points: 5
+	}
+};
+
 const titleTextColor = purpleColors.C5;
 const titleTextSideColor = purpleColors.C2;
 const titleBGColor = paleColors.C4;
@@ -79,10 +137,10 @@ var canvas = document.querySelector('canvas');
 var canvasContext = canvas.getContext('2d');
 
 var disketteImg = new Image(40, 40);
-disketteImg.src = "Scripts/Diskette.jpg";   
+disketteImg.src = "media/Diskette.jpg";   
 
 var diceImg = new Image(15, 15);
-diceImg.src = "Scripts/dice.png";
+diceImg.src = "media/dice.png";
 
 //key and mouse events
 window.addEventListener('keydown',
