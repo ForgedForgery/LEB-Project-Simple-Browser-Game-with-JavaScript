@@ -1,3 +1,4 @@
+// TODO: test mouse position and detection of hovering
 class CooldownBar {
     constructor(config) {
         this.x = config.x;
@@ -39,8 +40,8 @@ class CooldownBar {
         canvasContext.fillRect(this.x, this.y, this.width, this.height);
         
         //bar
-		if(this.level.list[0])
-        	canvasContext.fillStyle = this.level.list[0].color;
+	if(this.level.list[0])
+        	canvasContext.fillStyle = this.level.color;
         canvasContext.fillRect(this.x, this.y, this.width, (this.level.cooldown.timer / this.level.cooldown.maximum * this.height));
         
         //border
