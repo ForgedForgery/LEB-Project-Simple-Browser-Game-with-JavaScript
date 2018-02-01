@@ -1,3 +1,33 @@
+class MainGame {
+    constructor(inPlayerReference, inProgressionReference) {
+        this.player = inPlayerReference;
+        this.progression = inProgressionReference;
+        this.gameUI = new GameUI(this.player, this.progression);
+    }
+    
+    update() {
+        this.progression.update();
+        this.player.update();
+        this.player.checkCollisionWith(this.progression);
+        this.gameUI.update();
+    }
+    
+    draw() {
+        this.drawBG();
+        this.progression.draw();
+        this.player.draw();
+        this.gameUI.draw();
+    }
+    
+    drawBG() {
+        canvasContext.beginPath();
+        canvasContext.fillStyle = gameBGColor;
+        canvasContext.rect(0, 0, width, height + heightUI);
+        canvasContext.fill();
+        canvasContext.closePath();
+    }
+}
+
 class GameUI {
     constructor(inPlayerReference, inProgressionReference) {
         this.x = 0;
@@ -11,8 +41,6 @@ class GameUI {
         this.createMenuObjects();
       
         this.spawnCooldownBars = [];
-		
-		this.activeBarDetails;
 		
 		// TODO: add functionality for:
 		// 	"this.barDetail;"
@@ -29,8 +57,7 @@ class GameUI {
             height: 40,
             label: disketteImg,
             fontSize: "17px",
-			affectedReference: this.player,
-            onClick: (ref) => doSave(ref),
+            onClick: () => doSave(),
             shadowBlur: 5,
             shadowBlurText: 5
         });
@@ -74,7 +101,7 @@ class GameUI {
     }
     
     update() {
-		this.checkIfNewBar();		
+		this.checkIfNewLevelReached();		
         this.saveButton.update();
         this.shopButton.update();
         this.playerNameField.setTextTo(this.player.name);
@@ -83,7 +110,7 @@ class GameUI {
             this.spawnCooldownBars[i].update();
     }
 	
-	checkIfNewBar() {
+	checkIfNewLevelReached() {
 		let amountToAdd = this.progression.activeLevels.length - this.spawnCooldownBars.length;
 		while(amountToAdd > 0) {
 			this.addNewCooldownBar();
@@ -106,8 +133,9 @@ class GameUI {
         this.playerScorePreField.draw();
         this.saveButton.draw();
         this.shopButton.draw();
-		this.drawBars();
-	}
+        for(let i = 0; i < this.spawnCooldownBars.length; i++)
+            this.spawnCooldownBars[i].draw();
+    }
     
     drawBackground() {
         canvasContext.beginPath();
@@ -116,17 +144,6 @@ class GameUI {
         canvasContext.fill();
         canvasContext.closePath();
     }
-	
-	drawBars() {
-		this.activeBarDetails = null;
-        for(let i = 0; i < this.spawnCooldownBars.length; i++) {
-			if(this.spawnCooldownBars[i].detailPanel.active)
-				this.activeBarDetails = this.spawnCooldownBars[i].detailPanel;
-            this.spawnCooldownBars[i].draw();
-		}
-		if(this.activeBarDetails)
-			this.activeBarDetails.draw();
-	}
   
 //might be useful somewhere else 
 //draws a circular timer
@@ -142,5 +159,4 @@ class GameUI {
 //        canvasContext.stroke();
 //        canvasContext.closePath();
 //    }
-	
 }

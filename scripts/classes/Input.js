@@ -9,7 +9,6 @@ class Input {
             40: "DOWN",
             69: "E"
         }
-		this.resetIntervals = {};
         
         this.mouseX = 0;
         this.mouseY = 0;
@@ -18,32 +17,7 @@ class Input {
         this.downClick = false;
         this.mouseHold = false;
         this.prevMouseHold = false;
-		
-		this.addEventListener();
     }
-	
-	addEventListener() {
-		window.addEventListener('keydown',
-			function (event) {
-				playerInput.updateKeys(event, true);
-			});
-		window.addEventListener('keyup',
-			function (event) {
-				playerInput.updateKeys(event, false);
-			});
-		window.addEventListener('mousemove',
-			function (event) {
-				playerInput.updateMouseMove(event);
-			});
-		window.addEventListener('mouseup',
-			function (event) {
-				playerInput.updateMouse(event, false);
-			});
-		window.addEventListener('mousedown',
-			function (event) {
-				playerInput.updateMouse(event, true);
-			});
-	}
     
     update() {        
         if(this.mouseHold && !this.prevMouseHold) {
@@ -59,10 +33,10 @@ class Input {
             this.upClick = false;
         }
     }
-	
-	KeyDown(inKeyWord) {
-		return this.keysHeldDown[inKeyWord];
-	}
+    
+    getKeysDown() {
+        return this.keysHeldDown;
+    }
     
     updateKeys(event, state) {
         let keyWord = event.keyCode in this.possiblePlayerInput ?
@@ -70,17 +44,8 @@ class Input {
                     0;
         if (keyWord != 0) {
             this.keysHeldDown[keyWord] = state;
-			
-			if(state) {
-				if(this.resetIntervals[keyWord])
-					clearInterval(this.resetIntervals[keyWord]);
-				this.resetIntervals[keyWord] = setInterval(() => {
-					this.keysHeldDown[keyWord] = false;
-					clearInterval(this.resetIntervals[keyWord]);
-				}, 500);
-        	}
-    	}
-	}
+        }
+    }
     
     updateMouse(e, state) {
         this.mouseHold = state;
@@ -88,7 +53,7 @@ class Input {
     
     updateMouseMove(e) {
         let rect = canvas.getBoundingClientRect();
-        this.mouseX = e.clientX - rect.left - 4;
-        this.mouseY = e.clientY - rect.top - 4;
+        this.mouseX = e.clientX - rect.left;
+        this.mouseY = e.clientY - rect.top;
     }
 }
