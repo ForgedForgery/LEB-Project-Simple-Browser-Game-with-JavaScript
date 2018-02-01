@@ -1,5 +1,5 @@
 class Collectible {
-	constructor(shapeType, color, dimensions) {
+	constructor(formProperties, colorProperties, dimensions) {
 		let rx, ry, rr;
         rx = Math.random() * width;
         ry = Math.random() * height;
@@ -8,12 +8,13 @@ class Collectible {
         this.y = dimensions.y || ry;
         this.r = dimensions.r || rr; // radius, also hitbox
 		
-		this.color = color;
-
-		this.points = possibleCollectibleShapes[shapeType].points;
-		this.points += possibleCollectibleColor[color].points
+		this.color = colorProperties.color;
 		
-		this.draw = possibleCollectibleShapes[shapeType].fn;
+		this.points = 0;
+		this.points += formProperties.points;
+		this.points += colorProperties.points
+		
+		this.draw = formProperties.fn;
 	}
 	
 	randomizeRadius() {

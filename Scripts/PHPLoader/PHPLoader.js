@@ -1,29 +1,15 @@
-class LoginForm {
-    constructor() {
-        this.create();
-    }
-    
-    create() {
-        document.getElementById('login').innerHTML = '<input id="nameInput" type="text" name="user" placeholder="Benutzername"><input id="passInput" type="password" name="pass" placeholder="Passwort"><input type="submit" value="Log-In" onclick="doLogin()">';
-    }
-    
-    delete() {
-        document.getElementById("login").innerHTML = "";
-    }
-}
-
 function doLogin() {
-    loadPHP("scripts/server/loadData.php?user=" + document.getElementById("nameInput").value + "&pass=" + document.getElementById("passInput").value, loadData);
+    loadPHP("Scripts/PHPLoader/PHP Files/loadData.php?user=" + document.getElementById("nameInput").value + "&pass=" + document.getElementById("passInput").value, loadData);
 }
 
-function doSave() {
-    playerData.name = game.player.name;
-    playerData.score = game.player.score;
-    loadPHP("scripts/server/saveData.php?user=" + playerData.name + "&score=" + playerData.score, saveData);
+function doSave(inPlayer) {
+    loadedPlayerData.name = inPlayer.name;
+    loadedPlayerData.score = inPlayer.score;
+    loadPHP("Scripts/PHPLoader/PHP Files/saveData.php?user=" + loadedPlayerData.name + "&score=" + loadedPlayerData.score, saveData);
 }
 
 function doLoadHighscore() {
-    loadPHP("scripts/server/loadHighscore.php", handleHighscoreLoading);   
+    loadPHP("Scripts/PHPLoader/PHP Files/loadHighscore.php", handleHighscoreLoading);   
 }
 
 function loadPHP(url, cFunction) {
@@ -40,18 +26,18 @@ function loadPHP(url, cFunction) {
 
 function loadData(xhttp) {
     let loadedData = JSON.parse(xhttp.responseText);
-    playerData = {
+    loadedPlayerData = {
         name: loadedData.name,
         score: loadedData.score
     };
-    game.player.setTo(playerData);
+	game.player.updateLoadedData();
     
     loginForm.delete();
     
     let status = document.getElementById("status");
     if(loadedData.status == "New account created.")
         status.innerText += "New account created! ";
-    status.innerText += "Logged in as " + playerData.name + "...";
+    status.innerText += "Logged in as " + loadedPlayerData.name + "...";
     setTimeout(function(){status.innerText = "";}, 3000);
 }
 

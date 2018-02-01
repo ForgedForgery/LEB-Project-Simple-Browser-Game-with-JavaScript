@@ -6,6 +6,7 @@ class Player {
         this.x = options.x || width/2;
         this.y = options.y || height/2;
         this.speed = options.speed || baseCircleSpeed;
+		
         this.name = options.name;
         this.score = options.score || 0;
     }
@@ -18,14 +19,10 @@ class Player {
         canvasContext.closePath();
     }
     
-    setTo(options) {
-        this.name = options.name;
-        this.score = options.score;
-    }
-    
-    checkCollisionWith(obj) {
-        obj.checkCollisionWith(this);
-    }
+	updateLoadedData() {
+		this.name = loadedPlayerData.name;
+		this.score = loadedPlayerData.score;
+	}
         
     update() {
         this.checkInput();
@@ -34,32 +31,21 @@ class Player {
     
     checkInput() {
         let speed = this.speed;
-        
-        let keys = this.input.getKeysDown();
-        for (let k in keys) {
-            if (keys[k]) {
-                switch(k) {
-                    case "LEFT":
-                        this.moveX(-speed);
-                        break;
-                    case "RIGHT":
-                        this.moveX(speed);
-                        break;
-                    case "UP":
-                        this.moveY(-speed);
-                        break;
-                    case "DOWN":
-                        this.moveY(speed);
-                        break;
-                    case "E":
-                        this.increaseScoreByOne();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
+        	
+		if(playerInput.KeyDown("LEFT"))
+			this.moveX(-speed);
+		if(playerInput.KeyDown("RIGHT"))
+			this.moveX(speed);
+		if(playerInput.KeyDown("UP"))
+			this.moveY(-speed);
+		if(playerInput.KeyDown("DOWN"))
+			this.moveY(speed);
+		
+		if(playerInput.KeyDown("E"))
+			this.increaseScoreByOne();
     }
+	
+	
     
     checkOutOfBounds() {
         if(this.x > width + this.radius) {

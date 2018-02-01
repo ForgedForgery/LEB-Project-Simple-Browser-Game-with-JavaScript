@@ -1,3 +1,4 @@
+// TODO: could add highscore as menu
 class SceneManager {
     constructor(inPlayerReference, inProgressionReference) {
         this.currentScenes = ["title"];

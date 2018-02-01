@@ -3,8 +3,8 @@ class ResourceCollector {
         let playerOptions =
             {
 			input: inPlayerInput,
-            name: playerData.name,
-            score: playerData.score
+            name: loadedPlayerData.name,
+            score: loadedPlayerData.score
             //radius: 5,
             //speed: 1
             };

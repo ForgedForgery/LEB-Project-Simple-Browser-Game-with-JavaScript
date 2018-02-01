@@ -35,10 +35,10 @@ class ProgressionSystem {
     }
 	
 	randomizeForLevel(level) {
-		let formType = possibleCollectibleShapes[Math.round(Math.random() * (possibleCollectibleShapes.length - 1))];
-		let color = possibleCollectibleColor[Math.round(Math.random() * (possibleCollectibleColor.length - 1))];
+		let formProperties = possibleCollectibleShapes[Math.round(Math.random() * (possibleCollectibleShapes.length - 1))];
+		let colorProperties = possibleCollectibleColor[Math.round(Math.random() * (possibleCollectibleColor.length - 1))];
 		
-		this.activeLevels[level] = new Collectible({formType: formType, color: color});
+		this.activeLevels[level] = new Collectible(formProperties, colorProperties, {});
 	}
     
     checkCollisionWith(obj) {
@@ -50,8 +50,8 @@ class ProgressionSystem {
 
 class Level {
     constructor(levelProperties) {
-        this.form = levelProperties.shapeType;
-		this.color = levelProperties.color;
+        this.formProperties = possibleCollectibleShapes[levelProperties.shapeType];
+		this.colorProperties = possibleCollectibleColor[levelProperties.colorType];
 		
         this.list = [];
 		
@@ -73,7 +73,7 @@ class Level {
     }
 	
 	createCollectible() {
-		return new Collectible(this.form, this.color, {});
+		return new Collectible(this.formProperties, this.colorProperties, {});
 	}
 	
     draw() {

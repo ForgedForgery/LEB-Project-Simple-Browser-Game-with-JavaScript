@@ -1,4 +1,5 @@
-function init() {
+// TODO: make isHovered functions follow DRY principle
+function init() {	
     doLoadHighscore();
     loginForm = new LoginForm();
     playerInput = new Input();
