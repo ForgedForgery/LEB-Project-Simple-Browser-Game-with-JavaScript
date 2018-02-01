@@ -42,7 +42,7 @@ class CooldownBar {
         
         //bar
 		let oldColor = this.level.colorProperties.color.split(',');		
-		let newSolidColor = oldColor[0] + oldColor[1] + oldColor[2] + "1)";
+		let newSolidColor = oldColor[0] + "," + oldColor[1] + "," + oldColor[2] + "," + "1)";
 		canvasContext.fillStyle = newSolidColor;
         canvasContext.fillRect(this.x, this.y, this.width, (this.level.cooldown.timer / this.level.cooldown.maximum * this.height));
         

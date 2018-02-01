@@ -68,18 +68,8 @@ class Input {
         let keyWord = event.keyCode in this.possiblePlayerInput ?
                     this.possiblePlayerInput[event.keyCode] :
                     0;
-        if (keyWord != 0) {
+        if (keyWord != 0)
             this.keysHeldDown[keyWord] = state;
-			
-			if(state) {
-				if(this.resetIntervals[keyWord])
-					clearInterval(this.resetIntervals[keyWord]);
-				this.resetIntervals[keyWord] = setInterval(() => {
-					this.keysHeldDown[keyWord] = false;
-					clearInterval(this.resetIntervals[keyWord]);
-				}, 500);
-        	}
-    	}
 	}
     
     updateMouse(e, state) {
