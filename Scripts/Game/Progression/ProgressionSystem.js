@@ -34,6 +34,7 @@ class ProgressionSystem {
         }
     }
 	
+	// TODO: doesn't work yet
 	randomizeForLevel(level) {
 		let formProperties = possibleCollectibleShapes[Math.round(Math.random() * (possibleCollectibleShapes.length - 1))];
 		let colorProperties = possibleCollectibleColor[Math.round(Math.random() * (possibleCollectibleColor.length - 1))];

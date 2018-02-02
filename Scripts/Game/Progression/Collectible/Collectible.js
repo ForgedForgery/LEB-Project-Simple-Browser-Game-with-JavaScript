@@ -8,12 +8,28 @@ class Collectible {
         this.y = dimensions.y || ry;
         this.r = dimensions.r || rr; // radius, also hitbox
 		
-		this.color = colorProperties.color;
-		
 		this.points = 0;
 		this.points += formProperties.points;
-		this.points += colorProperties.points
+		this.points += colorProperties.points;
 		
+		if(colorProperties.type == "gradient") {
+			let paramsForColor = {
+				x: this.x,
+				y: this.y,
+				r: this.r,
+				type: "radial"
+			};
+			this.color = colorProperties.color(paramsForColor);
+		} else {
+			this.color = colorProperties.color;
+		}
+							
+		this.paramsForForm = {
+			x: this.x,
+			y: this.y,
+			r: this.r,
+			color: this.color
+		};
 		this.draw = formProperties.fn;
 	}
 	
@@ -23,11 +39,8 @@ class Collectible {
 	
 	isCollidedWith(obj) {
 		let distance = this.getDistanceTo(obj);
-		let maximumDistance = obj.radius + this.r;
-        if(distance <= maximumDistance) {
-            return true;
-        }
-        return false;
+		let collisionPoint = (obj.radius + this.r) * 0.9;
+		return distance < collisionPoint;
     }
 	
 	getDistanceTo(obj) {

@@ -27,12 +27,12 @@ class TitleMenu {
             x: 400,
             y: 100,
             hasSide: true,
-			sideThickness: 11,
-            color: titleTextColor,
-            sideColor: titleTextSideColor,
+			sideThickness: 10,
+            color: titleTextSideColor,
+            sideColor: textFieldSideColor,
             text: "Resource Collector",
-            type: "Ravie",
-            size: "55px"
+            type: "Ceviche One",
+            size: "90px"
         });
         this.playerNameField = new TextField({
             x: 650,

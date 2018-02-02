@@ -1,43 +1,47 @@
 var baseLevels = [	
 	{
-		shapeType: "decagon",
-		colorType: "blue"
+		shapeType: "pentagram",
+		colorType: "gradiant"
 	},
 	{
-		shapeType: "triangle",
+		shapeType: "hexagram",
 		colorType: "red"
 	},
 	{
-		shapeType: "square",
+		shapeType: "heptagram",
+		colorType: "yellow"
+	},
+	{
+		shapeType: "octagram",
+		colorType: "green"
+	},	
+	{
+		shapeType: "nonagram",
+		colorType: "blue"
+	},
+	{
+		shapeType: "decagram",
+		colorType: "pink"
+	},
+	{
+		shapeType: "pentagram",
+		colorType: "blue"
+	},
+	{
+		shapeType: "hexagram",
 		colorType: "red"
 	},
 	{
-		shapeType: "triangle",
-		colorType: "red"
-	},
-	{
-		shapeType: "triangle",
-		colorType: "blue"
-	},
-	{
-		shapeType: "square",
-		colorType: "blue"
-	},
-	{
-		shapeType: "pentagon",
-		colorType: "blue"
-	},
-	{
-		shapeType: "square",
+		shapeType: "decagram",
 		colorType: "green"
 	},
 	{
 		shapeType: "pentagon",
-		colorType: "green"
+		colorType: "yellow"
 	},
 	{
 		shapeType: "octagon",
-		colorType: "green"
+		colorType: "pink"
 	},
 	{
 		shapeType: "square",

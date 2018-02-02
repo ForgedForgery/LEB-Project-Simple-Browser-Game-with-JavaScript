@@ -1,4 +1,3 @@
-// TODO: Split this file and/or reorganize it
 const baseCircleSpeed = 300; // in pixel per second the player can move
 const baseCircleRad = 20;
 const width = 800;
