@@ -15,8 +15,8 @@ class CooldownBar {
 			let paramsForColor = {
 				x: this.x,
 				y: this.y + this.height,
-				width: this.x,
-				height: this.y,
+				width: this.x + this.width,
+				height: this.y + this.height,
 				type: "linear"
 			};
 			this.color = this.level.colorProperties.color(paramsForColor);
