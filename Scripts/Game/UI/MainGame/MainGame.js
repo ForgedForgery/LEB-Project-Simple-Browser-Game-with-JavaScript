@@ -8,7 +8,6 @@ class MainGame {
     update() {
         this.progression.update();
         this.player.update();
-        this.progression.checkCollisionWith(this.player);
         this.gameUI.update();
     }
     

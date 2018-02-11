@@ -9,7 +9,6 @@ class Input {
             40: "DOWN",
             69: "E"
         }
-		this.resetIntervals = {};
         
         this.mouseX = 0;
         this.mouseY = 0;
@@ -20,6 +19,48 @@ class Input {
         this.prevMouseHold = false;
 		
 		this.addEventListener();
+    }
+	
+	isMouseInside(inX, inY, inWidth, inHeight) {
+		return 	inX < this.mouseX && this.mouseX < inX + inWidth &&
+            	inY < this.mouseY && this.mouseY < inY + inHeight;
+	}
+	
+    update() {        
+        if(this.mouseHold && !this.prevMouseHold) {
+            this.downClick = true;
+            this.prevMouseHold = true;
+        } else {
+            this.downClick = false;
+        }
+        if(!this.mouseHold && this.prevMouseHold) {
+            this.upClick = true;
+            this.prevMouseHold = false;
+        } else {
+            this.upClick = false;
+        }
+    }
+	
+	KeyDown(inKeyWord) {
+		return this.keysHeldDown[inKeyWord];
+	}
+    
+    updateKeys(event, state) {
+        let keyWord = event.keyCode in this.possiblePlayerInput ?
+                    this.possiblePlayerInput[event.keyCode] :
+                    0;
+        if (keyWord != 0)
+            this.keysHeldDown[keyWord] = state;
+	}
+    
+    updateMouse(e, state) {
+        this.mouseHold = state;
+    }
+    
+    updateMouseMove(e) {
+        let rect = canvas.getBoundingClientRect();
+        this.mouseX = e.clientX - rect.left - 4;
+        this.mouseY = e.clientY - rect.top - 4;
     }
 	
 	addEventListener() {
@@ -44,51 +85,4 @@ class Input {
 				playerInput.updateMouse(event, true);
 			});
 	}
-    
-    update() {        
-        if(this.mouseHold && !this.prevMouseHold) {
-            this.downClick = true;
-            this.prevMouseHold = true;
-        } else {
-            this.downClick = false;
-        }
-        if(!this.mouseHold && this.prevMouseHold) {
-            this.upClick = true;
-            this.prevMouseHold = false;
-        } else {
-            this.upClick = false;
-        }
-    }
-	
-	KeyDown(inKeyWord) {
-		return this.keysHeldDown[inKeyWord];
-	}
-    
-    updateKeys(event, state) {
-        let keyWord = event.keyCode in this.possiblePlayerInput ?
-                    this.possiblePlayerInput[event.keyCode] :
-                    0;
-        if (keyWord != 0) {
-            this.keysHeldDown[keyWord] = state;
-			
-			if(state) {
-				if(this.resetIntervals[keyWord])
-					clearInterval(this.resetIntervals[keyWord]);
-				this.resetIntervals[keyWord] = setInterval(() => {
-					this.keysHeldDown[keyWord] = false;
-					clearInterval(this.resetIntervals[keyWord]);
-				}, 500);
-        	}
-    	}
-	}
-    
-    updateMouse(e, state) {
-        this.mouseHold = state;
-    }
-    
-    updateMouseMove(e) {
-        let rect = canvas.getBoundingClientRect();
-        this.mouseX = e.clientX - rect.left - 4;
-        this.mouseY = e.clientY - rect.top - 4;
-    }
 }

@@ -13,12 +13,6 @@ class GameUI {
         this.spawnCooldownBars = [];
 		
 		this.activeBarDetails;
-		
-		// TODO: add functionality for:
-		// 	"this.barDetail;"
-		// - saves a reference whenever a cooldown bar is hovered
-		// - draws/updates it as long as it has a reference
-		// - delete reference when not hovered
     }
     
     createMenuObjects() {
@@ -94,7 +88,7 @@ class GameUI {
 	addNewCooldownBar() {
 			this.spawnCooldownBars.push(new CooldownBar({
 				x: width - 300 - (this.spawnCooldownBars.length * 20),
-				y: height + 45,
+				y: height + 5,
 				levelInstance: this.progression.activeLevels[this.spawnCooldownBars.length]
 			}));
 	}

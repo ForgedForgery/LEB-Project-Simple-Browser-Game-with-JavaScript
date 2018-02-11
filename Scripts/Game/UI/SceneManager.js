@@ -1,4 +1,5 @@
-// TODO: could add highscore as menu
+// TODO: could add highscore table as menu
+// 	 	 you could open it from the game to see who is on top
 class SceneManager {
     constructor(inPlayerReference, inProgressionReference) {
         this.currentScenes = ["title"];
