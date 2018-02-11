@@ -1,70 +1,92 @@
 var baseLevels = [	
 	{
-		shapeType: "decagon",
-		colorType: "blue"
+		shape: "pentagram",
+		color: ["blue", "red", "green"],
+		pattern: "verticalLines" 
 	},
 	{
-		shapeType: "triangle",
-		colorType: "red"
+		shape: "pentagram",
+		color: ["red", "pink", "yellow", "black"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "square",
-		colorType: "red"
+		shape: "heptagram",
+		color: ["pink"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "triangle",
-		colorType: "red"
+		shape: "octagram",
+		color: ["green"],
+		pattern: "verticalLines"
+	},	
+	{
+		shape: "nonagram",
+		color: ["blue"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "triangle",
-		colorType: "blue"
+		shape: "decagram",
+		color: ["pink"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "square",
-		colorType: "blue"
+		shape: "pentagram",
+		color: ["blue"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "pentagon",
-		colorType: "blue"
+		shape: "hexagram",
+		color: ["red"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "square",
-		colorType: "green"
+		shape: "decagram",
+		color: ["green"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "pentagon",
-		colorType: "green"
+		shape: "pentagon",
+		color: ["yellow"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "octagon",
-		colorType: "green"
+		shape: "octagon",
+		color: ["pink"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "square",
-		colorType: "yellow"
+		shape: "square",
+		color: ["yellow"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "pentagon",
-		colorType: "yellow"
+		shape: "pentagon",
+		color: ["yellow"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "octagon",
-		colorType: "yellow"
+		shape: "octagon",
+		color: ["yellow"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "square",
-		colorType: "purple"
+		shape: "square",
+		color: ["purple"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "pentagon",
-		colorType: "purple"
+		shape: "pentagon",
+		color: ["purple"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "octagon",
-		colorType: "purple"
+		shape: "octagon",
+		color: ["purple"],
+		pattern: "verticalLines"
 	},
 	{
-		shapeType: "pentagram",
-		colorType: "pink"
+		shape: "pentagram",
+		color: ["pink"],
+		pattern: "verticalLines"
 	}
 ];

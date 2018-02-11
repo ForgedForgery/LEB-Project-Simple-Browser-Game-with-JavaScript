@@ -1,3 +1,4 @@
+// TODO: think about creating player configurations outside of this class
 class Player {
     constructor(options) {
 		this.input = options.input;

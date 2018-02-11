@@ -4,18 +4,19 @@ class CooldownBar {
         this.y = config.y;
         
         this.width = config.width || 15;
-        this.height = config.height || -40;
+        this.height = config.height || 40;
 		
 		this.borderWidth = 3;
 		
 		this.hovered = false;
         
 		this.level = config.levelInstance;
+		this.color = createPatternWithCanvas(this.width, this.height, this.level.colorList, this.level.patternProperties.fn);
         
         this.detailPanel = new DetailPanel({
 			x: this.x + this.width / 2,
-			y: this.y + this.height,
-			level: this.level
+			y: this.y,
+			color: this.color
 		});
     }
 	
@@ -35,43 +36,43 @@ class CooldownBar {
 
     draw() {
         canvasContext.beginPath();
+		
+		// offset vars
+		var offset_x = this.x;
+		var offset_y = this.y;
+
+		// offset
+		canvasContext.translate(offset_x, offset_y);
 
         //background
         canvasContext.fillStyle = textFieldSideColor;
-        canvasContext.fillRect(this.x, this.y, this.width, this.height);
+        canvasContext.fillRect(0, 0, this.width, this.height);
         
         //bar
-		let oldColor = this.level.colorProperties.color.split(',');		
-		let newSolidColor = oldColor[0] + "," + oldColor[1] + "," + oldColor[2] + "," + "1)";
-		canvasContext.fillStyle = newSolidColor;
-        canvasContext.fillRect(this.x, this.y, this.width, (this.level.cooldown.timer / this.level.cooldown.maximum * this.height));
+		canvasContext.fillStyle = this.color;
+        canvasContext.fillRect(0, this.height - this.level.cooldown.getPercentage() * this.height, this.width, this.level.cooldown.getPercentage() * this.height);
         
         //border
 		canvasContext.lineWidth = this.borderWidth.toString();
         canvasContext.strokeStyle = textFieldColor;
-        canvasContext.rect(this.x, this.y, this.width, this.height);
+        canvasContext.rect(0, 0, this.width, this.height);
         canvasContext.stroke();
+		
+		// undo offset
+		canvasContext.translate(-offset_x, -offset_y);
 
 		canvasContext.strokeStyle = "black";
         canvasContext.closePath();
     }
 	
 	isHovered() {
-        let mouseX = playerInput.mouseX;
-        let mouseY = playerInput.mouseY;
-        let topleftCorner = {
-            x: this.x - this.borderWidth,
-            y: this.y + this.height - this.borderWidth
-        };
-		let length = {
-			x: this.width + 2 * this.borderWidth,
-			y: -this.height + 2 * this.borderWidth
-		};
-        
-        return mouseX >= topleftCorner.x &&
-            mouseX <= (topleftCorner.x + length.x) &&
-            mouseY >= topleftCorner.y &&
-            mouseY <= (topleftCorner.y + length.y);
+        let left = this.x - this.borderWidth;
+        let top = this.y - this.borderWidth;
+		
+		let width = this.width + 2 * this.borderWidth;
+		let height = this.height + 2 * this.borderWidth;
+		
+		return playerInput.isMouseInside(left, top, width, height);
     } 
 	
 	setValuesTo() {
@@ -87,7 +88,7 @@ class DetailPanel {
         this.width = config.width || 200;
         this.height = config.height || 150;
 		
-		this.level = config.level;
+		this.color = config.color;
 		
 		this.borderWidth = 3;
 		
@@ -100,35 +101,36 @@ class DetailPanel {
     }
 
     isHovered() {
-        let mouseX = playerInput.mouseX;
-        let mouseY = playerInput.mouseY;
-        let topleftCorner = {
-            x: this.x - this.width/2,
-            y: this.y - this.height
-        }
+        let left = this.x - this.width/2,
+            right = this.y - this.height;
 
-		let length = {
-			x: this.width + 2 * this.borderWidth,
-			y: this.height + 2 * this.borderWidth
-		};
+		let width = this.width + 2 * this.borderWidth,
+			height = this.height + 2 * this.borderWidth;
         
-        return mouseX >= topleftCorner.x &&
-            mouseX <= (topleftCorner.x + length.x) &&
-            mouseY >= topleftCorner.y &&
-            mouseY <= (topleftCorner.y + length.y);
+        return playerInput.isMouseInside(left, right, width, height);
     } 
     
     draw(){
         canvasContext.beginPath();
 		
-		canvasContext.rect(this.x - this.width/2, this.y - this.height, this.width, this.height);
-		
-		canvasContext.fillStyle = "black";
+		// offset vars
+		var offset_x = this.x - this.width/2;
+		var offset_y = this.y - this.height;
+
+		// offset
+		canvasContext.translate(offset_x, offset_y);
+
+		//draw
+		canvasContext.rect(0, 0, this.width, this.height);
+		canvasContext.fillStyle = this.color;
 		canvasContext.fill();
 		
 		canvasContext.lineWidth = this.borderWidth.toString();
-		canvasContext.strokeStyle = this.level.color;
+		canvasContext.strokeStyle = this.color;
 		canvasContext.stroke();
+				
+		// undo offset
+		canvasContext.translate(-offset_x, -offset_y);
 		
 		canvasContext.strokeStyle = "black";
         canvasContext.closePath();

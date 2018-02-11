@@ -1,20 +1,24 @@
+//TODO: maybe put color/pattern creation into level instead
+// could create one pattern instance and use translate to draw it in the right place
 class Collectible {
-	constructor(formProperties, colorProperties, dimensions) {
+	constructor(_drawFn, _color, _dimensions) {
 		let rx, ry, rr;
         rx = Math.random() * width;
         ry = Math.random() * height;
 		rr = this.randomizeRadius();
-		this.x = dimensions.x || rx;
-        this.y = dimensions.y || ry;
-        this.r = dimensions.r || rr; // radius, also hitbox
-		
-		this.color = colorProperties.color;
+		this.x = _dimensions.x || rx;
+        this.y = _dimensions.y || ry;
+        this.r = _dimensions.r || rr; // radius, also hitbox
 		
 		this.points = 0;
-		this.points += formProperties.points;
-		this.points += colorProperties.points
 		
-		this.draw = formProperties.fn;
+		this.color = _color;
+		this.draw = _drawFn({
+			x: this.x,
+			y: this.y,
+			r: this.r,
+			color: this.color
+		});
 	}
 	
 	randomizeRadius() {
@@ -23,11 +27,8 @@ class Collectible {
 	
 	isCollidedWith(obj) {
 		let distance = this.getDistanceTo(obj);
-		let maximumDistance = obj.radius + this.r;
-        if(distance <= maximumDistance) {
-            return true;
-        }
-        return false;
+		let collisionPoint = (obj.radius + this.r) * 0.9;
+		return distance < collisionPoint;
     }
 	
 	getDistanceTo(obj) {

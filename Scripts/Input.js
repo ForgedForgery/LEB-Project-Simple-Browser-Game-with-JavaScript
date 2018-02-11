@@ -9,7 +9,6 @@ class Input {
             40: "DOWN",
             69: "E"
         }
-		this.resetIntervals = {};
         
         this.mouseX = 0;
         this.mouseY = 0;
@@ -22,29 +21,11 @@ class Input {
 		this.addEventListener();
     }
 	
-	addEventListener() {
-		window.addEventListener('keydown',
-			function (event) {
-				playerInput.updateKeys(event, true);
-			});
-		window.addEventListener('keyup',
-			function (event) {
-				playerInput.updateKeys(event, false);
-			});
-		window.addEventListener('mousemove',
-			function (event) {
-				playerInput.updateMouseMove(event);
-			});
-		window.addEventListener('mouseup',
-			function (event) {
-				playerInput.updateMouse(event, false);
-			});
-		window.addEventListener('mousedown',
-			function (event) {
-				playerInput.updateMouse(event, true);
-			});
+	isMouseInside(inX, inY, inWidth, inHeight) {
+		return 	inX < this.mouseX && this.mouseX < inX + inWidth &&
+            	inY < this.mouseY && this.mouseY < inY + inHeight;
 	}
-    
+	
     update() {        
         if(this.mouseHold && !this.prevMouseHold) {
             this.downClick = true;
@@ -81,4 +62,27 @@ class Input {
         this.mouseX = e.clientX - rect.left - 4;
         this.mouseY = e.clientY - rect.top - 4;
     }
+	
+	addEventListener() {
+		window.addEventListener('keydown',
+			function (event) {
+				playerInput.updateKeys(event, true);
+			});
+		window.addEventListener('keyup',
+			function (event) {
+				playerInput.updateKeys(event, false);
+			});
+		window.addEventListener('mousemove',
+			function (event) {
+				playerInput.updateMouseMove(event);
+			});
+		window.addEventListener('mouseup',
+			function (event) {
+				playerInput.updateMouse(event, false);
+			});
+		window.addEventListener('mousedown',
+			function (event) {
+				playerInput.updateMouse(event, true);
+			});
+	}
 }

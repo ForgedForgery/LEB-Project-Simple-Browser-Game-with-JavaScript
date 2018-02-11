@@ -5,8 +5,6 @@ class ResourceCollector {
 			input: inPlayerInput,
             name: loadedPlayerData.name,
             score: loadedPlayerData.score
-            //radius: 5,
-            //speed: 1
             };
 		
 		this.input = inPlayerInput;
