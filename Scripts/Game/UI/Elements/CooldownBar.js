@@ -4,29 +4,18 @@ class CooldownBar {
         this.y = config.y;
         
         this.width = config.width || 15;
-        this.height = config.height || -40;
+        this.height = config.height || 40;
 		
 		this.borderWidth = 3;
 		
 		this.hovered = false;
         
 		this.level = config.levelInstance;
-		if(this.level.colorProperties.type == "gradient") {
-			let paramsForColor = {
-				x: this.x,
-				y: this.y + this.height,
-				width: this.x + this.width,
-				height: this.y + this.height,
-				type: "linear"
-			};
-			this.color = this.level.colorProperties.color(paramsForColor);
-		} else {
-			this.color = this.level.colorProperties.color;
-		}
+		this.color = createPatternWithCanvas(this.width, this.height, this.level.colorList, this.level.patternProperties.fn);
         
         this.detailPanel = new DetailPanel({
 			x: this.x + this.width / 2,
-			y: this.y + this.height,
+			y: this.y,
 			color: this.color
 		});
     }
@@ -47,20 +36,30 @@ class CooldownBar {
 
     draw() {
         canvasContext.beginPath();
+		
+		// offset vars
+		var offset_x = this.x;
+		var offset_y = this.y;
+
+		// offset
+		canvasContext.translate(offset_x, offset_y);
 
         //background
         canvasContext.fillStyle = textFieldSideColor;
-        canvasContext.fillRect(this.x, this.y, this.width, this.height);
+        canvasContext.fillRect(0, 0, this.width, this.height);
         
         //bar
 		canvasContext.fillStyle = this.color;
-        canvasContext.fillRect(this.x, this.y, this.width, (this.level.cooldown.timer / this.level.cooldown.maximum * this.height));
+        canvasContext.fillRect(0, this.height - this.level.cooldown.getPercentage() * this.height, this.width, this.level.cooldown.getPercentage() * this.height);
         
         //border
 		canvasContext.lineWidth = this.borderWidth.toString();
         canvasContext.strokeStyle = textFieldColor;
-        canvasContext.rect(this.x, this.y, this.width, this.height);
+        canvasContext.rect(0, 0, this.width, this.height);
         canvasContext.stroke();
+		
+		// undo offset
+		canvasContext.translate(-offset_x, -offset_y);
 
 		canvasContext.strokeStyle = "black";
         canvasContext.closePath();
@@ -68,10 +67,10 @@ class CooldownBar {
 	
 	isHovered() {
         let left = this.x - this.borderWidth;
-        let top = this.y + this.height - this.borderWidth;
+        let top = this.y - this.borderWidth;
 		
 		let width = this.width + 2 * this.borderWidth;
-		let height = -this.height + 2 * this.borderWidth;
+		let height = this.height + 2 * this.borderWidth;
 		
 		return playerInput.isMouseInside(left, top, width, height);
     } 
@@ -114,16 +113,26 @@ class DetailPanel {
     draw(){
         canvasContext.beginPath();
 		
-		canvasContext.rect(this.x - this.width/2, this.y - this.height, this.width, this.height);
-		
+		// offset vars
+		var offset_x = this.x - this.width/2;
+		var offset_y = this.y - this.height;
+
+		// offset
+		canvasContext.translate(offset_x, offset_y);
+
+		//draw
+		canvasContext.rect(0, 0, this.width, this.height);
 		canvasContext.fillStyle = this.color;
 		canvasContext.fill();
 		
 		canvasContext.lineWidth = this.borderWidth.toString();
 		canvasContext.strokeStyle = this.color;
 		canvasContext.stroke();
+				
+		// undo offset
+		canvasContext.translate(-offset_x, -offset_y);
 		
-        canvasContext.closePath();
 		canvasContext.strokeStyle = "black";
+        canvasContext.closePath();
     }
 }

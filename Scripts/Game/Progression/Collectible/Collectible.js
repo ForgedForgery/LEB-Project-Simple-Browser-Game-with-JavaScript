@@ -1,36 +1,24 @@
+//TODO: maybe put color/pattern creation into level instead
+// could create one pattern instance and use translate to draw it in the right place
 class Collectible {
-	constructor(formProperties, colorProperties, dimensions) {
+	constructor(_drawFn, _color, _dimensions) {
 		let rx, ry, rr;
         rx = Math.random() * width;
         ry = Math.random() * height;
 		rr = this.randomizeRadius();
-		this.x = dimensions.x || rx;
-        this.y = dimensions.y || ry;
-        this.r = dimensions.r || rr; // radius, also hitbox
+		this.x = _dimensions.x || rx;
+        this.y = _dimensions.y || ry;
+        this.r = _dimensions.r || rr; // radius, also hitbox
 		
 		this.points = 0;
-		this.points += formProperties.points;
-		this.points += colorProperties.points;
 		
-		if(colorProperties.type == "gradient") {
-			let paramsForColor = {
-				x: this.x,
-				y: this.y,
-				r: this.r,
-				type: "radial"
-			};
-			this.color = colorProperties.color(paramsForColor);
-		} else {
-			this.color = colorProperties.color;
-		}
-							
-		this.paramsForForm = {
+		this.color = _color;
+		this.draw = _drawFn({
 			x: this.x,
 			y: this.y,
 			r: this.r,
 			color: this.color
-		};
-		this.draw = formProperties.fn;
+		});
 	}
 	
 	randomizeRadius() {

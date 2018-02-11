@@ -88,7 +88,7 @@ class GameUI {
 	addNewCooldownBar() {
 			this.spawnCooldownBars.push(new CooldownBar({
 				x: width - 300 - (this.spawnCooldownBars.length * 20),
-				y: height + 45,
+				y: height + 5,
 				levelInstance: this.progression.activeLevels[this.spawnCooldownBars.length]
 			}));
 	}

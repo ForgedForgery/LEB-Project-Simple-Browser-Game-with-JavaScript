@@ -15,7 +15,21 @@ function createNSidedShape(n, step, target) {
 	}
 
 	canvasContext.fillStyle = target.color;
+	
+	// offset vars
+	var offset_x = target.x - target.r;
+	var offset_y = target.y - target.r;
+
+	// offset
+	canvasContext.translate(offset_x, offset_y);
+
+	// draw
+	canvasContext.fillStyle = target.color;
 	canvasContext.fill();
+
+	// undo offset
+	canvasContext.translate(-offset_x, -offset_y);
+	
 	canvasContext.lineWidth = "1";
 	canvasContext.stroke();
 	
@@ -48,144 +62,118 @@ function createNSidedShape(n, step, target) {
 //}
 
 //TODO: draw more shapes
+//TODO: maybe you could just add stuff like 3 for corners and 1 for steps to draw and create the draw methods somewhere else like in Collectibles.js
 var possibleCollectibleShapes = {
 	triangle: {
 		points: 1,
-		fn: function() {
-			createNSidedShape(3, 1, this.paramsForForm);
+		fn: function(_params) {
+			return (function() {
+				createNSidedShape(3, 1, _params); 
+			});
 		}
 	},
 	square: {
 		points: 2,
-		fn: function() {
-			createNSidedShape(4, 1, this.paramsForForm);
+		fn: function(_params) {
+			return (function() {
+				createNSidedShape(4, 1, _params); 
+			});
 		}
 	},
 	pentagon: {
 		points: 3,
-		fn: function() {
-			createNSidedShape(5, 1, this.paramsForForm);
+		fn: function(_params) {
+			return (function() {
+				createNSidedShape(5, 1, _params); 
+			});
 		}
 	},
 	hexagon: {
 		points: 4,
-		fn: function() {
-			createNSidedShape(6, 1, this.paramsForForm);
+		fn: function(_params) {
+			return (function() {
+				createNSidedShape(6, 1, _params); 
+			});
 		}
 	},
 	heptagon: {
 		points: 5,
-		fn: function() {
-			createNSidedShape(7, 1, this.paramsForForm);
+		fn: function(_params) {
+			return (function() {
+				createNSidedShape(7, 1, _params); 
+			});
 		}
 	},
 	octagon: {
 		points: 6,
-		fn: function() {
-			createNSidedShape(8, 1, this.paramsForForm);
+		fn: function(_params) {
+			return (function() {
+				createNSidedShape(8, 1, _params); 
+			});
 		}
 	},
 	nonagon: {
 		points: 6,
-		fn: function() {
-			createNSidedShape(9, 1, this.paramsForForm);
+		fn: function(_params) {
+			return (function() {
+				createNSidedShape(9, 1, _params); 
+			});
 		}
 	},
 	decagon: {
 		points: 7,
-		fn: function() {			
-			createNSidedShape(10, 1, this.paramsForForm);
+		fn: function(_params) {			
+			return (function() {
+				createNSidedShape(10, 1, _params); 
+			});
 		}
 	},
 	pentagram: {
 		points: 8,
-		fn: function() {
-			createNSidedShape(5, 2, this.paramsForForm);
+		fn: function(_params) {
+			return (function() {
+				createNSidedShape(5, 2, _params); 
+			});
 		}
 	},
 	hexagram: {
 		points: 25,
-		fn: function() {
-			createNSidedShape(6, 2, this.paramsForForm);
+		fn: function(_params) {
+			return (function() {
+				createNSidedShape(6, 2, _params); 
+			});
 		}
 	},
 	heptagram: {
 		points: 25,
-		fn: function() {			
-			createNSidedShape(7, 2, this.paramsForForm);
+		fn: function(_params) {			
+			return (function() {
+				createNSidedShape(7, 2, _params); 
+			});
 		}
 	},
 	octagram: {
 		points: 25,
-		fn: function() {			
-			createNSidedShape(8, 3, this.paramsForForm);
+		fn: function(_params) {			
+			return (function() {
+				createNSidedShape(8, 3, _params); 
+			});
 		}
 	},
 	nonagram: {
 		points: 25,
-		fn: function() {			
-			createNSidedShape(9, 2, this.paramsForForm);
+		fn: function(_params) {			
+			return (function() {
+				createNSidedShape(9, 2, _params); 
+			});
 		}
 	},
 	decagram: {
 		points: 9,
-		fn: function() {
-			createNSidedShape(10, 3, this.paramsForForm);
-		}
-	}
-};
-
-function createGradiantAt(target, colorsToAdd) {
-	let grad;
-	if(target.type == "radial")
-		grad = canvasContext.createRadialGradient(target.x, target.y, 0, target.x, target.y , target.r);
-	else if(target.type == "linear") {
-		grad = canvasContext.createLinearGradient(target.x, target.y, target.width, target.height);
-		console.log(target);
-		console.log(playerInput.mouseX + " " + playerInput.mouseY);
-	}
-	
-	for(let color in colorsToAdd) {
-		grad.addColorStop(colorsToAdd[color], color);
-	}
-	return grad;
-}
-
-var possibleCollectibleColor = {
-	blue: {
-		points: 1,
-		color: "rgba(0, 0, 255, 1)"
-	},
-	red: {
-		points: 2,
-		color: "rgba(255, 0, 0, 1)"
-	},
-	yellow: {
-		points: 3,
-		color: "rgba(255, 255, 0, 1)"
-	},
-	purple: {
-		points: 4,
-		color: "rgba(100, 0, 255, 1)"
-	},
-	green: {
-		points: 5,
-		color: "rgba(0, 255, 0, 1)"
-	},
-	pink: {
-		points: 6,
-		color: "rgba(255, 51, 204, 1)"
-	},
-	gradiant: {
-		points: 50,
-		type: "gradient",
-		color: function(params) {
-			let colorsToAdd = {
-				pink: 0,
-				gray: 0.5,
-				yellow: 1,
-			};
-			return createGradiantAt(params, colorsToAdd);
+		fn: function(_params) {
+			return (function() {
+				createNSidedShape(10, 3, _params); 
+			});
 		}
 	}
 };
