@@ -5,12 +5,12 @@ var baseLevels = [
 		pattern: "radialGradient" 
 	},
 	{
-		shape: "pentagram",
+		shape: "hexagon",
 		color: ["red", "pink", "yellow", "black"],
 		pattern: "verticalLines"
 	},
 	{
-		shape: "heptagram",
+		shape: "hexagram",
 		color: ["pink"],
 		pattern: "verticalLines"
 	},

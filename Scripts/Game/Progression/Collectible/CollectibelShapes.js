@@ -1,18 +1,20 @@
 function createNSidedShape(n, step, target) {
 	canvasContext.beginPath();
 	
-	canvasContext.moveTo(target.x + target.r * Math.sin(0), target.y - target.r * Math.cos(0));
-	for(let i = 1; i <= n; i++) {
-		canvasContext.lineTo(target.x + target.r * Math.sin(i * step * 2 * Math.PI / n),
-							 target.y - target.r * Math.cos(i * step * 2 * Math.PI / n));
-	}
 	if(n == 6 && step == 2) {
 		canvasContext.moveTo(target.x + target.r * Math.sin(0), target.y + target.r * Math.cos(0));
 		for(let i = 1; i <= 3; i++) {
 			canvasContext.lineTo(target.x + target.r * Math.sin(i * 2 * Math.PI / 3),
 								 target.y + target.r * Math.cos(i * 2 * Math.PI / 3));
 		}
+        n = 3;
 	}
+    
+    canvasContext.moveTo(target.x + target.r * Math.sin(0), target.y - target.r * Math.cos(0));
+    for(let i = 1; i <= n; i++) {
+        canvasContext.lineTo(target.x + target.r * Math.sin(i * step * 2 * Math.PI / n),
+                             target.y - target.r * Math.cos(i * step * 2 * Math.PI / n));
+    }
 
 	canvasContext.fillStyle = target.color;
 	
