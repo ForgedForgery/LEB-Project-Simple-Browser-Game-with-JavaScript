@@ -9,7 +9,8 @@ function createPatternWithCanvas(_width, _height, _colorList, _drawPattern) {
 	_drawPattern(tempCanvas, tempContext, _colorList);
 	tempContext.closePath();
 	
-	let pattern = canvasContext.createPattern(tempCanvas, "no-repeat");
+	let pattern = canvasContext.createPattern(tempCanvas, "repeat");
+    document.body.appendChild(tempCanvas);
 	return pattern;
 }
 
@@ -30,6 +31,30 @@ var possibleCollectiblePatterns = {
 			}
 		}
 	},
+    linearGradient: {
+        points: 50,
+        fn: function(_canvas, _context, _colorList) {
+			let currentColorIndex = _colorList.length - 1;
+            grad = _context.createLinearGradient(0, 0, _canvas.width, 0);
+            for(let c in _colorList) {
+                grad.addColorStop(0.2 + c / currentColorIndex * 0.6, _colorList[c]);
+            }
+            _context.fillStyle = grad;
+            _context.fillRect(0, 0, _canvas.width, _canvas.height);
+        }   
+    },
+    radialGradient: {
+        points: 50,
+        fn: function(_canvas, _context, _colorList) {
+			let currentColorIndex = _colorList.length - 1;
+            grad = canvasContext.createRadialGradient(_canvas.width / 2, _canvas.height / 2, 0, _canvas.width / 2, _canvas.height / 2 , _canvas.height / 2);
+            for(let c in _colorList) {
+                grad.addColorStop(0.2 + c / currentColorIndex * 0.6, _colorList[c]);
+            }
+            _context.fillStyle = grad;
+            _context.fillRect(0, 0, _canvas.width, _canvas.height);
+        }
+    }
 };
 
 //var drawPattern = {

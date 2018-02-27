@@ -1,8 +1,8 @@
 var baseLevels = [	
 	{
 		shape: "pentagram",
-		color: ["blue", "red", "green"],
-		pattern: "verticalLines" 
+		color: ["lightblue", "blue", "green"],
+		pattern: "radialGradient" 
 	},
 	{
 		shape: "pentagram",

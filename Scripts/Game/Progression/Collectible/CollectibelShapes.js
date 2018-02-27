@@ -19,6 +19,7 @@ function createNSidedShape(n, step, target) {
 	// offset vars
 	var offset_x = target.x - target.r;
 	var offset_y = target.y - target.r;
+    var offset_r = target.patternRotation;
 
 	// offset
 	canvasContext.translate(offset_x, offset_y);
@@ -26,9 +27,12 @@ function createNSidedShape(n, step, target) {
 	// draw
 	canvasContext.fillStyle = target.color;
 	canvasContext.fill();
+    
+	//canvasContext.translate(target.r, target.r);
+    //canvasContext.rotate(target.patternRotation);
 
 	// undo offset
-	canvasContext.translate(-offset_x, -offset_y);
+    canvasContext.setTransform(1, 0, 0, 1, 0, 0);
 	
 	canvasContext.lineWidth = "1";
 	canvasContext.stroke();

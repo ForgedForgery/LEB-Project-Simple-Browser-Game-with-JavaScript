@@ -28,6 +28,10 @@ var possibleCollectibleColors = {
 		points: 6,
 		color: "rgba(255, 51, 204, 1)"
 	},
+    lightblue: {
+        points: 6,
+        color: "rgba(173, 216, 230, 1)"
+    },
 	gray_red_linear: {
 		points: 50,
 		type: "advanced",
