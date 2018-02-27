@@ -16,7 +16,8 @@ class CooldownBar {
         this.detailPanel = new DetailPanel({
 			x: this.x + this.width / 2,
 			y: this.y,
-			color: this.color
+			color: this.color,
+            level: this.level
 		});
     }
 	
@@ -87,18 +88,56 @@ class DetailPanel {
 		
         this.width = config.width || 200;
         this.height = config.height || 150;
-		
+        
+		this.leftSide = this.x - this.width/2;
+		this.topSide = this.y - this.height;
+        this.level = config.level;
 		this.color = config.color;
 		
 		this.borderWidth = 3;
-		
+        
+        this.example = new Collectible(this.level.formProperties.fn, this.level.color, {
+            r: this.level.r,
+            x: this.leftSide,
+            y: this.topSide
+        });
+        
+        this.informationPoints = new TextField({
+            x: this.leftSide ,
+            y: this.topSide,
+            text: "Points: " + this.level.points,
+            align: 'left',
+        });
+        
+        this.informationShape = new TextField({
+            x: this.leftSide,
+            y: this.topSide,
+            text: "Shape: " + this.level.points,
+            align: 'left',
+        });
+        
+        this.informationColor = new TextField({
+            x: this.leftSide,
+            y: this.topSide,
+            text: "Colors: " + this.level.points,
+            align: 'left',
+        });
+        this.informationPattern = new TextField({
+            x: this.leftSide,
+            y: this.topSide,
+            text: "Pattern: " + this.level.points,
+            align: 'left',
+        });
+        
         this.hovered = false;
 		this.active = false;
     }
 
+
+    
     update(){
 		this.hovered = this.isHovered() ? true : false;
-    }
+        }
 
     isHovered() {
         let left = this.x - this.width/2,
@@ -112,10 +151,10 @@ class DetailPanel {
     
     draw(){
         canvasContext.beginPath();
-		
+        
 		// offset vars
-		var offset_x = this.x - this.width/2;
-		var offset_y = this.y - this.height;
+		var offset_x = this.leftSide;
+		var offset_y = this.topSide;
 
 		// offset
 		canvasContext.translate(offset_x, offset_y);
@@ -133,6 +172,13 @@ class DetailPanel {
 		canvasContext.translate(-offset_x, -offset_y);
 		
 		canvasContext.strokeStyle = "black";
+        
+		this.informationPoints.draw();
+		this.informationShape.draw();
+		this.informationColor.draw();
+		this.informationPattern.draw();
+        this.example.draw();
+        
         canvasContext.closePath();
     }
 }

@@ -9,7 +9,8 @@ function createPatternWithCanvas(_width, _height, _colorList, _drawPattern) {
 	_drawPattern(tempCanvas, tempContext, _colorList);
 	tempContext.closePath();
 	
-	let pattern = canvasContext.createPattern(tempCanvas, "no-repeat");
+	let pattern = canvasContext.createPattern(tempCanvas, "repeat");
+	document.body.appendChild(tempCanvas);
 	return pattern;
 }
 
