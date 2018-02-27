@@ -68,7 +68,7 @@ class Level {
 		this.points += this.patternProperties.points;
 		this.points += this.formProperties.points;
 		
-		this.color = createPatternWithCanvas(this.r*2, this.r*2, this.colorList, this.patternProperties.fn);
+		this.color = this.createPatternWithCanvas(this.r*2, this.r*2);
 		
         this.list = [];
 		
@@ -113,6 +113,23 @@ class Level {
             }
         }
     }
+    
+    //TODO: finish this function
+    createPatternWithCanvas(_width, _height) {
+        let tempCanvas = document.createElement('canvas');
+        let tempContext = tempCanvas.getContext('2d');
+        tempCanvas.width = _width;
+        tempCanvas.height = _height;
+
+        tempContext.beginPath();
+        this.patternProperties.fn(tempCanvas, tempContext, this.colorList);
+        tempContext.closePath();
+
+        let pattern = canvasContext.createPattern(tempCanvas, "repeat");
+        document.body.appendChild(tempCanvas);
+        return pattern;
+    }
+
 }
 
 class SpawnCooldown {

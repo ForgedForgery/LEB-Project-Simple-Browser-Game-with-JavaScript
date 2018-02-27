@@ -11,7 +11,7 @@ class CooldownBar {
 		this.hovered = false;
         
 		this.level = config.levelInstance;
-		this.color = createPatternWithCanvas(this.width, this.height, this.level.colorList, this.level.patternProperties.fn);
+		this.color = this.level.createPatternWithCanvas(this.width, this.height);
         
         this.detailPanel = new DetailPanel({
 			x: this.x + this.width / 2,

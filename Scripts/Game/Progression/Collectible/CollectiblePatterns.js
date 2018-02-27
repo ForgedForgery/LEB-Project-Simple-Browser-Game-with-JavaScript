@@ -1,19 +1,3 @@
-//TODO: finish this function
-function createPatternWithCanvas(_width, _height, _colorList, _drawPattern) {
-	let tempCanvas = document.createElement('canvas');
-	let tempContext = tempCanvas.getContext('2d');
-	tempCanvas.width = _width;
-	tempCanvas.height = _height;
-	
-	tempContext.beginPath();
-	_drawPattern(tempCanvas, tempContext, _colorList);
-	tempContext.closePath();
-	
-	let pattern = canvasContext.createPattern(tempCanvas, "repeat");
-    document.body.appendChild(tempCanvas);
-	return pattern;
-}
-
 //TODO: split the pattern from color into this
 //maybe split into stripes and circles
 //maybe add special patterns like bubbles 
