@@ -44,6 +44,8 @@ const playerScoreFieldColor = paleColors.C3; //normal text field that needs to b
 
 const gameUIColor = paleColors.C1;
 
+const gameUIColor2 = paleColors.C2;
+
 const gameBGColor = paleColors.C4;
 const playerColor = paleColors.C5;
 const collectibleColor = paleColors.C3;
