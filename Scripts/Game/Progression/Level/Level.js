@@ -6,13 +6,13 @@ class Level {
 				
 		this.r = this.randomizeRadius();
 		
-		this.points = 0;
+		this.points = 1;
 		for(let c in this.colorList)
-			this.points += possibleCollectibleColors[this.colorList[c]].points;
-		this.points += this.patternProperties.points;
+			this.points *= 2;
+		this.points *= this.patternProperties.points;
 		this.points += this.formProperties.points;
 		
-		this.color = this.createPatternWithCanvas(this.r*2, this.r*2);
+		this.color = this.createPattern(this.r*2, this.r*2);
 		
         this.list = [];
 		
@@ -59,7 +59,7 @@ class Level {
     }
     
     //PUBLIC
-    createPatternWithCanvas(_width, _height) {
+    createPattern(_width, _height) {
         let tempCanvas = document.createElement('canvas');
         let tempContext = tempCanvas.getContext('2d');
         tempCanvas.width = _width;
