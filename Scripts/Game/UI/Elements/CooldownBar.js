@@ -121,6 +121,15 @@ class DetailPanel {
             size: "24px",
             color: playerScoreFieldColor
         });
+        this.informationPoints2 = new TextField({
+            x: this.leftSide + this.width - offset - ((this.width - offset * 2) / this.phi) * 5 /8,
+            y: this.topSide + 2 * this.height / 8 + this.height / 16 + offset / 2 + 1,
+            text: "-400000",
+            align: 'center',
+            textBaseline: 'middle',
+            size: "20px",
+            color: playerScoreFieldColorAlert
+        });
         
         this.informationShape = new TextField({
             x: this.leftSide + this.width / 6,
@@ -129,7 +138,8 @@ class DetailPanel {
             align: 'center',
             textBaseline: 'middle',
             size: "15px"
-        });        
+        });      
+        
         this.informationShape2 = new TextField({
             x: this.leftSide + this.width / 6,
             y: this.topSide +  this.height / 2 + this.height / 12 + 1 * this.height / 6,
@@ -138,6 +148,16 @@ class DetailPanel {
             textBaseline: 'middle',
             size: "15px",
             color: playerScoreFieldColor
+        }); 
+        
+        this.informationShape3 = new TextField({
+            x: this.leftSide + this.width / 6 - 7,
+            y: this.topSide + this.height / 2 + this.height / 12 + this.height / 6 + 19,
+            text: "-300000",
+            align: 'center',
+            textBaseline: 'middle',
+            size: "13px",
+            color: playerScoreFieldColorAlert
         }); 
         
         this.informationPattern = new TextField({
@@ -157,6 +177,15 @@ class DetailPanel {
             size: "15px",
             color: playerScoreFieldColor
         }); 
+        this.informationPattern3 = new TextField({
+            x: this.leftSide + 3 * this.width / 6 - 7,
+            y: this.topSide + this.height / 2 + this.height / 12 + this.height / 6 + 19,
+            text: "-300000",
+            align: 'center',
+            textBaseline: 'middle',
+            size: "13px",
+            color: playerScoreFieldColorAlert
+        }); 
         
         this.informationColor = new TextField({
             x: this.leftSide + 5 * this.width / 6,
@@ -166,6 +195,7 @@ class DetailPanel {
             textBaseline: 'middle',
             size: "15px",
         });       
+        
         this.informationColor2 = new TextField({
             x: this.leftSide + 5 * this.width / 6,
             y: this.topSide +  this.height / 2 + this.height / 12 + 1 * this.height / 6,
@@ -175,6 +205,64 @@ class DetailPanel {
             size: "15px",
             color: playerScoreFieldColor
         }); 
+        
+        this.informationColor3 = new TextField({
+            x: this.leftSide + 5 * this.width / 6 - 7,
+            y: this.topSide + this.height / 2 + this.height / 12 + this.height / 6 + 19,
+            text: "-30000",
+            align: 'center',
+            textBaseline: 'middle',
+            size: "13px",
+            color: playerScoreFieldColorAlert
+        }); 
+        
+        this.shapeRandomizeButton = new Button({
+            x: this.leftSide + this.width / 6 + 24,
+            y: this.topSide + this.height / 2 + this.height / 12 + this.height / 6 + 18,
+            //y: this.topSide +  this.height / 2 + this.height / 12 + 2 * this.height / 6 - 1,
+            width: 16,
+            height: 16,
+            label: diceImg,
+            fontSize: "17px",
+            shadowBlur: 0,
+            shadowBlurText: 0
+        });
+        
+        this.patternRandomizeButton = new Button({
+            x: this.leftSide + 3 * this.width / 6 + 24,
+            y: this.topSide + this.height / 2 + this.height / 12 + this.height / 6 + 18,
+            width: 16,
+            height: 16,
+            label: diceImg,
+            fontSize: "17px",
+            shadowBlur: 0,
+            shadowBlurText: 0
+        });
+        
+        this.colorRandomizeButton = new Button({
+            x: this.leftSide + 5 * this.width / 6 + 24,
+            y: this.topSide + this.height / 2 + this.height / 12 + this.height / 6 + 18,
+            width: 16,
+            height: 16,
+            label: diceImg,
+            fontSize: "17px",
+            shadowBlur: 0,
+            shadowBlurText: 0
+        });
+        
+        let tempDiceImg = new Image(20, 20);
+        tempDiceImg.src = diceImg.src;
+        this.totalRandomizeButton = new Button({
+            x: this.leftSide + this.width - offset - ((this.width - offset * 2) / this.phi) * 1/8 - 2,
+            y: this.topSide + 2 * this.height / 8 + this.height / 16 + offset / 2,
+            //y: this.topSide +  this.height / 2 + this.height / 12 + 2 * this.height / 6 - 1,
+            width: 21,
+            height: 21,
+            label: tempDiceImg,
+            fontSize: "23px",
+            shadowBlur: 0,
+            shadowBlurText: 0
+        });
    
         this.hovered = false;
 		this.active = false;
@@ -182,10 +270,14 @@ class DetailPanel {
 
 
     
-    update(){
+    update() {
 		this.hovered = this.isHovered() ? true : false;
-        }
-
+        this.totalRandomizeButton.update();
+        this.shapeRandomizeButton.update();
+        this.patternRandomizeButton.update();
+        this.colorRandomizeButton.update();
+    }
+  
     isHovered() {
         let left = this.x - this.width/2,
             right = this.y - this.height;
@@ -196,7 +288,7 @@ class DetailPanel {
         return playerInput.isMouseInside(left, right, width, height);
     } 
     
-    draw(){
+    draw() {
 		// offset vars
 		var offset_x = this.leftSide;
 		var offset_y = this.topSide;
@@ -216,15 +308,29 @@ class DetailPanel {
 		canvasContext.translate(-offset_x, -offset_y);
 		
 		canvasContext.strokeStyle = "black";
-		this.informationShape.draw();
-		this.informationShape2.draw();
-
 		this.informationPoints.draw();
-		//this.informationPoints2.draw();
+        this.drawRandomizedFrame();
+        this.informationPoints2.draw();
+
+		this.informationShape.draw();
+		this.informationShape2.draw();;
+        
 		this.informationColor.draw();
 		this.informationColor2.draw();
+        
 		this.informationPattern.draw();
 		this.informationPattern2.draw();
+        
+        this.totalRandomizeButton.draw();
+      
+        this.shapeRandomizeButton.draw();
+		this.informationShape3.draw()
+        
+        this.patternRandomizeButton.draw();
+		this.informationPattern3.draw();
+        
+        this.colorRandomizeButton.draw();
+		this.informationColor3.draw();
 
         this.example.draw();
     }
@@ -356,6 +462,39 @@ class DetailPanel {
         
         canvasContext.lineJoin = "miter";
         
+        canvasContext.closePath();
+    }
+    
+    drawRandomizedFrame() {
+        canvasContext.beginPath();
+        canvasContext.lineWidth = 3;
+        canvasContext.strokeStyle = buttonBGColor;
+        let offset = 5;
+         canvasContext.rect(            
+            this.leftSide + this.width - offset - ((this.width - offset * 2) / this.phi)* 15/16,
+            this.topSide + 2 * this.height / 8 ,
+            102,
+            24 
+        );       
+        canvasContext.rect(            
+            this.leftSide + this.width / 6 - 32,
+            this.topSide + this.height / 2 + this.height / 12 + this.height / 6 + 18 - 9,
+            62,
+            18 
+        );
+        canvasContext.rect(            
+            this.leftSide + 3 * this.width / 6 - 32,
+            this.topSide + this.height / 2 + this.height / 12 + this.height / 6 + 18 - 9,
+            62,
+            18 
+        );
+        canvasContext.rect(            
+            this.leftSide + 5 * this.width / 6 - 32,
+            this.topSide + this.height / 2 + this.height / 12 + this.height / 6 + 18 - 9,
+            62,
+            18 
+        );    
+        canvasContext.stroke();
         canvasContext.closePath();
     }
 }
