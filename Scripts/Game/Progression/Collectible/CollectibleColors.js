@@ -1,4 +1,5 @@
-//TODO: delete unnecessary stuff
+//TODO: maybe delete everything and just give every color equal amount of points
+// delete this after the detail panel is not dependant on this any more
 var possibleCollectibleColors = {
 	blue: {
 		points: 1,

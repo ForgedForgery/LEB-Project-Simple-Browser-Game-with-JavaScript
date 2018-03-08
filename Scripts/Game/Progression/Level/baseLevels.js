@@ -1,13 +1,16 @@
+// "red", "pink", "yellow", "black", "pink", "green", "lightblue", "red", "pink", "yellow", "black", "pink", "green", "lightblue"
+// looks kinda cool
+
 var baseLevels = [	
 	{
-		shape: "pentagram",
-		color: ["lightblue", "blue", "green"],
-		pattern: "radialGradient" 
+		shape: "disksaw",
+		color: ["lightblue", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green"],
+		pattern: "radialLines" 
 	},
 	{
-		shape: "hexagon",
-		color: ["red", "pink", "yellow", "black"],
-		pattern: "verticalLines"
+		shape: "decagram",
+		color: ["lightblue", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green"],
+		pattern: "solid"
 	},
 	{
 		shape: "hexagram",
