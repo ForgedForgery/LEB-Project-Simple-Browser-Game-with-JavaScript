@@ -59,7 +59,7 @@ class DetailPanel {
         this.informationShape2 = new TextField({
             x: this.leftSide + this.width / 6,
             y: this.topSide +  this.height / 2 + this.height / 12 + 1 * this.height / 6,
-            text: "+" + this.level.points.shape,
+            text: "" + this.level.points.shape,
             align: 'center',
             textBaseline: 'middle',
             size: "15px",
@@ -87,7 +87,7 @@ class DetailPanel {
         this.informationPattern2 = new TextField({
             x: this.leftSide + 3 * this.width / 6,
             y: this.topSide +  this.height / 2 + this.height / 12 + 1 * this.height / 6,
-            text: "+" + this.level.points.pattern,
+            text: "" + this.level.points.pattern,
             align: 'center',
             textBaseline: 'middle',
             size: "15px",
@@ -115,7 +115,7 @@ class DetailPanel {
         this.informationColor2 = new TextField({
             x: this.leftSide + 5 * this.width / 6,
             y: this.topSide +  this.height / 2 + this.height / 12 + 1 * this.height / 6,
-            text: "+" + this.level.points.color,
+            text: "" + this.level.points.color,
             align: 'center',
             textBaseline: 'middle',
             size: "15px",

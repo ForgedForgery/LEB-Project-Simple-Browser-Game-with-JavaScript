@@ -99,25 +99,43 @@ var possibleCollectiblePatterns = {
     },
 	randomCircles: {
 		points: 100,
-		fn: function(_canvas, _context, _colorList) {
+		fn: function(_canvas, _context, _colorList, _level) {
 			let maxColorIndex = _colorList.length - 1;
 			
+			let hasData = typeof _level.randomCircleData != "undefined";
+			if (!hasData)
+				_level.randomCircleData = {};
+
 			for(let colorIndex in _colorList) {
 				_context.beginPath();
-				
+
 				if(colorIndex == 0) {
 					_context.fillStyle = _colorList[maxColorIndex];
 					_context.fillRect(0, 0, _canvas.width, _canvas.height);
 				}
 				else {
 					_context.fillStyle = _colorList[colorIndex];
-					let x = 0.25 * _canvas.width + Math.random() * _canvas.width * 0.5;
-					let y = 0.25 * _canvas.height + Math.random() * _canvas.height * 0.5;
-					let r = 2 + Math.random() * 5;
+					
+					let x, y, r;
+					if (hasData) {
+						x = _level.randomCircleData[colorIndex].x * _canvas.width;
+						y = _level.randomCircleData[colorIndex].y * _canvas.height;
+						r = _level.randomCircleData[colorIndex].r * _canvas.height;
+					}
+					else {
+						x = 0.25 * _canvas.width + Math.random() * _canvas.width * 0.5;
+						y = 0.25 * _canvas.height + Math.random() * _canvas.height * 0.5;
+						r = 2 + Math.random() * 5;
+						_level.randomCircleData[colorIndex] = {
+							x: x / _canvas.width,
+							y: y / _canvas.height,
+							r: r / _canvas.height
+						};
+					}
 					_context.arc(x, y, r, 0, Math.PI * 2);
 					_context.fill();
 				}
-				
+
 				_context.closePath();
 			}
 		}
