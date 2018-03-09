@@ -3,57 +3,57 @@
 
 var baseLevels = [	
 	{
-		shape: "disksaw",
+		shape: "trisaw",
 		color: ["lightblue", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green"],
-		pattern: "radialLines" 
+		pattern: "randomCircles" 
 	},
 	{
-		shape: "decagram",
+		shape: "tetrasaw",
 		color: ["lightblue", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green"],
-		pattern: "solid"
+		pattern: "randomCircles"
 	},
 	{
-		shape: "hexagram",
-		color: ["pink"],
-		pattern: "verticalLines"
+		shape: "pentasaw",
+		color: ["pink", "black", "pink", "green", "lightblue"],
+		pattern: "randomCircles"
 	},
 	{
-		shape: "octagram",
-		color: ["green"],
-		pattern: "verticalLines"
+		shape: "heptasaw",
+		color: ["green", "blue", "green", "blue", "green"],
+		pattern: "randomCircles"
 	},	
 	{
-		shape: "nonagram",
+		shape: "hexasaw",
+		color: ["blue", "lightblue", "red", "pink"],
+		pattern: "randomCircles"
+	},
+	{
+		shape: "octasaw",
+		color: ["pink", "blue", "lightblue"],
+		pattern: "randomCircles"
+	},
+	{
+		shape: "nonasaw",
 		color: ["blue"],
 		pattern: "verticalLines"
 	},
 	{
-		shape: "decagram",
-		color: ["pink"],
-		pattern: "verticalLines"
-	},
-	{
-		shape: "pentagram",
-		color: ["blue"],
-		pattern: "verticalLines"
-	},
-	{
-		shape: "hexagram",
+		shape: "decasaw",
 		color: ["red"],
 		pattern: "verticalLines"
 	},
 	{
-		shape: "decagram",
+		shape: "tetradecasaw",
 		color: ["green"],
 		pattern: "verticalLines"
 	},
 	{
-		shape: "pentagon",
+		shape: "icosasaw",
 		color: ["yellow"],
 		pattern: "verticalLines"
 	},
 	{
-		shape: "octagon",
+		shape: "icosasaw",
 		color: ["pink"],
 		pattern: "verticalLines"
 	},
