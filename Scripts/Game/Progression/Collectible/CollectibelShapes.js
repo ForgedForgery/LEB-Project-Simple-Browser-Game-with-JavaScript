@@ -139,6 +139,60 @@ var possibleCollectibleShapes = {
 			});
 		}
 	},
+	pentagongram: {
+		points: 100,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedShape(5, 1, _params); 
+				drawNSidedShape(5, 2, _params); 
+			});
+		}
+	},
+	hexagongram: {
+		points: 100,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedShape(6, 1, _params); 
+				drawNSidedShape(6, 2, _params); 
+			});
+		}
+	},
+	heptagongram: {
+		points: 100,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedShape(7, 1, _params); 
+				drawNSidedShape(7, 2, _params); 
+			});
+		}
+	},
+	octagongram: {
+		points: 100,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedShape(8, 1, _params); 
+				drawNSidedShape(8, 3, _params); 
+			});
+		}
+	},
+	nonagongram: {
+		points: 100,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedShape(9, 1, _params); 
+				drawNSidedShape(9, 2, _params); 
+			});
+		}
+	},
+	decagongram: {
+		points: 100,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedShape(10, 1, _params); 
+				drawNSidedShape(10, 3, _params); 
+			});
+		}
+	},
 	pentagram: {
 		points: 5000000,
 		fn: function(_params) {
@@ -187,12 +241,83 @@ var possibleCollectibleShapes = {
 			});
 		}
 	},
-	decagramgon: {
-		points: 100,
+	trisaw: {
+		points: 100000,
 		fn: function(_params) {
 			return (function() {
-				drawNSidedShape(10, 1, _params); 
-				drawNSidedShape(10, 3, _params); 
+				drawNSidedDisksaw(3, _params);
+			});
+		}
+	},
+	tetrasaw: {
+		points: 100000,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedDisksaw(4, _params);
+			});
+		}
+	},
+	pentasaw: {
+		points: 100000,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedDisksaw(5, _params);
+			});
+		}
+	},
+	heptasaw: {
+		points: 100000,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedDisksaw(6, _params);
+			});
+		}
+	},
+	hexasaw: {
+		points: 100000,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedDisksaw(8, _params);
+			});
+		}
+	},
+	octasaw: {
+		points: 100000,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedDisksaw(8, _params);
+			});
+		}
+	},
+	nonasaw: {
+		points: 100000,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedDisksaw(9, _params);
+			});
+		}
+	},
+	decasaw: {
+		points: 100000,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedDisksaw(10, _params);
+			});
+		}
+	},
+	tetradecasaw: {
+		points: 100000,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedDisksaw(14, _params);
+			});
+		}
+	},
+	icosasaw: {
+		points: 100000,
+		fn: function(_params) {
+			return (function() {
+				drawNSidedDisksaw(20, _params);
 			});
 		}
 	},
@@ -216,11 +341,40 @@ var possibleCollectibleShapes = {
 //				canvasContext.quadraticCurveTo(_params.x - 10, _params.y - h, _params.x - 10, _params.y);
 //				canvasContext.quadraticCurveTo(_params.x - 10, _params.y + h, x, y);
 				
-				canvasContext.bezierCurveTo(_params.x - _params.r, _params.y - h, 
-											_params.x - _params.r, _params.y + h,
+				canvasContext.bezierCurveTo(_params.x - _params.r * 0.5, _params.y - h + 3, 
+											_params.x - _params.r * 0.5, _params.y + h - 3,
 											x, y);
 				
 				fillStrokeShape(_params);
+				
+				canvasContext.closePath();
+			});
+		}
+	},
+	turkey: {
+		points: 1000000000,
+		fn: function(_params) {
+			return (function() {
+				canvasContext.beginPath();
+				
+				let h = _params.r * Math.sqrt(2);
+				let x = h / 2 + _params.x;
+				let y = h / 2 + _params.y;
+		
+				canvasContext.arc(_params.x, _params.y, _params.r, 0.25 * Math.PI, 1.75 * Math.PI);
+				canvasContext.bezierCurveTo(_params.x - _params.r * 0.5, _params.y - h + 3, 
+											_params.x - _params.r * 0.5, _params.y + h - 3,
+											x, y);
+				
+				fillStrokeShape(_params);
+				
+				let starDimensions = {
+					color: _params.color,
+					x: _params.x + h * 0.4,
+					y: _params.y,
+					r: _params.r * 0.5
+				};
+				drawNSidedShape(5, 2, starDimensions);
 				
 				canvasContext.closePath();
 			});
@@ -248,28 +402,23 @@ var possibleCollectibleShapes = {
 				canvasContext.closePath();
 			});
 		}
-	},
-	disksaw: {
-		points: 100000,
-		fn: function(_params) {
-			return (function() {
-				canvasContext.beginPath();
-	
-				canvasContext.moveTo(_params.x, _params.y);
-				let _n = 5;
-				for(let i = 1; i <= _n; i++) {
-					canvasContext.lineTo(_params.x + _params.r * Math.sin(i * 2 * Math.PI / _n),
-										 _params.y - _params.r * Math.cos(i * 2 * Math.PI / _n));
-					canvasContext.lineTo(_params.x + _params.r / 2 * Math.sin(Math.PI * 0.5 + i * 2 * Math.PI / _n),
-										 _params.y - _params.r / 2 * Math.cos(Math.PI * 0.5 + i * 2 * Math.PI / _n));
-					canvasContext.lineTo(_params.x, _params.y);
-				}
-				
-
-				fillStrokeShape(_params);
-				
-				canvasContext.closePath();
-			});
-		}
 	}
 };
+
+function drawNSidedDisksaw(_n, _target) {
+	canvasContext.beginPath();
+
+	canvasContext.moveTo(_target.x, _target.y);
+	for(let i = 1; i <= _n; i++) {
+		canvasContext.lineTo(_target.x + _target.r * Math.sin(i * 2 * Math.PI / _n),
+							 _target.y - _target.r * Math.cos(i * 2 * Math.PI / _n));
+		canvasContext.lineTo(_target.x + _target.r / 2 * Math.sin(Math.PI * 0.5 + i * 2 * Math.PI / _n),
+							 _target.y - _target.r / 2 * Math.cos(Math.PI * 0.5 + i * 2 * Math.PI / _n));
+		canvasContext.lineTo(_target.x, _target.y);
+	}
+
+
+	fillStrokeShape(_target);
+
+	canvasContext.closePath();
+}

@@ -111,8 +111,8 @@ var possibleCollectiblePatterns = {
 				}
 				else {
 					_context.fillStyle = _colorList[colorIndex];
-					let x = Math.random() * _canvas.width;
-					let y = Math.random() * _canvas.height;
+					let x = 0.25 * _canvas.width + Math.random() * _canvas.width * 0.5;
+					let y = 0.25 * _canvas.height + Math.random() * _canvas.height * 0.5;
 					let r = 2 + Math.random() * 5;
 					_context.arc(x, y, r, 0, Math.PI * 2);
 					_context.fill();
