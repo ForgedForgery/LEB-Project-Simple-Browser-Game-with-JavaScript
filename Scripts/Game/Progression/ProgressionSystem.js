@@ -41,10 +41,10 @@ class ProgressionSystem {
 	// TODO: doesn't work yet
 	//PUBLIC
 	randomizeForLevel(level) {
-		let formProperties = possibleCollectibleShapes[Math.round(Math.random() * (possibleCollectibleShapes.length - 1))];
+		let shapeProperties = possibleCollectibleShapes[Math.round(Math.random() * (possibleCollectibleShapes.length - 1))];
 		let colorProperties = possibleCollectibleColor[Math.round(Math.random() * (possibleCollectibleColor.length - 1))];
 		
-		this.activeLevels[level] = new Collectible(formProperties, colorProperties, {});
+		this.activeLevels[level] = new Collectible(shapeProperties, colorProperties, {});
 	}
     
     checkCollisionWith(obj) {
