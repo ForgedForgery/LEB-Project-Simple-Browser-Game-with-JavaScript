@@ -1,4 +1,5 @@
-//TODO: delete unnecessary stuff
+//TODO: maybe delete everything and just give every color equal amount of points
+// delete this after the detail panel is not dependant on this any more
 var possibleCollectibleColors = {
 	blue: {
 		points: 1,
@@ -28,57 +29,8 @@ var possibleCollectibleColors = {
 		points: 6,
 		color: "rgba(255, 51, 204, 1)"
 	},
-	gray_red_linear: {
-		points: 50,
-		type: "advanced",
-		color: function(_params) {
-			let colorsToAdd = {
-				gray: 1,
-				red: 0.5,
-			};
-			_params.type = "linear";
-			
-			return createMultipleSolidAt(_params, colorsToAdd);
-		}
-	},
-	gray_red_radial: {
-		points: 50,
-		type: "advanced",
-		color: function(_params) {
-			let colorsToAdd = {
-				gray: 1,
-				red: 0.5,
-			};
-			
-			return createMultipleSolidAt(_params, colorsToAdd);
-		}
-	},
-	multipleSolidsExample: {
-		points: 50,
-		type: "advanced",
-		color: function(_params) {
-			let colorsToAdd = {
-				//needs to be descending numbers for multiple solids
-				//because of overlapping circles
-				yellow: 1,
-				gray: 0.666,
-				pink: 0.333,
-			};
-			
-			return createMultipleSolidAt(_params, colorsToAdd);
-		}
-	},
-	gradientExample: {
-		points: 50,
-		type: "advanced",
-		color: function(_params) {
-			let colorsToAdd = {
-				pink: 0,
-				gray: 0.5,
-				yellow: 1,
-			};
-			
-			return createGradiantAt(_params, colorsToAdd);
-		}
-	}
+    lightblue: {
+        points: 6,
+        color: "rgba(173, 216, 230, 1)"
+    }
 };

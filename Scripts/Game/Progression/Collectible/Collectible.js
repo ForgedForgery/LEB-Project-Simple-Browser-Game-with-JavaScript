@@ -9,6 +9,8 @@ class Collectible {
 		this.x = _dimensions.x || rx;
         this.y = _dimensions.y || ry;
         this.r = _dimensions.r || rr; // radius, also hitbox
+        
+        this.patternRotation = Math.random() * 360;
 		
 		this.points = 0;
 		
@@ -17,6 +19,7 @@ class Collectible {
 			x: this.x,
 			y: this.y,
 			r: this.r,
+            patternRotation: this.patternRotation,
 			color: this.color
 		});
 	}
