@@ -40,9 +40,12 @@ const buttonHoverColor = paleColors.C3;
 
 const textFieldColor = paleColors.C2;
 const textFieldSideColor = paleColors.C5;
-const playerScoreFieldColor = paleColors.C3; //normal text field that needs to be highlighted
+const playerScoreFieldColor = paleColors.C4; //normal text field that needs to be highlighted
+const playerScoreFieldColorAlert = paleColors.C3;
 
 const gameUIColor = paleColors.C1;
+
+const gameUIColor2 = paleColors.C2;
 
 const gameBGColor = paleColors.C4;
 const playerColor = paleColors.C5;

@@ -56,7 +56,7 @@ class Level {
     checkCollisionWith(obj) {
         for (let i in this.list) {
             if (this.list[i].isCollidedWith(obj)) {
-                obj.score += this.points + this.list[i].points;
+                obj.score += this.points.total;
                 this.list.splice(i, 1);
 				this.cooldown.adjustTimerBasedOn(this.list.length);
             }

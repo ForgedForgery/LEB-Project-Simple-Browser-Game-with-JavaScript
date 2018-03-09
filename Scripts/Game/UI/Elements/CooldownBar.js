@@ -16,7 +16,9 @@ class CooldownBar {
         this.detailPanel = new DetailPanel({
 			x: this.x + this.width / 2,
 			y: this.y,
-			color: this.color
+			color: this.color,
+            level: this.level,
+            
 		});
     }
 	
