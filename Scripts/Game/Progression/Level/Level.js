@@ -2,15 +2,20 @@ class Level {
     constructor(_levelProperties) {
 		this.colorList = _levelProperties.color;
 		this.patternProperties = possibleCollectiblePatterns[_levelProperties.pattern]
-        this.formProperties = possibleCollectibleShapes[_levelProperties.shape];
+        this.shapeProperties = possibleCollectibleShapes[_levelProperties.shape];
 				
 		this.r = this.randomizeRadius();
 		
-		this.points = 1;
+		let colorPoints = 1;
 		for(let c in this.colorList)
-			this.points *= 2;
-		this.points *= this.patternProperties.points;
-		this.points += this.formProperties.points;
+			colorPoints *= 2;
+		
+		this.points = {
+			color: colorPoints,
+			pattern: this.patternProperties.points,
+			shape: this.shapeProperties.points,
+			total: colorPoints * this.patternProperties.points + this.shapeProperties.points
+		};
 		
 		this.color = this.createPattern(this.r*2, this.r*2);
 		
@@ -37,7 +42,7 @@ class Level {
     }
 	
 	createCollectible() {
-		return new Collectible(this.formProperties.fn, this.color, {r: this.r});
+		return new Collectible(this.shapeProperties.fn, this.color, {r: this.r});
 	}
 	
 	//PUBLIC
