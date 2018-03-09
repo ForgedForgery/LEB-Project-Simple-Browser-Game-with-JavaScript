@@ -79,4 +79,27 @@ class Level {
         return pattern;
     }
 
+	//PUBLIC
+	randomizeShape() {
+		let keys = Object.keys(possibleCollectibleShapes);
+		let rand = Math.round(Math.random() * (keys.length - 1));
+		this.shapeProperties = possibleCollectibleShapes[keys[rand]];
+		this.resetDrawFn();
+	}
+	
+	resetDrawFn() {
+		for(let i in this.list) {
+			this.list[i].setColor(this.color);
+			this.list[i].setDrawFn(this.shapeProperties.fn);
+		}
+	}
+	
+	//PUBLIC
+	randomizePattern() {
+		let keys = Object.keys(possibleCollectiblePatterns);
+		let rand = Math.round(Math.random() * (keys.length - 1));
+		this.patternProperties = possibleCollectiblePatterns[keys[rand]];
+		this.color = this.createPattern(this.r * 2, this.r * 2);
+		this.resetDrawFn();
+	}
 }

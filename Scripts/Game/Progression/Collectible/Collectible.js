@@ -13,13 +13,7 @@ class Collectible {
         this.patternRotation = Math.random() * 360;
 		
 		this.color = _color;
-		this.draw = _drawFn({
-			x: this.x,
-			y: this.y,
-			r: this.r,
-            patternRotation: this.patternRotation,
-			color: this.color
-		});
+		this.setDrawFn(_drawFn);
 	}
 	
 	randomizeRadius() {
@@ -38,6 +32,20 @@ class Collectible {
             y: obj.y - this.y
         };
         return Math.sqrt(dVector.x**2 + dVector.y**2);
+	}
+	
+	setDrawFn(_drawFn) {
+		this.draw = _drawFn({
+			x: this.x,
+			y: this.y,
+			r: this.r,
+            patternRotation: this.patternRotation,
+			color: this.color
+		});
+	}
+	
+	setColor(_color) {
+		this.color = _color;
 	}
 }
 

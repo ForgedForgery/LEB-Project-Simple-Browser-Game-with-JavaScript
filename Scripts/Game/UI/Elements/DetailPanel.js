@@ -27,6 +27,7 @@ class DetailPanel {
             x: this.leftSide + offset + (this.width - offset * 2 - ((this.width - offset * 2) / this.phi)) / 2,
             y: this.topSide + this.height / 4
         });
+		this.level.list.push(this.example);
         
         this.informationPoints = new TextField({
             x: this.leftSide + this.width - offset - ((this.width - offset * 2) / this.phi) / 2,
@@ -141,7 +142,12 @@ class DetailPanel {
             label: diceImg,
             fontSize: "17px",
             shadowBlur: 0,
-            shadowBlurText: 0
+            shadowBlurText: 0,
+			onClick: (function(_level) {
+				return function() {
+					_level.randomizeShape();
+				}
+			})(this.level)
         });
         
         this.patternRandomizeButton = new Button({
@@ -152,7 +158,12 @@ class DetailPanel {
             label: diceImg,
             fontSize: "17px",
             shadowBlur: 0,
-            shadowBlurText: 0
+            shadowBlurText: 0,
+			onClick: (function(_level) {
+				return function() {
+					_level.randomizePattern();
+				}
+			})(this.level)
         });
         
         this.colorRandomizeButton = new Button({
