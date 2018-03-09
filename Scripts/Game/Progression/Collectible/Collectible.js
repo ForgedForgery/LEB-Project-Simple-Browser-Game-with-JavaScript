@@ -12,8 +12,6 @@ class Collectible {
         
         this.patternRotation = Math.random() * 360;
 		
-		this.points = 0;
-		
 		this.color = _color;
 		this.draw = _drawFn({
 			x: this.x,
