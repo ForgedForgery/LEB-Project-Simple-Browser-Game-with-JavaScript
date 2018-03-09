@@ -9,14 +9,15 @@ class Collectible {
 		this.x = _dimensions.x || rx;
         this.y = _dimensions.y || ry;
         this.r = _dimensions.r || rr; // radius, also hitbox
-		
-		this.points = 0;
+        
+        this.patternRotation = Math.random() * 360;
 		
 		this.color = _color;
 		this.draw = _drawFn({
 			x: this.x,
 			y: this.y,
 			r: this.r,
+            patternRotation: this.patternRotation,
 			color: this.color
 		});
 	}
