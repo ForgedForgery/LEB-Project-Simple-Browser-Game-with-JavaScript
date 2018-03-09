@@ -71,7 +71,7 @@ class Level {
         tempCanvas.height = _height;
 
         tempContext.beginPath();
-        this.patternProperties.fn(tempCanvas, tempContext, this.colorList);
+        this.patternProperties.fn(tempCanvas, tempContext, this.colorList, this);
         tempContext.closePath();
 
         let pattern = canvasContext.createPattern(tempCanvas, "repeat");
