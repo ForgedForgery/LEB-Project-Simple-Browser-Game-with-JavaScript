@@ -2,10 +2,11 @@ function doLogin() {
     loadPHP("Scripts/PHPLoader/PHP Files/loadData.php?user=" + document.getElementById("nameInput").value + "&pass=" + document.getElementById("passInput").value, loadData);
 }
 
-function doSave(inPlayer) {
+function doSave(inPlayer, inProgression) {
     loadedPlayerData.name = inPlayer.name;
-    loadedPlayerData.score = inPlayer.score;
-    loadPHP("Scripts/PHPLoader/PHP Files/saveData.php?user=" + loadedPlayerData.name + "&score=" + loadedPlayerData.score, saveData);
+    
+    loadPHP("Scripts/PHPLoader/PHP Files/saveData.php?user=" + loadedPlayerData.name + "&data=" + JSON.stringify(loadedPlayerData), saveData);
+    console.log(loadedPlayerData);
 }
 
 function doLoadHighscore() {

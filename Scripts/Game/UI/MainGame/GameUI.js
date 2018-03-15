@@ -9,7 +9,7 @@ class GameUI {
         this.progression = inProgressionReference;
         
         this.createMenuObjects();
-      
+        
         this.spawnCooldownBars = [];
 		
 		this.activeBarDetails;
@@ -24,7 +24,7 @@ class GameUI {
             label: disketteImg,
             fontSize: "17px",
 			affectedReference: this.player,
-            onClick: (ref) => doSave(ref),
+            onClick: ((_player, _progression) => doSave(_player, _progression))(this.player, this.progression),
             shadowBlur: 5,
             shadowBlurText: 5
         });
