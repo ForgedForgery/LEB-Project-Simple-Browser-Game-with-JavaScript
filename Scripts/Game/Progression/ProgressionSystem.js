@@ -4,7 +4,7 @@ class ProgressionSystem {
         
 		this.maxLevel = 15;
         this.currentLevel = 1;
-        this.activeLevels = [new Level(baseLevels[0])];
+        this.activeLevels = [new Level(baseLevels[0], this.player)];
     }
     
 	//PUBLIC
@@ -28,7 +28,7 @@ class ProgressionSystem {
 	}
 
 	generateNewLevel() {
-		this.activeLevels.push(new Level(baseLevels[this.currentLevel]));
+		this.activeLevels.push(new Level(baseLevels[this.currentLevel], this.player));
 	}
     
 	//PUBLIC

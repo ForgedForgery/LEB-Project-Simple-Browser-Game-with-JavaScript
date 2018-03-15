@@ -17,7 +17,7 @@ class CooldownBar {
 			x: this.x + this.width / 2,
 			y: this.y,
 			color: this.color,
-            level: this.level,
+            level: this.level
 		});
     }
 	
