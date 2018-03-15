@@ -74,6 +74,7 @@ function fillStrokeShape(target) {
 
 //TODO: draw more shapes
 //TODO: maybe you could just add stuff like 3 for corners and 1 for steps to draw and create the draw methods somewhere else like in Collectibles.js
+var radiusOffset1 = 25;
 var possibleCollectibleShapes = {
 	triangle: {
 		points: 3,
@@ -247,7 +248,8 @@ var possibleCollectibleShapes = {
 			return (function() {
 				drawNSidedDisksaw(3, _params);
 			});
-		}
+		},
+		radius: radiusOffset1
 	},
 	tetrasaw: {
 		points: 100000,
@@ -255,7 +257,8 @@ var possibleCollectibleShapes = {
 			return (function() {
 				drawNSidedDisksaw(4, _params);
 			});
-		}
+		},
+		radius: radiusOffset1
 	},
 	pentasaw: {
 		points: 100000,
@@ -263,7 +266,8 @@ var possibleCollectibleShapes = {
 			return (function() {
 				drawNSidedDisksaw(5, _params);
 			});
-		}
+		},
+		radius: radiusOffset1
 	},
 	heptasaw: {
 		points: 100000,
@@ -271,7 +275,8 @@ var possibleCollectibleShapes = {
 			return (function() {
 				drawNSidedDisksaw(6, _params);
 			});
-		}
+		},
+		radius: radiusOffset1
 	},
 	hexasaw: {
 		points: 100000,
@@ -279,7 +284,8 @@ var possibleCollectibleShapes = {
 			return (function() {
 				drawNSidedDisksaw(8, _params);
 			});
-		}
+		},
+		radius: radiusOffset1
 	},
 	octasaw: {
 		points: 100000,
@@ -287,7 +293,8 @@ var possibleCollectibleShapes = {
 			return (function() {
 				drawNSidedDisksaw(8, _params);
 			});
-		}
+		},
+		radius: radiusOffset1
 	},
 	nonasaw: {
 		points: 100000,
@@ -295,7 +302,8 @@ var possibleCollectibleShapes = {
 			return (function() {
 				drawNSidedDisksaw(9, _params);
 			});
-		}
+		},
+		radius: radiusOffset1
 	},
 	decasaw: {
 		points: 100000,
@@ -303,7 +311,8 @@ var possibleCollectibleShapes = {
 			return (function() {
 				drawNSidedDisksaw(10, _params);
 			});
-		}
+		},
+		radius: radiusOffset1
 	},
 	tetradecasaw: {
 		points: 100000,
@@ -311,7 +320,8 @@ var possibleCollectibleShapes = {
 			return (function() {
 				drawNSidedDisksaw(14, _params);
 			});
-		}
+		},
+		radius: radiusOffset1
 	},
 	icosasaw: {
 		points: 100000,
@@ -319,7 +329,8 @@ var possibleCollectibleShapes = {
 			return (function() {
 				drawNSidedDisksaw(20, _params);
 			});
-		}
+		},
+		radius: radiusOffset1
 	},
 	moon: {
 		points: 1000000000,
@@ -401,7 +412,8 @@ var possibleCollectibleShapes = {
 				
 				canvasContext.closePath();
 			});
-		}
+		},
+		radius: radiusOffset1
 	}
 };
 
