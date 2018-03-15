@@ -1,6 +1,7 @@
 <?php
 $name = $_GET["user"];
-$data = $_GET["score"];
+$score = $_GET["score"];
+$data = $_GET["data"];
 
 $sname = "localhost";
 $uname = "id3398325_benutzerxyz";
@@ -12,7 +13,7 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "UPDATE benutzer  SET Data = '$data'  where Benutzername = '$name'";
+$sql = "UPDATE benutzer  SET Score = '$score', Data = '$data'  where Benutzername = '$name'";
 $results = mysqli_query($conn, $sql);
 if ($results == 1){
     echo '{

@@ -24,7 +24,11 @@ class GameUI {
             label: disketteImg,
             fontSize: "17px",
 			affectedReference: this.player,
-            onClick: ((_player, _progression) => doSave(_player, _progression))(this.player, this.progression),
+            onClick: (function(_player, _progression) {
+				return function() {
+					doSave(_player, _progression);
+				}
+			})(this.player, this.progression),
             shadowBlur: 5,
             shadowBlurText: 5
         });

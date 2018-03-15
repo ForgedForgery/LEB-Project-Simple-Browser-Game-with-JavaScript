@@ -3,10 +3,20 @@ function doLogin() {
 }
 
 function doSave(inPlayer, inProgression) {
+	loadedPlayerData = {};
     loadedPlayerData.name = inPlayer.name;
-    
-    loadPHP("Scripts/PHPLoader/PHP Files/saveData.php?user=" + loadedPlayerData.name + "&data=" + JSON.stringify(loadedPlayerData), saveData);
+	loadedPlayerData.score = inPlayer.score;
+	loadedPlayerData.levels = {};
+	for(let l in inProgression.activeLevels) {
+		loadedPlayerData.levels[l] = {};
+		loadedPlayerData.levels[l].colorList = inProgression.activeLevels[l].colorList;
+		loadedPlayerData.levels[l].patternProperties = inProgression.activeLevels[l].patternKeyword;
+		loadedPlayerData.levels[l].shapeProperties = inProgression.activeLevels[l].shapeKeyword;
+	}
+	
     console.log(loadedPlayerData);
+    
+    loadPHP("Scripts/PHPLoader/PHP Files/saveData.php?user=" + loadedPlayerData.name + "&score=" + loadedPlayerData.score + "&data=" + JSON.stringify(loadedPlayerData), saveData);
 }
 
 function doLoadHighscore() {
@@ -27,17 +37,17 @@ function loadPHP(url, cFunction) {
 
 function loadData(xhttp) {
     let loadedData = JSON.parse(xhttp.responseText);
-    loadedPlayerData = {
-        name: loadedData.name,
-        score: loadedData.score
-    };
+    loadedPlayerData = loadedData;
+	
 	game.player.updateLoadedData();
+	if(loadedData.status != "New account created!")
+		game.progression.updateLoadedData();
     
     loginForm.delete();
     
     let status = document.getElementById("status");
-    if(loadedData.status == "New account created.")
-        status.innerText += "New account created! ";
+    if(loadedData.status == "New account created!")
+        status.innerText += loadedData.status + " ";
     status.innerText += "Logged in as " + loadedPlayerData.name + "...";
     setTimeout(function(){status.innerText = "";}, 3000);
 }

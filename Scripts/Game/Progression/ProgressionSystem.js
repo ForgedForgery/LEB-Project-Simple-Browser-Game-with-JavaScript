@@ -52,4 +52,17 @@ class ProgressionSystem {
             this.activeLevels[i].checkCollisionWith(obj);
         }
     }
+	
+	//PUBLIC
+	updateLoadedData() {
+		this.activeLevels = {};
+		for(let d in loadedPlayerData.levels) {
+			this.activeLevels[d] = new Level({
+				color: loadedPlayerData.levels[d].color,
+				pattern: loadedPlayerData.levels[d].pattern,
+				shape: loadedPlayerData.levels[d].shape
+			});
+			this.currentLevel++;
+		}
+	}
 }
