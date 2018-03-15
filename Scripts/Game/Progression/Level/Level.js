@@ -1,12 +1,17 @@
 class Level {
-    constructor(_levelProperties) {
+    constructor(_levelProperties, _player) {
 		this.colorList = _levelProperties.color;
 		this.patternProperties = possibleCollectiblePatterns[_levelProperties.pattern]
         this.shapeProperties = possibleCollectibleShapes[_levelProperties.shape];
+		
+		this.player = _player;
 				
 		this.r = possibleCollectibleShapes.radius || this.randomizeRadius();
 		
+		this.points = {};
 		this.calculatePoints();
+		this.cost = {};
+		this.calculateCost();
 		
 		this.randomCircleData = {};
 		this.color = this.createPattern(this.r*2, this.r*2);
@@ -17,6 +22,24 @@ class Level {
 		
 		this.wasRandomized = false;
     }	
+	
+	calculatePoints() {
+		let colorPoints = 1;
+		for(let c in this.colorList)
+			colorPoints *= 2;
+		
+		this.points = {
+			color: colorPoints,
+			pattern: this.patternProperties.points,
+			shape: this.shapeProperties.points,
+			total: colorPoints * this.patternProperties.points + this.shapeProperties.points
+		};
+	}
+	
+	//TODO: implement this like this.points
+	calculateCost() {
+		
+	}
 	
 	randomizeRadius() {
         return 20 - 5 + Math.random() * 10;
@@ -74,13 +97,14 @@ class Level {
     }
 
 	//PUBLIC
-	randomizeShape() {
+	randomizeShape(_player) {
 		let keys = Object.keys(possibleCollectibleShapes);
 		let rand = Math.round(Math.random() * (keys.length - 1));
 		this.r = possibleCollectibleShapes[keys[rand]].radius || this.randomizeRadius();
 		this.shapeProperties = possibleCollectibleShapes[keys[rand]];
 		this.color = this.createPattern(this.r * 2, this.r * 2);
 		this.calculatePoints();
+		this.calculateCost();
 		this.resetDrawFn();
 		this.wasRandomized = true;
 	}
@@ -93,6 +117,7 @@ class Level {
 		this.color = this.createPattern(this.r * 2, this.r * 2);
 		this.randomCircleData = {};
 		this.calculatePoints();
+		this.calculateCost();
 		this.resetDrawFn();
 		this.wasRandomized = true;
 	}
@@ -110,8 +135,9 @@ class Level {
 		this.colorList = newColorList;
 		this.color = this.createPattern(this.r * 2, this.r * 2);
 		this.calculatePoints();
+		this.calculateCost();
 		this.resetDrawFn();
-		this.wasRandomized = true;
+			this.wasRandomized = true;
 	}
 	
 	//PUBLIC
@@ -127,18 +153,5 @@ class Level {
 			this.list[i].setColor(this.color);
 			this.list[i].setDrawFn(this.shapeProperties.fn);
 		}
-	}
-	
-	calculatePoints() {
-		let colorPoints = 1;
-		for(let c in this.colorList)
-			colorPoints *= 2;
-		
-		this.points = {
-			color: colorPoints,
-			pattern: this.patternProperties.points,
-			shape: this.shapeProperties.points,
-			total: colorPoints * this.patternProperties.points + this.shapeProperties.points
-		};
 	}
 }

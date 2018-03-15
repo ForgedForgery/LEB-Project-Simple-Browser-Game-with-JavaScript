@@ -9,6 +9,7 @@ class DetailPanel {
 		this.leftSide = this.x - this.width/2;
 		this.topSide = this.y - this.height;
         this.level = config.level;
+		this.player = config.player;
 		this.color = config.color;
         
         this.phi = (1 + Math.sqrt(5)) / 2;
@@ -36,7 +37,7 @@ class DetailPanel {
         this.informationPoints2 = new TextField({
             x: this.leftSide + this.width - offset - ((this.width - offset * 2) / this.phi) * 5 /8,
             y: this.topSide + 2 * this.height / 8 + this.height / 16 + offset / 2 + 1,
-            text: "-400000",
+            text: "-" + this.level.cost.total,
             align: 'center',
             textBaseline: 'middle',
             size: "20px",
@@ -46,12 +47,11 @@ class DetailPanel {
         this.informationShape = new TextField({
             x: this.leftSide + this.width / 6,
             y: this.topSide +  this.height / 2 + this.height / 12 + 0 * this.height / 6,
-            text: "Shape", // this.level.formProperties.points,
+            text: "Shape",
             align: 'center',
             textBaseline: 'middle',
             size: "15px"
-        });      
-        
+        });    
         this.informationShape2 = new TextField({
             x: this.leftSide + this.width / 6,
             y: this.topSide +  this.height / 2 + this.height / 12 + 1 * this.height / 6,
@@ -61,11 +61,10 @@ class DetailPanel {
             size: "15px",
             color: playerScoreFieldColor
         }); 
-        
         this.informationShape3 = new TextField({
             x: this.leftSide + this.width / 6 - 7,
             y: this.topSide + this.height / 2 + this.height / 12 + this.height / 6 + 19,
-            text: "-300000",
+            text: "-" + this.level.cost.shape,
             align: 'center',
             textBaseline: 'middle',
             size: "13px",
@@ -92,7 +91,7 @@ class DetailPanel {
         this.informationPattern3 = new TextField({
             x: this.leftSide + 3 * this.width / 6 - 7,
             y: this.topSide + this.height / 2 + this.height / 12 + this.height / 6 + 19,
-            text: "-300000",
+            text: "-" + this.level.cost.pattern,
             align: 'center',
             textBaseline: 'middle',
             size: "13px",
@@ -121,7 +120,7 @@ class DetailPanel {
         this.informationColor3 = new TextField({
             x: this.leftSide + 5 * this.width / 6 - 7,
             y: this.topSide + this.height / 2 + this.height / 12 + this.height / 6 + 19,
-            text: "-30000",
+            text: "-" + this.level.cost.color,
             align: 'center',
             textBaseline: 'middle',
             size: "13px",
@@ -140,9 +139,12 @@ class DetailPanel {
             shadowBlurText: 0,
 			onClick: (function(_level, _detailPanel) {
 				return function() {
-					_level.randomizeShape();
+					if(_level.player.score > _level.cost.shape) {
+						_level.player.score -= _level.cost.shape;
+						_level.randomizeShape();
 					
-					_detailPanel.example.setDrawFn(_level.shapeProperties.fn);
+						_detailPanel.example.setDrawFn(_level.shapeProperties.fn);
+					}
 				}
 			})(this.level, this)
         });
@@ -158,10 +160,14 @@ class DetailPanel {
             shadowBlurText: 0,
 			onClick: (function(_level, _detailPanel) {
 				return function() {
-					_level.randomizePattern();
-					_detailPanel.color = _level.createPattern(50, 50);
-					_detailPanel.example.setColor(_detailPanel.color);
-					_detailPanel.example.setDrawFn(_level.shapeProperties.fn);
+					if(_level.player.score > _level.cost.pattern) {
+						_level.player.score -= _level.cost.pattern;
+						
+						_level.randomizePattern();
+						_detailPanel.color = _level.createPattern(50, 50);
+						_detailPanel.example.setColor(_detailPanel.color);
+						_detailPanel.example.setDrawFn(_level.shapeProperties.fn);
+					}
 				}
 			})(this.level, this)
         });
@@ -177,10 +183,14 @@ class DetailPanel {
             shadowBlurText: 0,
 			onClick: (function(_level, _detailPanel) {
 				return function() {
-					_level.randomizeColor();
-					_detailPanel.color = _level.createPattern(50, 50);
-					_detailPanel.example.setColor(_detailPanel.color);
-					_detailPanel.example.setDrawFn(_level.shapeProperties.fn);
+					if(_level.player.score > _level.cost.color) {
+						_level.player.score -= _level.cost.color;
+						
+						_level.randomizeColor();
+						_detailPanel.color = _level.createPattern(50, 50);
+						_detailPanel.example.setColor(_detailPanel.color);
+						_detailPanel.example.setDrawFn(_level.shapeProperties.fn);
+					}
 				}
 			})(this.level, this)
         });
@@ -199,10 +209,14 @@ class DetailPanel {
             shadowBlurText: 0,
 			onClick: (function(_level, _detailPanel) {
 				return function() {
-					_level.randomizeEverything();
-					_detailPanel.color = _level.createPattern(50, 50);
-					_detailPanel.example.setColor(_detailPanel.color);
-					_detailPanel.example.setDrawFn(_level.shapeProperties.fn);
+					if(_level.player.score > _level.cost.total) {
+						_level.player.score -= _level.cost.total;
+						
+						_level.randomizeEverything();
+						_detailPanel.color = _level.createPattern(50, 50);
+						_detailPanel.example.setColor(_detailPanel.color);
+						_detailPanel.example.setDrawFn(_level.shapeProperties.fn);
+					}
 				}
 			})(this.level, this)
         });
