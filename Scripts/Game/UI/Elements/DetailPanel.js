@@ -13,21 +13,16 @@ class DetailPanel {
         
         this.phi = (1 + Math.sqrt(5)) / 2;
 		
-		this.borderWidth = 3;
-        
-        this.colorPoints = 0;
-  		for(let c in this.level.colorList)
-			this.colorPoints += possibleCollectibleColors[this.level.colorList[c]].points; 
+		this.borderWidth = 3; 
         
         let offset = 5;
         let tempRadius = 25;
-        let newColor = this.level.createPattern(tempRadius * 2, tempRadius * 2, this.level.colorList, this.level.patternProperties.fn);
-        this.example = new Collectible(this.level.shapeProperties.fn, newColor, {
+        this.color = this.level.createPattern(tempRadius * 2, tempRadius * 2);
+        this.example = new Collectible(this.level.shapeProperties.fn, this.color, {
             r: tempRadius,
             x: this.leftSide + offset + (this.width - offset * 2 - ((this.width - offset * 2) / this.phi)) / 2,
             y: this.topSide + this.height / 4
         });
-		this.level.list.push(this.example);
         
         this.informationPoints = new TextField({
             x: this.leftSide + this.width - offset - ((this.width - offset * 2) / this.phi) / 2,
@@ -143,11 +138,13 @@ class DetailPanel {
             fontSize: "17px",
             shadowBlur: 0,
             shadowBlurText: 0,
-			onClick: (function(_level) {
+			onClick: (function(_level, _detailPanel) {
 				return function() {
 					_level.randomizeShape();
+					
+					_detailPanel.example.setDrawFn(_level.shapeProperties.fn);
 				}
-			})(this.level)
+			})(this.level, this)
         });
         
         this.patternRandomizeButton = new Button({
@@ -159,11 +156,14 @@ class DetailPanel {
             fontSize: "17px",
             shadowBlur: 0,
             shadowBlurText: 0,
-			onClick: (function(_level) {
+			onClick: (function(_level, _detailPanel) {
 				return function() {
 					_level.randomizePattern();
+					_detailPanel.color = _level.createPattern(50, 50);
+					_detailPanel.example.setColor(_detailPanel.color);
+					_detailPanel.example.setDrawFn(_level.shapeProperties.fn);
 				}
-			})(this.level)
+			})(this.level, this)
         });
         
         this.colorRandomizeButton = new Button({
@@ -174,7 +174,15 @@ class DetailPanel {
             label: diceImg,
             fontSize: "17px",
             shadowBlur: 0,
-            shadowBlurText: 0
+            shadowBlurText: 0,
+			onClick: (function(_level, _detailPanel) {
+				return function() {
+					_level.randomizeColor();
+					_detailPanel.color = _level.createPattern(50, 50);
+					_detailPanel.example.setColor(_detailPanel.color);
+					_detailPanel.example.setDrawFn(_level.shapeProperties.fn);
+				}
+			})(this.level, this)
         });
         
         let tempDiceImg = new Image(20, 20);
@@ -188,14 +196,20 @@ class DetailPanel {
             label: tempDiceImg,
             fontSize: "23px",
             shadowBlur: 0,
-            shadowBlurText: 0
+            shadowBlurText: 0,
+			onClick: (function(_level, _detailPanel) {
+				return function() {
+					_level.randomizeEverything();
+					_detailPanel.color = _level.createPattern(50, 50);
+					_detailPanel.example.setColor(_detailPanel.color);
+					_detailPanel.example.setDrawFn(_level.shapeProperties.fn);
+				}
+			})(this.level, this)
         });
    
         this.hovered = false;
 		this.active = false;
     }
-
-
     
     update() {
 		this.hovered = this.isHovered() ? true : false;
@@ -203,6 +217,10 @@ class DetailPanel {
         this.shapeRandomizeButton.update();
         this.patternRandomizeButton.update();
         this.colorRandomizeButton.update();
+		this.informationShape2.setTextTo(this.level.points.shape);
+		this.informationPattern2.setTextTo(this.level.points.pattern);
+		this.informationColor2.setTextTo(this.level.points.color);
+		this.informationPoints.setTextTo("+" + this.level.points.total);
     }
   
     isHovered() {

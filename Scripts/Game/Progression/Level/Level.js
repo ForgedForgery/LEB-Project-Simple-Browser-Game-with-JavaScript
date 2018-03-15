@@ -4,24 +4,18 @@ class Level {
 		this.patternProperties = possibleCollectiblePatterns[_levelProperties.pattern]
         this.shapeProperties = possibleCollectibleShapes[_levelProperties.shape];
 				
-		this.r = this.randomizeRadius();
+		this.r = possibleCollectibleShapes.radius || this.randomizeRadius();
 		
-		let colorPoints = 1;
-		for(let c in this.colorList)
-			colorPoints *= 2;
+		this.calculatePoints();
 		
-		this.points = {
-			color: colorPoints,
-			pattern: this.patternProperties.points,
-			shape: this.shapeProperties.points,
-			total: colorPoints * this.patternProperties.points + this.shapeProperties.points
-		};
-		
+		this.randomCircleData = {};
 		this.color = this.createPattern(this.r*2, this.r*2);
 		
         this.list = [];
 		
 		this.cooldown = new SpawnCooldown();
+		
+		this.wasRandomized = false;
     }	
 	
 	randomizeRadius() {
@@ -83,15 +77,12 @@ class Level {
 	randomizeShape() {
 		let keys = Object.keys(possibleCollectibleShapes);
 		let rand = Math.round(Math.random() * (keys.length - 1));
+		this.r = possibleCollectibleShapes[keys[rand]].radius || this.randomizeRadius();
 		this.shapeProperties = possibleCollectibleShapes[keys[rand]];
+		this.color = this.createPattern(this.r * 2, this.r * 2);
+		this.calculatePoints();
 		this.resetDrawFn();
-	}
-	
-	resetDrawFn() {
-		for(let i in this.list) {
-			this.list[i].setColor(this.color);
-			this.list[i].setDrawFn(this.shapeProperties.fn);
-		}
+		this.wasRandomized = true;
 	}
 	
 	//PUBLIC
@@ -100,6 +91,54 @@ class Level {
 		let rand = Math.round(Math.random() * (keys.length - 1));
 		this.patternProperties = possibleCollectiblePatterns[keys[rand]];
 		this.color = this.createPattern(this.r * 2, this.r * 2);
+		this.randomCircleData = {};
+		this.calculatePoints();
 		this.resetDrawFn();
+		this.wasRandomized = true;
+	}
+	
+	//PUBLIC
+	randomizeColor() {
+		let newColorList = [];
+		let rand = Math.round(Math.random() * 10);
+		for(let i = 0; i <= rand; i++) {
+			let r = Math.random() * 255;
+			let g = Math.random() * 255;
+			let b = Math.random() * 255;
+			newColorList.push("rgb(" + r + ", " + g + ", " + b + ")");
+		}
+		this.colorList = newColorList;
+		this.color = this.createPattern(this.r * 2, this.r * 2);
+		this.calculatePoints();
+		this.resetDrawFn();
+		this.wasRandomized = true;
+	}
+	
+	//PUBLIC
+	randomizeEverything() {
+		this.randomizeShape();
+		this.randomizePattern();
+		this.randomizeColor();
+	}
+	
+	resetDrawFn() {
+		for(let i in this.list) {
+			this.list[i].r = this.r;
+			this.list[i].setColor(this.color);
+			this.list[i].setDrawFn(this.shapeProperties.fn);
+		}
+	}
+	
+	calculatePoints() {
+		let colorPoints = 1;
+		for(let c in this.colorList)
+			colorPoints *= 2;
+		
+		this.points = {
+			color: colorPoints,
+			pattern: this.patternProperties.points,
+			shape: this.shapeProperties.points,
+			total: colorPoints * this.patternProperties.points + this.shapeProperties.points
+		};
 	}
 }

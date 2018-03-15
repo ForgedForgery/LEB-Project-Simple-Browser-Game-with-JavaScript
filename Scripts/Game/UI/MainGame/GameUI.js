@@ -118,6 +118,7 @@ class GameUI {
 				this.activeBarDetails = this.spawnCooldownBars[i].detailPanel;
             this.spawnCooldownBars[i].draw();
 		}
+		
 		if(this.activeBarDetails)
 			this.activeBarDetails.draw();
 	}

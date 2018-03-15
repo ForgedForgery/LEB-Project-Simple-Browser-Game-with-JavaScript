@@ -4,7 +4,7 @@
 var baseLevels = [	
 	{
 		shape: "trisaw",
-		color: ["lightblue", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green"],
+		color: ["lightblue", "red"],
 		pattern: "randomCircles" 
 	},
 	{

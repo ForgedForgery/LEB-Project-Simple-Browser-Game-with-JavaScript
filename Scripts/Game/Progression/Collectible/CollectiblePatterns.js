@@ -79,7 +79,11 @@ var possibleCollectiblePatterns = {
 			let maxColorIndex = _colorList.length - 1;
             grad = _context.createLinearGradient(0, 0, _canvas.width, 0);
             for(let colorIndex in _colorList) {
-                grad.addColorStop(0.15 + colorIndex / maxColorIndex * 0.7, _colorList[colorIndex]);
+				if(maxColorIndex == 0) {
+					grad.addColorStop(1, _colorList[colorIndex]);
+					break;
+				}
+				grad.addColorStop(0.15 + colorIndex / maxColorIndex * 0.7, _colorList[colorIndex]);
             }
             _context.fillStyle = grad;
             _context.fillRect(0, 0, _canvas.width, _canvas.height);
@@ -91,6 +95,10 @@ var possibleCollectiblePatterns = {
 			let maxColorIndex = _colorList.length - 1;
             grad = _context.createRadialGradient(_canvas.width / 2, _canvas.height / 2, 0, _canvas.width / 2, _canvas.height / 2 , _canvas.height / 2);
             for(let colorIndex in _colorList) {
+				if(maxColorIndex == 0) {
+					grad.addColorStop(1, _colorList[colorIndex]);
+					break;
+				}
                 grad.addColorStop(0.15 + colorIndex / maxColorIndex * 0.7, _colorList[colorIndex]);
             }
             _context.fillStyle = grad;
@@ -101,23 +109,19 @@ var possibleCollectiblePatterns = {
 		points: 100,
 		fn: function(_canvas, _context, _colorList, _level) {
 			let maxColorIndex = _colorList.length - 1;
-			
-			let hasData = typeof _level.randomCircleData != "undefined";
-			if (!hasData)
-				_level.randomCircleData = {};
 
 			for(let colorIndex in _colorList) {
 				_context.beginPath();
 
 				if(colorIndex == 0) {
-					_context.fillStyle = _colorList[maxColorIndex];
+					_context.fillStyle = _colorList[colorIndex];
 					_context.fillRect(0, 0, _canvas.width, _canvas.height);
 				}
 				else {
 					_context.fillStyle = _colorList[colorIndex];
 					
 					let x, y, r;
-					if (hasData) {
+					if (typeof _level.randomCircleData[colorIndex] != "undefined") {
 						x = _level.randomCircleData[colorIndex].x * _canvas.width;
 						y = _level.randomCircleData[colorIndex].y * _canvas.height;
 						r = _level.randomCircleData[colorIndex].r * _canvas.height;
