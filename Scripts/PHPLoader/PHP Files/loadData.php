@@ -24,6 +24,7 @@ if ($array != NULL) {
     echo '{
         "name": "'.$loginName.'",
         "score": 0,
+		"levels": {},
         "status": "New account created."
     }';
 
