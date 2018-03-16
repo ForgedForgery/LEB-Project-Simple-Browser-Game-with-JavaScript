@@ -55,6 +55,7 @@ class ProgressionSystem {
 	
 	//PUBLIC
 	updateLoadedData() {
+        console.log("updateLoadedData()");
 		this.activeLevels = {};
 		for(let d in loadedPlayerData.levels) {
 			this.activeLevels[d] = new Level({

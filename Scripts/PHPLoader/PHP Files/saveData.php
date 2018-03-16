@@ -17,7 +17,7 @@ $sql = "UPDATE benutzer  SET Score = '$score', Data = '$data'  where Benutzernam
 $results = mysqli_query($conn, $sql);
 if ($results == 1){
     echo '{
-        status: "Game saved."
+        "status": "Game saved."
     }'; 
 }
 mysqli_close($conn);
