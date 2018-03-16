@@ -34,6 +34,15 @@ class SpawnCooldown {
 	}
 		
 	generateNewMaximum(spawnAmount) {
-		return Math.pow((spawnAmount), 2) / 12;
+        let x = 4;
+        let y = this.doFormula(x);
+        if(spawnAmount < x)	
+            return this.doFormula(spawnAmount);
+        else
+            return y * (spawnAmount - x) + y;
 	}
+    
+    doFormula(x) {
+        return Math.pow(x, 3) / 2;
+    }
 }

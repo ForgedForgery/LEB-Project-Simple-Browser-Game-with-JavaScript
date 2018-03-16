@@ -31,6 +31,8 @@ class Button {
                 
             }
         }
+		
+		this.input = playerInput;
         
         this.hovered = false;
     }
@@ -38,7 +40,7 @@ class Button {
     update() {
         this.hovered = this.isHovered();
         
-        if(this.hovered && playerInput.upClick) {
+        if(this.hovered && this.input.upClick) {
             if(this.executeBehavior.length == 1)
                 this.executeBehavior(this.affectedReference);
             else
@@ -49,8 +51,8 @@ class Button {
 
     
     isHovered() {
-        let mouseX = playerInput.mouseX;
-        let mouseY = playerInput.mouseY;
+        let mouseX = this.input.mouseX;
+        let mouseY = this.input.mouseY;
         let topleftCorner = {
             x: this.x - this.width/2,
             y: this.y - this.height/2
@@ -69,7 +71,7 @@ class Button {
         
         canvasContext.lineWidth = "5";
         canvasContext.strokeStyle = this.backgroundColor;
-        canvasContext.fillStyle = this.hovered ? (playerInput.mouseHold ? buttonHoldColor : buttonHoverColor) : this.backgroundColor;
+        canvasContext.fillStyle = this.hovered ? (this.input.mouseHold ? buttonHoldColor : buttonHoverColor) : this.backgroundColor;
         canvasContext.rect(this.x - this.width/2, this.y - this.height/2, this.width, this.height);
         
         canvasContext.stroke();
@@ -84,7 +86,7 @@ class Button {
         else if((this.label instanceof Image) && this.label.complete) {
             canvasContext.drawImage(this.label, this.x - this.label.width / 2, this.y - this.label.height / 2, this.label.width, this.label.height);
             
-            canvasContext.fillStyle = this.hovered ? (playerInput.mouseHold ? "rgba(0, 0, 0, 0.4)" :  "rgba(255, 0, 0, 0.15)") : "rgba(255, 255, 255, 0)";
+            canvasContext.fillStyle = this.hovered ? (this.input.mouseHold ? "rgba(0, 0, 0, 0.4)" :  "rgba(255, 0, 0, 0.15)") : "rgba(255, 255, 255, 0)";
             canvasContext.rect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
             canvasContext.fill();
         }

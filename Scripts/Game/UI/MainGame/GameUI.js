@@ -9,7 +9,7 @@ class GameUI {
         this.progression = inProgressionReference;
         
         this.createMenuObjects();
-      
+        
         this.spawnCooldownBars = [];
 		
 		this.activeBarDetails;
@@ -24,27 +24,38 @@ class GameUI {
             label: disketteImg,
             fontSize: "17px",
 			affectedReference: this.player,
-            onClick: (ref) => doSave(ref),
+            onClick: (function(_player, _progression) {
+				return function() {
+					doSave(_player, _progression);
+				}
+			})(this.player, this.progression),
             shadowBlur: 5,
             shadowBlurText: 5
         });
         
-        this.shopButton = new Button({
-            x: this.x + 680,
-            y: this.y + 25,
-            width: 100,
-            label: "Shop",
-            fontSize: "20px",
-            shadowBlur: 5,
-            shadowBlurText: 5,
-            onClick: function() {
-                    //game.scenes.changeTo("store");
-            }
+        this.levelPreProgressField = new TextField({
+            x: this.x + 530,
+            y: this.y + 13,
+            text: "Next Level:",
+            align: 'left',
+            shadowBlur: 5
+        });
+        
+        this.missingScoreField = new TextField({
+            x: this.x + 530,
+            y: this.y + 38,
+            color: playerScoreFieldColor,
+            text: "Nothing",
+            align: 'left',
+            shadowBlur: 5
         });
         
         this.playerNameField = new TextField({
             x: this.x + 10,
             y: this.y + 13,
+            color: playerScoreFieldColorAlert,
+            type: "Ceviche One",
+            size: "30px",
             text: this.player.name,
             align: 'left',
             shadowBlur: 5
@@ -70,7 +81,7 @@ class GameUI {
     update() {
 		this.checkIfNewBar();		
         this.saveButton.update();
-        this.shopButton.update();
+        this.missingScoreField.setTextTo(this.progression.requiredScore - this.player.score);
         this.playerNameField.setTextTo(this.player.name);
         this.playerScoreField.setTextTo(this.player.score);
 		for(let i = 0; i < this.spawnCooldownBars.length; i++)
@@ -99,7 +110,8 @@ class GameUI {
         this.playerScoreField.draw();
         this.playerScorePreField.draw();
         this.saveButton.draw();
-        this.shopButton.draw();
+        this.levelPreProgressField.draw();
+        this.missingScoreField.draw();
 		this.drawBars();
 	}
     
@@ -118,6 +130,7 @@ class GameUI {
 				this.activeBarDetails = this.spawnCooldownBars[i].detailPanel;
             this.spawnCooldownBars[i].draw();
 		}
+		
 		if(this.activeBarDetails)
 			this.activeBarDetails.draw();
 	}

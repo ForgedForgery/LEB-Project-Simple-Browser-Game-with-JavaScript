@@ -12,23 +12,20 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT Benutzername, Score FROM benutzer where Benutzername = '$loginName'";
+$sql = "SELECT Data FROM benutzer where Benutzername = '$loginName'";
 $result = mysqli_query($conn, $sql);
 $array = mysqli_fetch_assoc($result);
 if ($array != NULL) {
-    echo '{
-        "name": "'.$array['Benutzername'].'",
-        "score": '.$array['Score'].',
-        "status": "Account loaded."
-    }';
+    echo $array['Data'];
 } else {
     // create new account and put it in database
-    $erstellen="INSERT INTO benutzer(Benutzername) VALUES ('$loginName')";
+    $erstellen = "INSERT INTO benutzer (Benutzername, Score, Data) VALUES ('$loginName', 0, '{\"name\": \"".$loginName."\", \"score\": 0, \"levels\": null}')";
     $sqlerstellen = mysqli_query($conn, $erstellen);
     echo '{
         "name": "'.$loginName.'",
         "score": 0,
-        "status": "New account created."
+		"levels": null,
+        "status": "New account created!"
     }';
 
 }
