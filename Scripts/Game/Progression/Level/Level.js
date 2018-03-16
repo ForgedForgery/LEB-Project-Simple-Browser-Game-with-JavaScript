@@ -114,6 +114,7 @@ class Level {
 		this.calculatePoints();
 		this.calculateCost();
 		this.resetDrawFn();
+        this.shapeKeyword = keys[rand];
 		this.wasRandomized = true;
 	}
 	
@@ -127,6 +128,7 @@ class Level {
 		this.calculatePoints();
 		this.calculateCost();
 		this.resetDrawFn();
+        this.patternKeyword = keys[rand];
 		this.wasRandomized = true;
 	}
 	

@@ -52,7 +52,7 @@ function loadData(xhttp) {
     
     let status = document.getElementById("status");
     if(loadedData.status == "New account created!")
-        status.innerText += "test";
+        status.innerText += loadedData.status;
     status.innerText += "Logged in as " + loadedPlayerData.name + "...";
     setTimeout(function(){status.innerText = "";}, 3000);
 }
