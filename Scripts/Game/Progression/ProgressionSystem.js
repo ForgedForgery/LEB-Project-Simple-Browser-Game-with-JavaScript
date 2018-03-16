@@ -64,6 +64,8 @@ class ProgressionSystem {
 					pattern: loadedPlayerData.levels[d].pattern,
 					shape: loadedPlayerData.levels[d].shape
 				}, this.player));
+			if(this.activeLevels[d].patternKeyword == "randomCircle")
+				this.activeLevels[d].randomCircleData = loadedPlayerData.levels[d].patternData;
 			this.currentLevel++;
 		}
 		console.log(this.activeLevels.length);

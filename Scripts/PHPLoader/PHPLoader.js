@@ -11,10 +11,10 @@ function doSave(inPlayer, inProgression) {
 		loadedPlayerData.levels[l] = {};
 		loadedPlayerData.levels[l].color = inProgression.activeLevels[l].colorList;
 		loadedPlayerData.levels[l].pattern = inProgression.activeLevels[l].patternKeyword;
-		//FUCK: need files from level-system branch
-//		if(inProgression.activeLevels[l].patternKeyword == "randomCircles") {
-//			loadedPlayerData.levels[l].patternData = inProgression.activeLevels[l].randomCircleData
-//		}
+		
+		if(inProgression.activeLevels[l].patternKeyword == "randomCircles") {
+			loadedPlayerData.levels[l].patternData = inProgression.activeLevels[l].randomCircleData;
+		}
 		loadedPlayerData.levels[l].shape = inProgression.activeLevels[l].shapeKeyword;
 	}
 	
