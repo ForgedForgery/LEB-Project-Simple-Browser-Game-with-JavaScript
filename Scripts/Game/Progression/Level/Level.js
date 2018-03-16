@@ -16,7 +16,7 @@ class Level {
 		this.cost = {};
 		this.calculateCost();
 		
-		this.randomCircleData = {};
+		this.randomCircleData = _levelProperties.randomCircleData || {};
 		this.color = this.createPattern(this.r*2, this.r*2);
 		
         this.list = [];
@@ -100,7 +100,6 @@ class Level {
         tempContext.closePath();
 
         let pattern = canvasContext.createPattern(tempCanvas, "repeat");
-        document.body.appendChild(tempCanvas);
         return pattern;
     }
 
