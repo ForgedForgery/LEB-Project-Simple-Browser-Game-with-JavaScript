@@ -55,15 +55,18 @@ class ProgressionSystem {
 	
 	//PUBLIC
 	updateLoadedData() {
-        console.log("updateLoadedData()");
-		this.activeLevels = {};
+		if(loadedPlayerData.levels != null && Object.keys(loadedPlayerData.levels) != 0) {
+			this.activeLevels = [];
+		}
 		for(let d in loadedPlayerData.levels) {
-			this.activeLevels[d] = new Level({
-				color: loadedPlayerData.levels[d].color,
-				pattern: loadedPlayerData.levels[d].pattern,
-				shape: loadedPlayerData.levels[d].shape
-			});
+			this.activeLevels
+				.push(new Level({
+					color: loadedPlayerData.levels[d].color,
+					pattern: loadedPlayerData.levels[d].pattern,
+					shape: loadedPlayerData.levels[d].shape
+				}));
 			this.currentLevel++;
 		}
+		console.log(this.activeLevels.length);
 	}
 }
