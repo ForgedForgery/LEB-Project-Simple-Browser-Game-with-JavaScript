@@ -14,6 +14,7 @@ function doSave(inPlayer, inProgression) {
 		
 		if(inProgression.activeLevels[l].patternKeyword == "randomCircles") {
 			loadedPlayerData.levels[l].patternData = inProgression.activeLevels[l].randomCircleData;
+            console.log(inProgression.activeLevels[l].randomCircleData);
 		}
 		loadedPlayerData.levels[l].shape = inProgression.activeLevels[l].shapeKeyword;
 	}

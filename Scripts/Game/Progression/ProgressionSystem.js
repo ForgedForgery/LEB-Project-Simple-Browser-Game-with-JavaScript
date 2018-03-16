@@ -22,9 +22,9 @@ class ProgressionSystem {
     }
 	
 	nextLevelReached() {
-		let requiredScore = (5+Math.pow(this.currentLevel, 6)) * 6;
+		this.requiredScore = (5+Math.pow(this.currentLevel, 6)) * 6;
 
-		return this.player.score > requiredScore && this.currentLevel <= this.maxLevel;
+		return this.player.score > this.requiredScore && this.currentLevel <= this.maxLevel;
 	}
 
 	generateNewLevel() {
@@ -62,10 +62,9 @@ class ProgressionSystem {
 			this.activeLevels.push(new Level({
 					color: loadedPlayerData.levels[d].color,
 					pattern: loadedPlayerData.levels[d].pattern,
-					shape: loadedPlayerData.levels[d].shape
+					shape: loadedPlayerData.levels[d].shape,
+                    randomCircleData: loadedPlayerData.levels[d].patternData
 				}, this.player));
-			if(this.activeLevels[d].patternKeyword == "randomCircle")
-				this.activeLevels[d].randomCircleData = loadedPlayerData.levels[d].patternData;
 			this.currentLevel++;
 		}
 		console.log(this.activeLevels.length);
