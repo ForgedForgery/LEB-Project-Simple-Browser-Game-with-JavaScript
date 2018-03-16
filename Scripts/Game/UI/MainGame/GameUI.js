@@ -44,6 +44,7 @@ class GameUI {
         this.missingScoreField = new TextField({
             x: this.x + 530,
             y: this.y + 38,
+            color: playerScoreFieldColor,
             text: "Nothing",
             align: 'left',
             shadowBlur: 5
@@ -52,6 +53,9 @@ class GameUI {
         this.playerNameField = new TextField({
             x: this.x + 10,
             y: this.y + 13,
+            color: playerScoreFieldColorAlert,
+            type: "Ceviche One",
+            size: "30px",
             text: this.player.name,
             align: 'left',
             shadowBlur: 5
