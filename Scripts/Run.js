@@ -3,6 +3,7 @@ function init() {
     loginForm = new LoginForm();
     playerInput = new Input();
     game = new ResourceCollector(width, height + heightUI, playerInput);
+	//game.progression.updateLoadedData(); //TESTING
     updateHighscoreInterval = setInterval(doLoadHighscore, 5000);
 }
 
