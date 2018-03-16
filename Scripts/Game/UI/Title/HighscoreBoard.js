@@ -1,6 +1,5 @@
 class HighscoreBoard {
     constructor(options) {
-        this.data = highscoreData;
         this.x = options.x;
         this.y = options.y;
         this.height = options.height;
@@ -90,13 +89,13 @@ class HighscoreBoard {
     }
     
     update() {
-        this.firstPlayerName.setTextTo(this.data.name1);      
-        this.secondPlayerName.setTextTo(this.data.name2);       
-        this.thirdPlayerName.setTextTo(this.data.name3);
+        this.firstPlayerName.setTextTo(highscoreData.name1);      
+        this.secondPlayerName.setTextTo(highscoreData.name2);       
+        this.thirdPlayerName.setTextTo(highscoreData.name3);
         
-        this.firstPlayerScore.setTextTo(this.data.score1);      
-        this.secondPlayerScore.setTextTo(this.data.score2);       
-        this.thirdPlayerScore.setTextTo(this.data.score3);
+        this.firstPlayerScore.setTextTo(highscoreData.score1);      
+        this.secondPlayerScore.setTextTo(highscoreData.score2);       
+        this.thirdPlayerScore.setTextTo(highscoreData.score3);
     }
     
     draw() {
