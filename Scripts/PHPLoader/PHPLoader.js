@@ -9,9 +9,9 @@ function doSave(inPlayer, inProgression) {
 	loadedPlayerData.levels = {};
 	for(let l in inProgression.activeLevels) {
 		loadedPlayerData.levels[l] = {};
-		loadedPlayerData.levels[l].colorList = inProgression.activeLevels[l].colorList;
-		loadedPlayerData.levels[l].patternProperties = inProgression.activeLevels[l].patternKeyword;
-		loadedPlayerData.levels[l].shapeProperties = inProgression.activeLevels[l].shapeKeyword;
+		loadedPlayerData.levels[l].color = inProgression.activeLevels[l].colorList;
+		loadedPlayerData.levels[l].pattern = inProgression.activeLevels[l].patternKeyword;
+		loadedPlayerData.levels[l].shape = inProgression.activeLevels[l].shapeKeyword;
 	}
 	
     console.log(loadedPlayerData);
@@ -40,6 +40,7 @@ function loadData(xhttp) {
     loadedPlayerData = loadedData;
 	
 	game.player.updateLoadedData();
+    console.log(loadedData.status);
 	if(loadedData.status != "New account created!")
 		game.progression.updateLoadedData();
     
@@ -47,7 +48,7 @@ function loadData(xhttp) {
     
     let status = document.getElementById("status");
     if(loadedData.status == "New account created!")
-        status.innerText += loadedData.status + " ";
+        status.innerText += "test";
     status.innerText += "Logged in as " + loadedPlayerData.name + "...";
     setTimeout(function(){status.innerText = "";}, 3000);
 }

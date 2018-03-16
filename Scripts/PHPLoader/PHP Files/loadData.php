@@ -19,13 +19,13 @@ if ($array != NULL) {
     echo $array['Data'];
 } else {
     // create new account and put it in database
-    $erstellen="INSERT INTO benutzer(Benutzername) VALUES ('$loginName')";
+    $erstellen = "INSERT INTO benutzer (Benutzername, Score, Data) VALUES ('$loginName', 0, '{\"name\": \"".$loginName."\", \"score\": 0, \"levels\": null}')";
     $sqlerstellen = mysqli_query($conn, $erstellen);
     echo '{
         "name": "'.$loginName.'",
         "score": 0,
-		"levels": {},
-        "status": "New account created."
+		"levels": null,
+        "status": "New account created!"
     }';
 
 }
