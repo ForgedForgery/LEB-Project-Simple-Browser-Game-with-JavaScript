@@ -2,10 +2,25 @@ function doLogin() {
     loadPHP("Scripts/PHPLoader/PHP Files/loadData.php?user=" + document.getElementById("nameInput").value + "&pass=" + document.getElementById("passInput").value, loadData);
 }
 
-function doSave(inPlayer) {
+function doSave(inPlayer, inProgression) {
+	loadedPlayerData = {};
     loadedPlayerData.name = inPlayer.name;
-    loadedPlayerData.score = inPlayer.score;
-    loadPHP("Scripts/PHPLoader/PHP Files/saveData.php?user=" + loadedPlayerData.name + "&score=" + loadedPlayerData.score, saveData);
+	loadedPlayerData.score = inPlayer.score;
+	loadedPlayerData.levels = {};
+	for(let l in inProgression.activeLevels) {
+		loadedPlayerData.levels[l] = {};
+		loadedPlayerData.levels[l].color = inProgression.activeLevels[l].colorList;
+		loadedPlayerData.levels[l].pattern = inProgression.activeLevels[l].patternKeyword;
+		//FUCK: need files from level-system branch
+//		if(inProgression.activeLevels[l].patternKeyword == "randomCircles") {
+//			loadedPlayerData.levels[l].patternData = inProgression.activeLevels[l].randomCircleData
+//		}
+		loadedPlayerData.levels[l].shape = inProgression.activeLevels[l].shapeKeyword;
+	}
+	
+    console.log(loadedPlayerData);
+    
+    loadPHP("Scripts/PHPLoader/PHP Files/saveData.php?user=" + loadedPlayerData.name + "&score=" + loadedPlayerData.score + "&data=" + JSON.stringify(loadedPlayerData), saveData);
 }
 
 function doLoadHighscore() {
@@ -26,17 +41,18 @@ function loadPHP(url, cFunction) {
 
 function loadData(xhttp) {
     let loadedData = JSON.parse(xhttp.responseText);
-    loadedPlayerData = {
-        name: loadedData.name,
-        score: loadedData.score
-    };
+    loadedPlayerData = loadedData;
+	
 	game.player.updateLoadedData();
+    console.log(loadedData.status);
+	if(loadedData.status != "New account created!")
+		game.progression.updateLoadedData();
     
     loginForm.delete();
     
     let status = document.getElementById("status");
-    if(loadedData.status == "New account created.")
-        status.innerText += "New account created! ";
+    if(loadedData.status == "New account created!")
+        status.innerText += "test";
     status.innerText += "Logged in as " + loadedPlayerData.name + "...";
     setTimeout(function(){status.innerText = "";}, 3000);
 }

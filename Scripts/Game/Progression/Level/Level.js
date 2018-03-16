@@ -4,6 +4,9 @@ class Level {
 		this.patternProperties = possibleCollectiblePatterns[_levelProperties.pattern]
         this.shapeProperties = possibleCollectibleShapes[_levelProperties.shape];
 		
+		this.patternKeyword = _levelProperties.pattern;
+		this.shapeKeyword = _levelProperties.shape;
+
 		this.player = _player;
 				
 		this.r = possibleCollectibleShapes.radius || this.randomizeRadius();

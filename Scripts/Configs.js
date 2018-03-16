@@ -22,7 +22,41 @@ var highscoreData = {
 };
 var loadedPlayerData = {
     name: "Guest",
-    score: 0
+    score: 0,
+	levels: 
+	{
+		//TESTING
+//		0: {
+//			shape: "trisaw",
+//			color: ["lightblue", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green"],
+//			pattern: "randomCircles" 
+//		},
+//		1: {
+//			shape: "tetrasaw",
+//			color: ["lightblue", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green"],
+//			pattern: "randomCircles"
+//		},
+//		2: {
+//			shape: "pentasaw",
+//			color: ["pink", "black", "pink", "green", "lightblue"],
+//			pattern: "randomCircles"
+//		},
+//		3: { 
+//			shape: "heptasaw",
+//			color: ["green", "blue", "green", "blue", "green"],
+//			pattern: "randomCircles"
+//		},	
+//		4: {
+//			shape: "hexasaw",
+//			color: ["blue", "lightblue", "red", "pink"],
+//			pattern: "randomCircles"
+//		},
+//		5: {
+//			shape: "octasaw",
+//			color: ["pink", "blue", "lightblue"],
+//			pattern: "randomCircles"
+//		} //TESTING
+	}
 };
 
 var canvas = document.querySelector('canvas');
