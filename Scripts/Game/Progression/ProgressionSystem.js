@@ -59,12 +59,11 @@ class ProgressionSystem {
 			this.activeLevels = [];
 		}
 		for(let d in loadedPlayerData.levels) {
-			this.activeLevels
-				.push(new Level({
+			this.activeLevels.push(new Level({
 					color: loadedPlayerData.levels[d].color,
 					pattern: loadedPlayerData.levels[d].pattern,
 					shape: loadedPlayerData.levels[d].shape
-				}));
+				}, this.player));
 			this.currentLevel++;
 		}
 		console.log(this.activeLevels.length);
