@@ -14,7 +14,7 @@ var possibleCollectiblePatterns = {
 		}
 	},
 	verticalLines: {
-		points: 10,
+		points: 3,
 		fn: function(_canvas, _context, _colorList) {
 			let maxColorIndex = _colorList.length;
 
@@ -29,7 +29,7 @@ var possibleCollectiblePatterns = {
 		}
 	},
 	radialLines: {
-		points: 40,
+		points: 4,
 		fn: function(_canvas, _context, _colorList) {
 			let maxColorIndex = _colorList.length - 1;
 
@@ -79,18 +79,26 @@ var possibleCollectiblePatterns = {
 			let maxColorIndex = _colorList.length - 1;
             grad = _context.createLinearGradient(0, 0, _canvas.width, 0);
             for(let colorIndex in _colorList) {
-                grad.addColorStop(0.15 + colorIndex / maxColorIndex * 0.7, _colorList[colorIndex]);
+				if(maxColorIndex == 0) {
+					grad.addColorStop(1, _colorList[colorIndex]);
+					break;
+				}
+				grad.addColorStop(0.15 + colorIndex / maxColorIndex * 0.7, _colorList[colorIndex]);
             }
             _context.fillStyle = grad;
             _context.fillRect(0, 0, _canvas.width, _canvas.height);
         }   
     },
     radialGradient: {
-        points: 20,
+        points: 7,
         fn: function(_canvas, _context, _colorList) {
 			let maxColorIndex = _colorList.length - 1;
             grad = _context.createRadialGradient(_canvas.width / 2, _canvas.height / 2, 0, _canvas.width / 2, _canvas.height / 2 , _canvas.height / 2);
             for(let colorIndex in _colorList) {
+				if(maxColorIndex == 0) {
+					grad.addColorStop(1, _colorList[colorIndex]);
+					break;
+				}
                 grad.addColorStop(0.15 + colorIndex / maxColorIndex * 0.7, _colorList[colorIndex]);
             }
             _context.fillStyle = grad;
@@ -98,26 +106,40 @@ var possibleCollectiblePatterns = {
         }
     },
 	randomCircles: {
-		points: 100,
-		fn: function(_canvas, _context, _colorList) {
+		points: 10,
+		fn: function(_canvas, _context, _colorList, _level) {
 			let maxColorIndex = _colorList.length - 1;
-			
+
 			for(let colorIndex in _colorList) {
 				_context.beginPath();
-				
+
 				if(colorIndex == 0) {
-					_context.fillStyle = _colorList[maxColorIndex];
+					_context.fillStyle = _colorList[colorIndex];
 					_context.fillRect(0, 0, _canvas.width, _canvas.height);
 				}
 				else {
 					_context.fillStyle = _colorList[colorIndex];
-					let x = 0.25 * _canvas.width + Math.random() * _canvas.width * 0.5;
-					let y = 0.25 * _canvas.height + Math.random() * _canvas.height * 0.5;
-					let r = 2 + Math.random() * 5;
+					
+					let x, y, r;
+					if (typeof _level.randomCircleData[colorIndex] != "undefined") {
+						x = _level.randomCircleData[colorIndex].x * _canvas.width;
+						y = _level.randomCircleData[colorIndex].y * _canvas.height;
+						r = _level.randomCircleData[colorIndex].r * _canvas.height;
+					}
+					else {
+						x = 0.25 * _canvas.width + Math.random() * _canvas.width * 0.5;
+						y = 0.25 * _canvas.height + Math.random() * _canvas.height * 0.5;
+						r = 2 + Math.random() * 5;
+						_level.randomCircleData[colorIndex] = {
+							x: x / _canvas.width,
+							y: y / _canvas.height,
+							r: r / _canvas.height
+						};
+					}
 					_context.arc(x, y, r, 0, Math.PI * 2);
 					_context.fill();
 				}
-				
+
 				_context.closePath();
 			}
 		}

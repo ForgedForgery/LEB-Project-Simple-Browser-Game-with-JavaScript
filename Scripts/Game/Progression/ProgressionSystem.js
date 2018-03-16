@@ -4,7 +4,7 @@ class ProgressionSystem {
         
 		this.maxLevel = 15;
         this.currentLevel = 1;
-        this.activeLevels = [new Level(baseLevels[0])];
+        this.activeLevels = [new Level(baseLevels[0], this.player)];
     }
     
 	//PUBLIC
@@ -22,13 +22,13 @@ class ProgressionSystem {
     }
 	
 	nextLevelReached() {
-		let requiredScore = Math.pow(this.currentLevel, 2) * 4;
+		let requiredScore = (5+Math.pow(this.currentLevel, 6)) * 6;
 
 		return this.player.score > requiredScore && this.currentLevel <= this.maxLevel;
 	}
 
 	generateNewLevel() {
-		this.activeLevels.push(new Level(baseLevels[this.currentLevel]));
+		this.activeLevels.push(new Level(baseLevels[this.currentLevel], this.player));
 	}
     
 	//PUBLIC
@@ -41,10 +41,10 @@ class ProgressionSystem {
 	// TODO: doesn't work yet
 	//PUBLIC
 	randomizeForLevel(level) {
-		let formProperties = possibleCollectibleShapes[Math.round(Math.random() * (possibleCollectibleShapes.length - 1))];
+		let shapeProperties = possibleCollectibleShapes[Math.round(Math.random() * (possibleCollectibleShapes.length - 1))];
 		let colorProperties = possibleCollectibleColor[Math.round(Math.random() * (possibleCollectibleColor.length - 1))];
 		
-		this.activeLevels[level] = new Collectible(formProperties, colorProperties, {});
+		this.activeLevels[level] = new Collectible(shapeProperties, colorProperties, {});
 	}
     
     checkCollisionWith(obj) {
