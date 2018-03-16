@@ -17,13 +17,11 @@ class CooldownBar {
 			x: this.x + this.width / 2,
 			y: this.y,
 			color: this.color,
-            level: this.level,
-            
+            level: this.level
 		});
     }
 	
 	update() {
-		this.detailPanel.update();
 		if(this.isHovered()) {
 			this.detailPanel.active = true;
 			this.hovered = true;
@@ -34,6 +32,14 @@ class CooldownBar {
 
 		if(!this.hovered && !this.detailPanel.hovered)
 			this.detailPanel.active = false;
+		
+		if(this.detailPanel.active)
+			this.detailPanel.update();
+		
+		if(this.level.wasRandomized) {
+			this.color = this.level.createPattern(this.width, this.height);
+			this.level.wasRandomized = false;
+		}
 	}
 
     draw() {
