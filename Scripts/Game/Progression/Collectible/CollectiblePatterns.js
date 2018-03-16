@@ -14,7 +14,7 @@ var possibleCollectiblePatterns = {
 		}
 	},
 	verticalLines: {
-		points: 10,
+		points: 3,
 		fn: function(_canvas, _context, _colorList) {
 			let maxColorIndex = _colorList.length;
 
@@ -29,7 +29,7 @@ var possibleCollectiblePatterns = {
 		}
 	},
 	radialLines: {
-		points: 40,
+		points: 4,
 		fn: function(_canvas, _context, _colorList) {
 			let maxColorIndex = _colorList.length - 1;
 
@@ -90,7 +90,7 @@ var possibleCollectiblePatterns = {
         }   
     },
     radialGradient: {
-        points: 20,
+        points: 7,
         fn: function(_canvas, _context, _colorList) {
 			let maxColorIndex = _colorList.length - 1;
             grad = _context.createRadialGradient(_canvas.width / 2, _canvas.height / 2, 0, _canvas.width / 2, _canvas.height / 2 , _canvas.height / 2);
@@ -106,7 +106,7 @@ var possibleCollectiblePatterns = {
         }
     },
 	randomCircles: {
-		points: 100,
+		points: 10,
 		fn: function(_canvas, _context, _colorList, _level) {
 			let maxColorIndex = _colorList.length - 1;
 

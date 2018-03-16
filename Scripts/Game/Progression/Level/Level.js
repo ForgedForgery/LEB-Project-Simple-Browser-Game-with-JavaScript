@@ -38,7 +38,12 @@ class Level {
 	
 	//TODO: implement this like this.points
 	calculateCost() {
-		
+		this.cost = {
+			color: this.points.color * 50,
+			pattern: this.points.pattern * 50,
+			shape: this.points.shape * 50,
+			total: (this.points.color + this.points.pattern + this.points.shape) * 45
+		};		
 	}
 	
 	randomizeRadius() {

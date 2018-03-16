@@ -235,6 +235,10 @@ class DetailPanel {
 		this.informationPattern2.setTextTo(this.level.points.pattern);
 		this.informationColor2.setTextTo(this.level.points.color);
 		this.informationPoints.setTextTo("+" + this.level.points.total);
+		this.informationShape3.setTextTo("-" + this.level.cost.shape);
+		this.informationPattern3.setTextTo("-" + this.level.cost.pattern);
+		this.informationColor3.setTextTo("-" + this.level.cost.color);
+		this.informationPoints2.setTextTo("-" + this.level.cost.total);
     }
   
     isHovered() {

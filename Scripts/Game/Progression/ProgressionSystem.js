@@ -22,7 +22,7 @@ class ProgressionSystem {
     }
 	
 	nextLevelReached() {
-		let requiredScore = Math.pow(this.currentLevel, 2) * 4;
+		let requiredScore = (5+Math.pow(this.currentLevel, 6)) * 6;
 
 		return this.player.score > requiredScore && this.currentLevel <= this.maxLevel;
 	}
