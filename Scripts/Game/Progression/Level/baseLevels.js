@@ -1,95 +1,97 @@
 // "red", "pink", "yellow", "black", "pink", "green", "lightblue", "red", "pink", "yellow", "black", "pink", "green", "lightblue"
 // looks kinda cool
 
+
+
 var baseLevels = [	
 	{
-		shape: "trisaw",
-		color: ["lightblue", "red"],
-		pattern: "randomCircles" 
+		shape: "triangle",
+		color: ["lightblue"],
+		pattern: "solid" 
 	},
 	{
-		shape: "tetrasaw",
-		color: ["lightblue", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green"],
-		pattern: "randomCircles"
+		shape: "pentagon",
+		color: ["blue"],
+		pattern: "solid"
 	},
 	{
-		shape: "pentasaw",
-		color: ["pink", "black", "pink", "green", "lightblue"],
-		pattern: "randomCircles"
-	},
-	{
-		shape: "heptasaw",
-		color: ["green", "blue", "green", "blue", "green"],
-		pattern: "randomCircles"
+		shape: "heptagon",
+		color: ["green"],
+		pattern: "solid"
 	},	
 	{
-		shape: "hexasaw",
-		color: ["blue", "lightblue", "red", "pink"],
-		pattern: "randomCircles"
-	},
-	{
-		shape: "octasaw",
-		color: ["pink", "blue", "lightblue"],
-		pattern: "randomCircles"
-	},
-	{
-		shape: "nonasaw",
-		color: ["blue"],
-		pattern: "verticalLines"
-	},
-	{
-		shape: "decasaw",
+		shape: "nonagon",
 		color: ["red"],
-		pattern: "verticalLines"
+		pattern: "solid"
 	},
 	{
-		shape: "tetradecasaw",
+		shape: "decagongram",
+		color: ["pink"],
+		pattern: "solid"
+	},
+	{
+		shape: "octagongram",
+		color: ["pink", "blue"],
+		pattern: "radialGradient"
+	},
+	{
+		shape: "hexagongram",
+		color: ["red"],
+		pattern: "solid"
+	},
+	{
+		shape: "decagram",
+		color: ["black"],
+		pattern: "solid"
+	},
+	{
+		shape: "octagram",
 		color: ["green"],
 		pattern: "verticalLines"
 	},
 	{
-		shape: "icosasaw",
-		color: ["yellow"],
-		pattern: "verticalLines"
-	},
-	{
-		shape: "icosasaw",
-		color: ["pink"],
-		pattern: "verticalLines"
-	},
-	{
-		shape: "square",
-		color: ["yellow"],
-		pattern: "verticalLines"
-	},
-	{
-		shape: "pentagon",
-		color: ["yellow"],
-		pattern: "verticalLines"
-	},
-	{
-		shape: "octagon",
-		color: ["yellow"],
-		pattern: "verticalLines"
-	},
-	{
-		shape: "square",
-		color: ["purple"],
-		pattern: "verticalLines"
-	},
-	{
-		shape: "pentagon",
-		color: ["purple"],
-		pattern: "verticalLines"
-	},
-	{
-		shape: "octagon",
-		color: ["purple"],
-		pattern: "verticalLines"
-	},
-	{
 		shape: "pentagram",
+		color: ["yellow"],
+		pattern: "solid"
+	},
+	{
+		shape: "trisaw",
 		color: ["pink"],
-		pattern: "verticalLines"
+		pattern: "solid"
+	},
+	{
+		shape: "pentasaw",
+		color: ["yellow"],
+		pattern: "solid"
+	},
+	{
+		shape: "heptasaw",
+		color: ["yellow", "red"],
+		pattern: "solid"
+	},
+	{
+		shape: "nonasaw",
+		color: ["yellow"],
+		pattern: "solid"
+	},
+	{
+		shape: "icosasaw",
+		color: ["red"],
+		pattern: "solid"
+	},
+	{
+		shape: "moon",
+		color: ["lightblue", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green", "blue", "green"],
+		pattern: "randomCircles"
+	},
+	{
+		shape: "decasaw",
+		color: ["purple"],
+		pattern: "solid"
+	},
+	{
+		shape: "tetradecasaw",
+		color: ["blue"],
+		pattern: "solid"
 	}
 ];

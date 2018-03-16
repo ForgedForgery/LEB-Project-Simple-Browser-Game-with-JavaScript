@@ -77,7 +77,7 @@ function fillStrokeShape(target) {
 var radiusOffset1 = 25;
 var possibleCollectibleShapes = {
 	triangle: {
-		points: 3,
+		points: 1,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(3, 1, _params); 
@@ -85,7 +85,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	square: {
-		points: 4,
+		points: 3,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(4, 1, _params); 
@@ -93,7 +93,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	pentagon: {
-		points: 5,
+		points: 6,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(5, 1, _params); 
@@ -101,7 +101,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	hexagon: {
-		points: 6,
+		points: 9,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(6, 1, _params); 
@@ -109,7 +109,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	heptagon: {
-		points: 7,
+		points: 12,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(7, 1, _params); 
@@ -117,7 +117,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	octagon: {
-		points: 8,
+		points: 15,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(8, 1, _params); 
@@ -125,7 +125,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	nonagon: {
-		points: 9,
+		points: 18,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(9, 1, _params); 
@@ -133,7 +133,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	decagon: {
-		points: 10,
+		points: 21,
 		fn: function(_params) {			
 			return (function() {
 				drawNSidedShape(10, 1, _params); 
@@ -141,7 +141,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	pentagongram: {
-		points: 100,
+		points: 251,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(5, 1, _params); 
@@ -150,7 +150,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	hexagongram: {
-		points: 100,
+		points: 154,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(6, 1, _params); 
@@ -159,7 +159,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	heptagongram: {
-		points: 100,
+		points: 103,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(7, 1, _params); 
@@ -168,7 +168,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	octagongram: {
-		points: 100,
+		points: 69,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(8, 1, _params); 
@@ -177,7 +177,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	nonagongram: {
-		points: 100,
+		points: 46,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(9, 1, _params); 
@@ -186,7 +186,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	decagongram: {
-		points: 100,
+		points: 31,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(10, 1, _params); 
@@ -195,7 +195,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	pentagram: {
-		points: 5000000,
+		points: 1506,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(5, 2, _params); 
@@ -203,7 +203,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	hexagram: {
-		points: 600000,
+		points: 1386,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(6, 2, _params); 
@@ -211,7 +211,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	heptagram: {
-		points: 70000,
+		points: 1236,
 		fn: function(_params) {			
 			return (function() {
 				drawNSidedShape(7, 2, _params); 
@@ -219,7 +219,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	octagram: {
-		points: 8000,
+		points: 1035,
 		fn: function(_params) {			
 			return (function() {
 				drawNSidedShape(8, 3, _params); 
@@ -227,7 +227,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	nonagram: {
-		points: 900,
+		points: 828,
 		fn: function(_params) {			
 			return (function() {
 				drawNSidedShape(9, 2, _params); 
@@ -235,7 +235,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	decagram: {
-		points: 100,
+		points: 651,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedShape(10, 3, _params); 
@@ -243,7 +243,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	trisaw: {
-		points: 100000,
+		points: 1903,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedDisksaw(3, _params);
@@ -252,7 +252,7 @@ var possibleCollectibleShapes = {
 		radius: radiusOffset1
 	},
 	tetrasaw: {
-		points: 100000,
+		points: 2321,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedDisksaw(4, _params);
@@ -261,7 +261,7 @@ var possibleCollectibleShapes = {
 		radius: radiusOffset1
 	},
 	pentasaw: {
-		points: 100000,
+		points: 2604,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedDisksaw(5, _params);
@@ -270,7 +270,7 @@ var possibleCollectibleShapes = {
 		radius: radiusOffset1
 	},
 	heptasaw: {
-		points: 100000,
+		points: 3312,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedDisksaw(6, _params);
@@ -279,7 +279,7 @@ var possibleCollectibleShapes = {
 		radius: radiusOffset1
 	},
 	hexasaw: {
-		points: 100000,
+		points: 4140,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedDisksaw(8, _params);
@@ -288,7 +288,7 @@ var possibleCollectibleShapes = {
 		radius: radiusOffset1
 	},
 	octasaw: {
-		points: 100000,
+		points: 4944,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedDisksaw(8, _params);
@@ -297,7 +297,7 @@ var possibleCollectibleShapes = {
 		radius: radiusOffset1
 	},
 	nonasaw: {
-		points: 100000,
+		points: 5544,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedDisksaw(9, _params);
@@ -306,7 +306,7 @@ var possibleCollectibleShapes = {
 		radius: radiusOffset1
 	},
 	decasaw: {
-		points: 100000,
+		points: 6042,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedDisksaw(10, _params);
@@ -315,7 +315,7 @@ var possibleCollectibleShapes = {
 		radius: radiusOffset1
 	},
 	tetradecasaw: {
-		points: 100000,
+		points: 6925,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedDisksaw(14, _params);
@@ -324,7 +324,7 @@ var possibleCollectibleShapes = {
 		radius: radiusOffset1
 	},
 	icosasaw: {
-		points: 100000,
+		points: 7734,
 		fn: function(_params) {
 			return (function() {
 				drawNSidedDisksaw(20, _params);
@@ -333,7 +333,7 @@ var possibleCollectibleShapes = {
 		radius: radiusOffset1
 	},
 	moon: {
-		points: 1000000000,
+		points: 8531,
 		fn: function(_params) {
 			return (function() {
 				canvasContext.beginPath();
@@ -363,7 +363,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	turkey: {
-		points: 1000000000,
+		points: 9312,
 		fn: function(_params) {
 			return (function() {
 				canvasContext.beginPath();
@@ -392,7 +392,7 @@ var possibleCollectibleShapes = {
 		}
 	},
 	weirdstar: {
-		points: 100000,
+		points: 10052,
 		fn: function(_params) {
 			return (function() {
 				canvasContext.beginPath();
