@@ -1,5 +1,5 @@
 function doLogin() {
-    loadPHP("Scripts/PHPLoader/PHP Files/loadData.php?user=" + document.getElementById("nameInput").value + "&pass=" + document.getElementById("passInput").value, loadData);
+    loadPHP("Scripts/PHPLoader/PHP Files/loadData.php?user=" + document.getElementById("nameInput").value, loadData);
 }
 
 function doSave(inPlayer, inProgression) {
