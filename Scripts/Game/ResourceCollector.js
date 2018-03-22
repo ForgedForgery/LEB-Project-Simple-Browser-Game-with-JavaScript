@@ -21,7 +21,7 @@ class ResourceCollector {
     update() {
         this.input.update();
         this.scenes.update();
-		this.savePeriodically();
+		//this.savePeriodically();
     }
 	
     savePeriodically() {
