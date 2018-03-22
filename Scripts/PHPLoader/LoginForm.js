@@ -4,7 +4,7 @@ class LoginForm {
     }
     
     create() {
-        document.getElementById('login').innerHTML = '<input id="nameInput" type="text" name="user" placeholder="Benutzername"><input id="passInput" type="password" name="pass" placeholder="Passwort"><input type="submit" value="Log-In" onclick="doLogin()">';
+        document.getElementById('login').innerHTML = '<input id="nameInput" type="text" name="user" placeholder="Benutzername"><input type="submit" value="Log-In" onclick="doLogin()">';
     }
     
     delete() {
