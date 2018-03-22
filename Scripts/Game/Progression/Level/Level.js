@@ -122,8 +122,8 @@ class Level {
 		let keys = Object.keys(possibleCollectiblePatterns);
 		let rand = Math.round(Math.random() * (keys.length - 1));
 		this.patternProperties = possibleCollectiblePatterns[keys[rand]];
-		this.color = this.createPattern(this.r * 2, this.r * 2);
 		this.randomCircleData = {};
+		this.color = this.createPattern(this.r * 2, this.r * 2);
 		this.calculatePoints();
 		this.calculateCost();
 		this.resetDrawFn();
