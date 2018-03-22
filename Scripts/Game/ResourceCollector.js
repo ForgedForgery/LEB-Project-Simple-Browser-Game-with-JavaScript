@@ -14,12 +14,23 @@ class ResourceCollector {
         
         this.scenes = new SceneManager(this.player, this.progression);
         this.screen = new Screen(inWidth, inHeight, this.scenes);
+		
+		this.saveTimer = 0;
     }
     
     update() {
         this.input.update();
         this.scenes.update();
+		this.savePeriodically();
     }
+	
+    savePeriodically() {
+		this.saveTimer += deltaTime;
+		if(this.saveTimer > 10000) {
+			doSave(this.player, this.progression);
+			this.saveTimer = 0;s
+		}
+	}
     
     draw() {
         this.screen.draw();

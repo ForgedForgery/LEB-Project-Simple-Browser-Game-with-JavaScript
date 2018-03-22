@@ -41,9 +41,6 @@ class Player {
 			this.moveY(-speed);
 		if(playerInput.KeyDown("DOWN"))
 			this.moveY(speed);
-		
-		if(playerInput.KeyDown("E"))
-			this.increaseScoreByOne();
     }
 	
 	
