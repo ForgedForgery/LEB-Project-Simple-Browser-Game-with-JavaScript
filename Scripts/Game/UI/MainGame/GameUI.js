@@ -23,7 +23,6 @@ class GameUI {
             height: 40,
             label: disketteImg,
             fontSize: "17px",
-			affectedReference: this.player,
             onClick: (function(_player, _progression) {
 				return function() {
 					doSave(_player, _progression);
