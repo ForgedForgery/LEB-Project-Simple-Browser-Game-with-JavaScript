@@ -26,9 +26,9 @@ class ResourceCollector {
 	
     savePeriodically() {
 		this.saveTimer += deltaTime;
-		if(this.saveTimer > 10000) {
+		if(this.saveTimer > 10) {
 			doSave(this.player, this.progression);
-			this.saveTimer = 0;s
+			this.saveTimer = 0;
 		}
 	}
     
