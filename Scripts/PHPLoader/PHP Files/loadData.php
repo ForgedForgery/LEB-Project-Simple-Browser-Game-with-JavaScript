@@ -1,6 +1,5 @@
 <?php 
 $loginName = $_GET["user"];
-$loginPass = $_GET["pass"];
 
 $sname = "localhost";
 $uname = "id3398325_benutzerxyz";
